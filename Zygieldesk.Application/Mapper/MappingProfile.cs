@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryList;
+using Zygieldesk.Domain.Entities;
 
 namespace Zygieldesk.Application.Mapper
 {
@@ -11,7 +13,7 @@ namespace Zygieldesk.Application.Mapper
     {
         public MappingProfile()
         {
-
+            CreateMap<Category, CategoryListViewModel>();
         }
     }
 }

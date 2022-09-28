@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <Folder Include="Functions\Categories\Commands\" />
-    <Folder Include="Functions\Categories\Queries\" />
     <Folder Include="Functions\TicketComments\Commands\" />
     <Folder Include="Functions\TicketComments\Queries\" />
     <Folder Include="Functions\Tickets\Commands\" />
