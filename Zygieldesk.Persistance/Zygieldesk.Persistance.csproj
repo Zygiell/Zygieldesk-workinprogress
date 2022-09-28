@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Zygieldesk.Application\Zygieldesk.Application.csproj" />
+  </ItemGroup>
+
 </Project>
