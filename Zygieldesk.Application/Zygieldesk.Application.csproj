@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,7 +7,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Zygieldesk.Domain\Zygieldesk.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Functions\Categories\Commands\" />
+    <Folder Include="Functions\Categories\Queries\" />
+    <Folder Include="Functions\TicketComments\Commands\" />
+    <Folder Include="Functions\TicketComments\Queries\" />
+    <Folder Include="Functions\Tickets\Commands\" />
+    <Folder Include="Functions\Tickets\Queries\" />
   </ItemGroup>
 
 </Project>
