@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryList;
+using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryWithTickets;
 using Zygieldesk.Domain.Entities;
 
 namespace Zygieldesk.Application.Mapper
@@ -14,6 +15,8 @@ namespace Zygieldesk.Application.Mapper
         public MappingProfile()
         {
             CreateMap<Category, CategoryListViewModel>();
+            CreateMap<Category, CategoryWithTitcketsViewModel>();
+            CreateMap<Ticket, CategoryTicketDto>();
         }
     }
 }
