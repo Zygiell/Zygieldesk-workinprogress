@@ -21,7 +21,7 @@ namespace Zygieldesk.Application.Functions.Categories.Queries.GetCategoryWithTic
         }
         public async Task<CategoryWithTitcketsViewModel> Handle(GetCategoryWithTicketsQuery request, CancellationToken cancellationToken)
         {
-            var category = await _categoryRepository.GetByIdAsync(request.CategoryId);
+            var category = await _categoryRepository.GetCategoryWithTickets(request.CategoryId);
 
             return _mapper.Map<CategoryWithTitcketsViewModel>(category);
         }
