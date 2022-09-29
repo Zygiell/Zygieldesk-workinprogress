@@ -14,5 +14,7 @@ namespace Zygieldesk.Application.Functions.Categories.Queries.GetCategoryWithTic
         public string TicketBody { get; set; }
         public TicketStatus Status { get; set; }
         public DateTime TicketCreationDate { get; set; }
+        public int CategoryId { get; set; }
+
     }
 }
