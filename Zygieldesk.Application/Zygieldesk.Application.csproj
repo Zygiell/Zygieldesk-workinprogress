@@ -9,6 +9,8 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="FluentValidation" Version="11.2.2" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.2.2" />
     <PackageReference Include="MediatR" Version="10.0.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
   </ItemGroup>
@@ -18,7 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Functions\Categories\Commands\" />
+    <Folder Include="Functions\Categories\Commands\DeleteCategory\" />
+    <Folder Include="Functions\Categories\Commands\UpdateCategory\" />
     <Folder Include="Functions\TicketComments\Commands\" />
     <Folder Include="Functions\TicketComments\Queries\" />
     <Folder Include="Functions\Tickets\Commands\" />

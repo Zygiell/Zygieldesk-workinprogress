@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Zygieldesk.Application.Functions.Categories.Commands.CreateCategory;
 using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryList;
 using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryWithTickets;
 using Zygieldesk.Domain.Entities;
@@ -16,6 +17,7 @@ namespace Zygieldesk.Application.Mapper
         {
             CreateMap<Category, CategoryListViewModel>();
             CreateMap<Category, CategoryWithTitcketsViewModel>();
+            CreateMap<Category, CreatedCategoryCommand>().ReverseMap();
             CreateMap<Ticket, CategoryTicketDto>();
         }
     }

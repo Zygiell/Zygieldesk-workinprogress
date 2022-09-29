@@ -18,7 +18,7 @@ namespace Zygieldesk.UnitTests.Mocks
 
             var mockTicketRepository = new Mock<ITicketRepository>();
 
-            mockTicketRepository.Setup(t => t.GetAllAsync()).ReturnsAsync(tickets);
+            mockTicketRepository.Setup(repo => repo.GetAllAsync()).ReturnsAsync(tickets);
 
             return mockTicketRepository;
         }
@@ -27,14 +27,19 @@ namespace Zygieldesk.UnitTests.Mocks
             var categories = GetCategories();
             var tickets = GetTickets();
             var mockCategoryRepository = new Mock<ICategoryRepository>();
-            mockCategoryRepository.Setup(c => c.GetAllAsync()).ReturnsAsync(categories);
-            mockCategoryRepository.Setup(c => c.GetCategoryWithTickets(It.IsAny<int>())).ReturnsAsync(
+            mockCategoryRepository.Setup(repo => repo.GetAllAsync()).ReturnsAsync(categories);
+            mockCategoryRepository.Setup(repo => repo.GetCategoryWithTickets(It.IsAny<int>())).ReturnsAsync(
                 (int id) =>
                 {
                     var cat = categories.FirstOrDefault(c => c.Id == id);
                     cat.Tickets = tickets.Where(t => t.CategoryId == cat.Id).ToList();
                     return cat;
                 });
+            mockCategoryRepository.Setup(repo => repo.AddAsync(It.IsAny<Category>())).ReturnsAsync((Category category) =>
+            {
+                categories.Add(category);
+                return category;
+            });
 
             return mockCategoryRepository;
         }
