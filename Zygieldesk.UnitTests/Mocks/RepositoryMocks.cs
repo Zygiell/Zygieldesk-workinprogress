@@ -83,7 +83,7 @@ namespace Zygieldesk.UnitTests.Mocks
                             Id=1,
                             TicketTitle = "I cant log in!",
                             TicketBody = "As i said in title i cant log in, i dont know what to do help!",
-                            TicketCreationDate = DateTime.Now,
+                            CreatedDate = DateTime.Now,
                             CategoryId = 1,
                             Status = TicketStatus.Open
 
@@ -93,7 +93,7 @@ namespace Zygieldesk.UnitTests.Mocks
                             Id=2,
                             TicketTitle = "I cant log in again!",
                             TicketBody = "As i said in title i cant log in, i dont know what to do help! again",
-                            TicketCreationDate = DateTime.Now,
+                            CreatedDate = DateTime.Now,
                             CategoryId = 1,
                             Status = TicketStatus.Open
                         },
@@ -102,7 +102,7 @@ namespace Zygieldesk.UnitTests.Mocks
                             Id=3,
                             TicketTitle = "I cant log in again 3!",
                             TicketBody = "As i said in title i cant log in, i dont know what to do help! again 3",
-                            TicketCreationDate = DateTime.Now,
+                            CreatedDate = DateTime.Now,
                             CategoryId = 1,
                             Status = TicketStatus.Open
                         }
@@ -121,7 +121,7 @@ namespace Zygieldesk.UnitTests.Mocks
                             Id=4,
                             TicketTitle = "I cant log in!4",
                             TicketBody = "As i said in title i cant log in, i dont know what to do help!4",
-                            TicketCreationDate = DateTime.Now,
+                            CreatedDate = DateTime.Now,
                             CategoryId = 2,
                             Status = TicketStatus.Open
 
@@ -131,7 +131,7 @@ namespace Zygieldesk.UnitTests.Mocks
                             Id=5,
                             TicketTitle = "I cant log in again!",
                             TicketBody = "As i said in title i cant log in, i dont know what to do help! again",
-                            TicketCreationDate = DateTime.Now,
+                            CreatedDate = DateTime.Now,
                             CategoryId = 2,
                             Status = TicketStatus.Open
                         },
@@ -140,7 +140,7 @@ namespace Zygieldesk.UnitTests.Mocks
                             Id=6,
                             TicketTitle = "I cant log in again 3!",
                             TicketBody = "As i said in title i cant log in, i dont know what to do help! again 3",
-                            TicketCreationDate = DateTime.Now,
+                            CreatedDate = DateTime.Now,
                             CategoryId = 2,
                             Status = TicketStatus.Open
                         }
@@ -159,7 +159,7 @@ namespace Zygieldesk.UnitTests.Mocks
                             Id=7,
                             TicketTitle = "I cant log in!4",
                             TicketBody = "As i said in title i cant log in, i dont know what to do help!4",
-                            TicketCreationDate = DateTime.Now,
+                            CreatedDate = DateTime.Now,
                             CategoryId = 3,
                             Status = TicketStatus.Open
 
@@ -169,7 +169,7 @@ namespace Zygieldesk.UnitTests.Mocks
                             Id=8,
                             TicketTitle = "I cant log in again!",
                             TicketBody = "As i said in title i cant log in, i dont know what to do help! again",
-                            TicketCreationDate = DateTime.Now,
+                            CreatedDate = DateTime.Now,
                             CategoryId = 3,
                             Status = TicketStatus.Open
                         },
@@ -178,7 +178,7 @@ namespace Zygieldesk.UnitTests.Mocks
                             Id=9,
                             TicketTitle = "I cant log in again 3!",
                             TicketBody = "As i said in title i cant log in, i dont know what to do help! again 3",
-                            TicketCreationDate = DateTime.Now,
+                            CreatedDate = DateTime.Now,
                             CategoryId = 3,
                             Status = TicketStatus.Open
                         }
