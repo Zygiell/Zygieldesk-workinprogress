@@ -27,6 +27,17 @@ namespace Zygieldesk.UnitTests.Mocks
             var categories = GetCategories();
             var tickets = GetTickets();
             var mockCategoryRepository = new Mock<ICategoryRepository>();
+
+
+            mockCategoryRepository.Setup(repo => repo.UpdateAsync(It.IsAny<Category>())).Callback
+                <Category>((entity) => 
+                { 
+                    var categoryToBeUpdated = categories.FirstOrDefault(c => c.Id == entity.Id);
+                    var updatedCategory = entity;
+                    categories.Remove(categoryToBeUpdated);
+                    categories.Add(updatedCategory);
+                });
+
             mockCategoryRepository.Setup(repo => repo.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(
                 (int id) =>
                 {
@@ -34,6 +45,7 @@ namespace Zygieldesk.UnitTests.Mocks
                     return cat;
                 });
             mockCategoryRepository.Setup(repo => repo.GetAllAsync()).ReturnsAsync(categories);
+
             mockCategoryRepository.Setup(repo => repo.GetCategoryWithTickets(It.IsAny<int>())).ReturnsAsync(
                 (int id) =>
                 {
@@ -41,13 +53,16 @@ namespace Zygieldesk.UnitTests.Mocks
                     cat.Tickets = tickets.Where(t => t.CategoryId == cat.Id).ToList();
                     return cat;
                 });
+
             mockCategoryRepository.Setup(repo => repo.AddAsync(It.IsAny<Category>())).ReturnsAsync((Category category) =>
             {
                 categories.Add(category);
                 return category;
             });
+
             mockCategoryRepository.Setup(repo => repo.DeleteAsync(It.IsAny<Category>()))
                 .Callback<Category>((entity) => categories.Remove(entity));
+
 
             return mockCategoryRepository;
         }

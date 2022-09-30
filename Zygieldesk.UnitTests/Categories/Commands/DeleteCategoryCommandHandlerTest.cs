@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Zygieldesk.Application.Contracts.Persistance;
+using Zygieldesk.Application.Exceptions;
 using Zygieldesk.Application.Functions.Categories.Commands.CreateCategory;
 using Zygieldesk.Application.Functions.Categories.Commands.DeleteCategory;
 using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryList;
@@ -46,5 +47,17 @@ namespace Zygieldesk.UnitTests.Categories.Commands
 
 
         }
+
+        [Fact]
+
+        public async Task DeleteCategoryTest_NoExistingCategoryId_ThrowsAnExceptionNotFound()
+        {
+            var handler = new DeleteCategoryCommandHandler(_mapper, _mockCategoryRepository.Object);
+
+            Func<Task> action = async () => { await handler.Handle(new DeleteCategoryCommand { CategoryId = 43 }, CancellationToken.None); } ;
+
+            await action().ShouldThrowAsync<NotFoundException>();
+        }
+
     }
 }
