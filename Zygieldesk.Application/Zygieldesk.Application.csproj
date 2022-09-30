@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Functions\Categories\Commands\UpdateCategory\" />
     <Folder Include="Functions\TicketComments\Commands\" />
     <Folder Include="Functions\TicketComments\Queries\" />
     <Folder Include="Functions\Tickets\Commands\" />

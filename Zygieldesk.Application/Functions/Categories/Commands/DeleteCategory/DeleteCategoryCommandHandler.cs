@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Zygieldesk.Application.Contracts.Persistance;
+using Zygieldesk.Application.Exceptions;
 using Zygieldesk.Application.Functions.Responses;
 
 namespace Zygieldesk.Application.Functions.Categories.Commands.DeleteCategory
@@ -23,6 +24,11 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.DeleteCategory
         public async Task<Unit> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
         {
             var categoryToDelete = await _categoryRepository.GetByIdAsync(request.CategoryId);
+
+            if (categoryToDelete == null)
+            {
+                throw new NotFoundException($"Category with {request.CategoryId} id, do not exist");
+            }
 
             await _categoryRepository.DeleteAsync(categoryToDelete);
 
