@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Zygieldesk.Application.Contracts.Persistance;
 using Zygieldesk.Persistance.Repositories;
+using Zygieldesk.Persistance.Seeder;
 
 namespace Zygieldesk.Persistance
 {
@@ -23,6 +24,7 @@ namespace Zygieldesk.Persistance
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<ITicketCommentRepository, TicketCommentRepository>();
+            services.AddScoped<ZygieldeskSeeder>();
 
             return services;
         }
