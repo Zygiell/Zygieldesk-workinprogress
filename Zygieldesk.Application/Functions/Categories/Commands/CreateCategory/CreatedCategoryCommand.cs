@@ -9,7 +9,7 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.CreateCategory
 {
     public class CreatedCategoryCommand : IRequest<CreatedCategoryCommandResponse>
     {
-        public int Id { get; set; }
+
         public string Name { get; set; }
         public string Description { get; set; }
     }

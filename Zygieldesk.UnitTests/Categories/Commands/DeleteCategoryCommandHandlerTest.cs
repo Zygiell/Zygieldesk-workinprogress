@@ -42,21 +42,10 @@ namespace Zygieldesk.UnitTests.Categories.Commands
             var handler = new DeleteCategoryCommandHandler(_mapper, _mockCategoryRepository.Object);
             var result = await handler.Handle(new DeleteCategoryCommand { CategoryId = 1 }, CancellationToken.None);
 
-            result.ShouldBe(Unit.Value);
+            result.ShouldBeOfType<DeleteCategoryCommandResponse>();
             allCategories.Count.ShouldBe(2);
 
 
-        }
-
-        [Fact]
-
-        public async Task DeleteCategoryTest_NoExistingCategoryId_ThrowsAnExceptionNotFound()
-        {
-            var handler = new DeleteCategoryCommandHandler(_mapper, _mockCategoryRepository.Object);
-
-            Func<Task> action = async () => { await handler.Handle(new DeleteCategoryCommand { CategoryId = 43 }, CancellationToken.None); } ;
-
-            await action().ShouldThrowAsync<NotFoundException>();
         }
 
     }
