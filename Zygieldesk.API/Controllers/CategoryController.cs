@@ -28,7 +28,7 @@ namespace Zygieldesk.API.Controllers
         /// Get all the categories from database.
         /// </summary>
         /// <returns></returns>
-        [HttpGet("all", Name = "GetAllCategories")]
+        [HttpGet]
         public async Task<ActionResult<List<CategoryListViewModel>>> GetAllCategories()
         {
             var categoryListViewModel = await _mediator.Send(new GetCategoryListQuery());
@@ -40,10 +40,15 @@ namespace Zygieldesk.API.Controllers
         /// </summary>
         /// <param name="id">Id of the category</param>
         /// <returns></returns>
-        [HttpGet("{id}", Name = "GetCategoryWithTickets")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<CategoryWithTitcketsViewModel>> GetCategoryWithTickets(int id)
         {
             var dto = await _mediator.Send(new GetCategoryWithTicketsQuery { CategoryId = id });
+
+            if(dto == null)
+            {
+                return NotFound($"Category with {id} id does not exist");
+            }
 
             return Ok(dto);
         }
@@ -60,7 +65,7 @@ namespace Zygieldesk.API.Controllers
             return Ok(response.CategoryId);
         }
 
-        [HttpPut(Name ="UpdateCategory")]
+        [HttpPut]
         public async Task<ActionResult> UpdateCategory([FromBody] UpdateCategoryCommand updateCategoryCommand)
         {
             var categoryWasFound = await _mediator.Send(updateCategoryCommand);
@@ -77,7 +82,7 @@ namespace Zygieldesk.API.Controllers
         /// </summary>
         /// <param name="id">Id of category to delete</param>
         /// <returns></returns>
-        [HttpDelete("{id}", Name = "DeleteCategory")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteCategory(int id)
         {
             var deleteCategoryCommand = new DeleteCategoryCommand() { CategoryId=id };

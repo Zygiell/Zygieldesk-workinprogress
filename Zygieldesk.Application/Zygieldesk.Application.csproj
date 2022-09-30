@@ -20,10 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Functions\TicketComments\Commands\" />
-    <Folder Include="Functions\TicketComments\Queries\" />
-    <Folder Include="Functions\Tickets\Commands\" />
-    <Folder Include="Functions\Tickets\Queries\" />
+    <Folder Include="Functions\TicketComment\Commands\" />
+    <Folder Include="Functions\Ticket\Commands\" />
   </ItemGroup>
 
 </Project>

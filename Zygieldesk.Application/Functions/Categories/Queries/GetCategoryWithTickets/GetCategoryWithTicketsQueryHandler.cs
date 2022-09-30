@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Zygieldesk.Application.Contracts.Persistance;
+using Zygieldesk.Application.Exceptions;
 using Zygieldesk.Domain.Entities;
 
 namespace Zygieldesk.Application.Functions.Categories.Queries.GetCategoryWithTickets
@@ -25,6 +26,11 @@ namespace Zygieldesk.Application.Functions.Categories.Queries.GetCategoryWithTic
         public async Task<CategoryWithTitcketsViewModel> Handle(GetCategoryWithTicketsQuery request, CancellationToken cancellationToken)
         {
             var category = await _categoryRepository.GetCategoryWithTickets(request.CategoryId);
+            if(category == null)
+            {
+                return null;
+            }
+
             var mappedTicketsList = new List<CategoryTicketDto>();
 
             foreach(Ticket ticket in category.Tickets)            
