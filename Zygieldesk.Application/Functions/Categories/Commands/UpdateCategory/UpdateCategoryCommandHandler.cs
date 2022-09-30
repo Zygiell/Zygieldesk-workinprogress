@@ -34,9 +34,15 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.UpdateCategory
                 return new UpdateCategoryCommandResponse(validatorResult);
             }
 
-            var categoryUpdate = _mapper.Map<Category>(request);
-
-            await _categoryRepository.UpdateAsync(categoryUpdate);
+            var categoryToUpdate = await _categoryRepository.GetByIdAsync(request.Id);
+            if (categoryToUpdate == null)
+            {
+                return new UpdateCategoryCommandResponse($"Category with {request.Id} id does not exist", false);
+            }
+            categoryToUpdate.Name = request.Name;
+            categoryToUpdate.Description = request.Description;            
+            
+            await _categoryRepository.UpdateAsync(categoryToUpdate);
 
             return new UpdateCategoryCommandResponse("Category successfully updated", true);
 

@@ -11,7 +11,7 @@ using Zygieldesk.Application.Functions.Responses;
 
 namespace Zygieldesk.Application.Functions.Categories.Commands.DeleteCategory
 {
-    public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand>
+    public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand, DeleteCategoryCommandResponse>
     {
         private readonly IMapper _mapper;
         private readonly ICategoryRepository _categoryRepository;
@@ -21,18 +21,18 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.DeleteCategory
             _mapper = mapper;
             _categoryRepository = categoryRepository;
         }
-        public async Task<Unit> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
+        public async Task<DeleteCategoryCommandResponse> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
         {
             var categoryToDelete = await _categoryRepository.GetByIdAsync(request.CategoryId);
 
             if (categoryToDelete == null)
             {
-                throw new NotFoundException($"Category with {request.CategoryId} id, do not exist");
+                return new DeleteCategoryCommandResponse($"Category with {request.CategoryId} id, do not exist", false);
             }
 
             await _categoryRepository.DeleteAsync(categoryToDelete);
 
-            return Unit.Value;
+            return new DeleteCategoryCommandResponse();
         }
     }
 }

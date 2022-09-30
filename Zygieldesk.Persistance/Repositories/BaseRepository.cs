@@ -41,7 +41,7 @@ namespace Zygieldesk.Persistance.Repositories
         }
 
         public async Task UpdateAsync(T entity)
-        {
+        {            
             _dbContext.Entry(entity).State = EntityState.Modified;
             await _dbContext.SaveChangesAsync();
         }
