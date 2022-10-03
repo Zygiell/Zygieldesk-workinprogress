@@ -62,6 +62,12 @@ namespace Zygieldesk.API.Controllers
         public async Task<ActionResult<CreatedCategoryCommandResponse>> CreateCategory([FromBody] CreatedCategoryCommand dto)
         {
             var response = await _mediator.Send(dto);
+
+            if (response.ValidationErrors.Any())
+            {
+                return BadRequest(response.ValidationErrors);
+            }
+
             return Ok(response.CategoryId);
         }
 
@@ -74,6 +80,11 @@ namespace Zygieldesk.API.Controllers
         public async Task<ActionResult> UpdateCategory([FromBody] UpdateCategoryCommand updateCategoryCommand)
         {
             var categoryWasFound = await _mediator.Send(updateCategoryCommand);
+            if (categoryWasFound.ValidationErrors.Any())
+            {
+                return BadRequest(categoryWasFound.ValidationErrors);
+            }
+
             if (!categoryWasFound.Success)
             {
                 return NotFound(categoryWasFound.Message);

@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Zygieldesk.Application.Functions.Categories.Commands.CreateCategory;
 using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryList;
 using Zygieldesk.Application.Functions.Tickets.Commands.CreateTicket;
+using Zygieldesk.Application.Functions.Tickets.Commands.DeleteTicket;
+using Zygieldesk.Application.Functions.Tickets.Commands.UpdateTicket;
 using Zygieldesk.Application.Functions.Tickets.Queries.GetAllTickets;
 using Zygieldesk.Application.Functions.Tickets.Queries.GetTicketById;
 using Zygieldesk.Application.Functions.Tickets.Queries.GetTicketList;
@@ -25,6 +27,46 @@ namespace Zygieldesk.API.Controllers
             _mediator = mediator;
         }
 
+        /// <summary>
+        /// Update ticket
+        /// </summary>
+        /// <param name="updateTicketCommand"></param>
+        /// <returns></returns>
+        [HttpPut]
+        public async Task<ActionResult> UpdateTicket([FromBody] UpdateTicketCommand updateTicketCommand)
+        {
+            var ticketWasFound = await _mediator.Send(updateTicketCommand);
+
+            if (ticketWasFound.ValidationErrors.Any())
+            {
+                return BadRequest(ticketWasFound.ValidationErrors);
+            }
+
+            if (!ticketWasFound.Success)
+            {
+                return NotFound(ticketWasFound.Message);
+            }
+
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Delete ticket from database.
+        /// </summary>
+        /// <param name="id">Ticket to delete id</param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteTicket(int id)
+        {
+            var ticketWasFound = await _mediator.Send(new DeleteTicketCommand() { TicketId = id });
+
+            if (!ticketWasFound.Success)
+            {
+                return NotFound(ticketWasFound.Message);
+            }
+            return NoContent();
+        }
+
 
         /// <summary>
         /// Creates new ticket, existing category id from body dto has to be provided
@@ -32,9 +74,15 @@ namespace Zygieldesk.API.Controllers
         /// <param name="dto"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult<CreateTicketCommandResponse>> CreateCategory([FromBody] CreateTicketCommand dto)
+        public async Task<ActionResult<CreateTicketCommandResponse>> CreateTicket([FromBody] CreateTicketCommand dto)
         {
             var response = await _mediator.Send(dto);
+
+            if (response.ValidationErrors.Any())
+            {
+                return BadRequest(response.ValidationErrors);
+            }
+
             if (!response.Success)
             {
                 return NotFound(response.Message);
