@@ -21,8 +21,6 @@
 
   <ItemGroup>
     <Folder Include="Functions\TicketComments\Commands\" />
-    <Folder Include="Functions\Tickets\Commands\DeleteTicket\" />
-    <Folder Include="Functions\Tickets\Commands\UpdateTicket\" />
   </ItemGroup>
 
 </Project>
