@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Zygieldesk.Application.Functions.TicketComments.Queries.GetAllTicketsComments;
 using Zygieldesk.Application.Functions.TicketComments.Queries.GetTicketCommentsList;
 using Zygieldesk.Application.Functions.TicketComments.Queries.GetTicketCommetById;
 
@@ -21,6 +22,19 @@ namespace Zygieldesk.API.Controllers
         {
             _mediator = mediator;
         }
+
+        [HttpGet]
+        [SwaggerOperation(Summary = "Returns all ticket comments from database.")]
+        public async Task<ActionResult<List<TicketCommentViewModel>>> GetAllTicketComments()
+        {
+            var ticketCommentsList = await _mediator.Send(new GetAllTicketsCommentsQuery());
+            if(ticketCommentsList == null)
+            {
+                return NotFound("There are no ticket comments in database");
+            }
+            return Ok(ticketCommentsList);
+        }
+
 
         [HttpGet("ticket/{ticketId}")]
         [SwaggerOperation(Summary = "Returns all ticket comments associated with {ticketId}.")]
