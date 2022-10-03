@@ -24,13 +24,6 @@ namespace Zygieldesk.Application.Functions.Tickets.Commands.CreateTicket
         }
         public async Task<CreateTicketCommandResponse> Handle(CreateTicketCommand request, CancellationToken cancellationToken)
         {
-            var category = await _categoryRepository.GetByIdAsync(request.CategoryId);
-
-            if(category == null)
-            {
-                return new CreateTicketCommandResponse($"Category you are trying to add ticket to (Category id: {request.CategoryId}) does not exist.", false);
-            }
-
             var validator = new CreateTicketCommandValidator();
             var validationResult = await validator.ValidateAsync(request);
 
@@ -38,6 +31,14 @@ namespace Zygieldesk.Application.Functions.Tickets.Commands.CreateTicket
             {
                 return new CreateTicketCommandResponse(validationResult);
             }
+
+            var category = await _categoryRepository.GetByIdAsync(request.CategoryId);
+
+            if (category == null)
+            {
+                return new CreateTicketCommandResponse($"Category you are trying to add ticket to (Category id: {request.CategoryId}) does not exist.", false);
+            }
+
             var ticket = _mapper.Map<Ticket>(request);
 
             ticket = await _ticketRepository.AddAsync(ticket);

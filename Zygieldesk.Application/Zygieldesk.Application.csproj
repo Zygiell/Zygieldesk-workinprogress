@@ -19,8 +19,4 @@
     <ProjectReference Include="..\Zygieldesk.Domain\Zygieldesk.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Functions\TicketComments\Commands\" />
-  </ItemGroup>
-
 </Project>
