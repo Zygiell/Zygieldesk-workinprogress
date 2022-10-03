@@ -19,14 +19,40 @@ namespace Zygieldesk.UnitTests.Mocks
 
             var mockTicketRepository = new Mock<ITicketRepository>();
 
-            mockTicketRepository.Setup(repo => repo.GetAllTicketsFromCategoryAsync(It.IsAny<int>())).ReturnsAsync((int id) =>
-            {
-                var cat = categories.FirstOrDefault(c => c.Id == id);
-                return cat.Tickets.ToList();
+            mockTicketRepository.Setup(repo => repo.UpdateAsync(It.IsAny<Ticket>())).Callback
+                <Ticket>((entity) =>
+                {
+                    var ticketToBeUpdated = tickets.FirstOrDefault(c => c.Id == entity.Id);
+                    var updatedTicket = entity;
+                    tickets.Remove(ticketToBeUpdated);
+                    tickets.Add(updatedTicket);
+                });
 
-            });
+            mockTicketRepository.Setup(repo => repo.GetAllTicketsFromCategoryAsync(It.IsAny<int>())).ReturnsAsync(
+                (int id) =>
+                {
+                    var cat = categories.FirstOrDefault(c => c.Id == id);
+                    return cat.Tickets.ToList();
+
+                });
+
+            mockTicketRepository.Setup(repo => repo.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(
+                (int id) =>
+                {
+                    var tic = tickets.FirstOrDefault(c => c.Id == id);
+                    return tic;
+                });
 
             mockTicketRepository.Setup(repo => repo.GetAllAsync()).ReturnsAsync(tickets);
+
+            mockTicketRepository.Setup(repo => repo.AddAsync(It.IsAny<Ticket>())).ReturnsAsync((Ticket ticket) =>
+                {
+                    tickets.Add(ticket);
+                    return ticket;
+                });
+
+            mockTicketRepository.Setup(repo => repo.DeleteAsync(It.IsAny<Ticket>()))
+                .Callback<Ticket>((entity) => tickets.Remove(entity));
 
             return mockTicketRepository;
         }
@@ -38,8 +64,8 @@ namespace Zygieldesk.UnitTests.Mocks
 
 
             mockCategoryRepository.Setup(repo => repo.UpdateAsync(It.IsAny<Category>())).Callback
-                <Category>((entity) => 
-                { 
+                <Category>((entity) =>
+                {
                     var categoryToBeUpdated = categories.FirstOrDefault(c => c.Id == entity.Id);
                     var updatedCategory = entity;
                     categories.Remove(categoryToBeUpdated);
