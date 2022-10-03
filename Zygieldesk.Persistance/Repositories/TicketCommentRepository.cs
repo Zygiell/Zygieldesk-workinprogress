@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,21 @@ namespace Zygieldesk.Persistance.Repositories
     {
         public TicketCommentRepository(ZygieldeskDbContext dbContext) : base(dbContext)
         {
+        }
+
+        public async Task<IReadOnlyList<TicketComment>> GetAllTicketCommentsFromTicketAsync(int ticketId)
+        {
+            var ticket = await _dbContext.Tickets
+                .Include(t => t.TicketComments)
+                .FirstOrDefaultAsync(ti => ti.Id == ticketId);
+
+            if (ticket != null)
+            {
+                return ticket.TicketComments.ToList();
+            }
+
+            return null;
+            
         }
     }
 }

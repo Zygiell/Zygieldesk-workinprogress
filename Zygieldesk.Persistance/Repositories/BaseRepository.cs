@@ -37,7 +37,8 @@ namespace Zygieldesk.Persistance.Repositories
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await _dbContext.Set<T>().FindAsync(id);
+            var entity = await _dbContext.Set<T>().FindAsync(id);
+            return entity;
         }
 
         public async Task UpdateAsync(T entity)

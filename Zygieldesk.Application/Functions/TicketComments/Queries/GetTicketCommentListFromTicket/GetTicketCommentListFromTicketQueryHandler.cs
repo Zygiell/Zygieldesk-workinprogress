@@ -10,19 +10,24 @@ using Zygieldesk.Application.Functions.Tickets.Queries.GetTicketList;
 
 namespace Zygieldesk.Application.Functions.TicketComments.Queries.GetTicketCommentsList
 {
-    public class GetTicketCommentListQueryHandler : IRequestHandler<GetTicketCommentListQuery, List<TicketCommentListViewModel>>
+    public class GetTicketCommentListFromTicketQueryHandler : IRequestHandler<GetTicketCommentListFromTicketQuery, List<TicketCommentListViewModel>>
     {
         private readonly IMapper _mapper;
         private readonly ITicketCommentRepository _ticketCommentRepository;
 
-        public GetTicketCommentListQueryHandler(IMapper mapper, ITicketCommentRepository ticketCommentRepository)
+        public GetTicketCommentListFromTicketQueryHandler(IMapper mapper, ITicketCommentRepository ticketCommentRepository)
         {
             _mapper = mapper;
             _ticketCommentRepository = ticketCommentRepository;
         }
-        public async Task<List<TicketCommentListViewModel>> Handle(GetTicketCommentListQuery request, CancellationToken cancellationToken)
+        public async Task<List<TicketCommentListViewModel>> Handle(GetTicketCommentListFromTicketQuery request, CancellationToken cancellationToken)
         {
-            var ticketComments = await _ticketCommentRepository.GetAllAsync();
+            var ticketComments = await _ticketCommentRepository.GetAllTicketCommentsFromTicketAsync(request.TicketId);
+
+            if (ticketComments== null)
+            {
+                return null;
+            }
 
             return _mapper.Map<List<TicketCommentListViewModel>>(ticketComments);
         }

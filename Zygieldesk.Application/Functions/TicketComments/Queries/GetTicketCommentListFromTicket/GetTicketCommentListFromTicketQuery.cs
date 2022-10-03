@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Zygieldesk.Application.Functions.TicketComments.Queries.GetTicketCommentsList
 {
-    public class GetTicketCommentListQuery : IRequest<List<TicketCommentListViewModel>>
+    public class GetTicketCommentListFromTicketQuery : IRequest<List<TicketCommentListViewModel>>
     {
-
+        public int TicketId { get; set; }
     }
 }
