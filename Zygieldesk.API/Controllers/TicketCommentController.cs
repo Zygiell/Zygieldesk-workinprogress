@@ -40,7 +40,7 @@ namespace Zygieldesk.API.Controllers
 
         public async Task<ActionResult<TicketCommentViewModel>> GetTicketCommentById(int id)
         {
-            var ticketComment = _mediator.Send(new GetTicketCommentByIdQuery() { TicketCommentId = id });
+            var ticketComment = await _mediator.Send(new GetTicketCommentByIdQuery() { TicketCommentId = id });
             if (ticketComment == null)
             {
                 return NotFound($"Ticket comment with {id} id does not exist.");
