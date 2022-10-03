@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Zygieldesk.Application.Functions.Categories.Commands.CreateCategory;
 using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryList;
-using Zygieldesk.Application.Functions.Ticket.Queries.GetAllTickets;
-using Zygieldesk.Application.Functions.Ticket.Queries.GetTicketById;
+using Zygieldesk.Application.Functions.Tickets.Commands.CreateTicket;
+using Zygieldesk.Application.Functions.Tickets.Queries.GetAllTickets;
+using Zygieldesk.Application.Functions.Tickets.Queries.GetTicketById;
 using Zygieldesk.Application.Functions.Tickets.Queries.GetTicketList;
 
 namespace Zygieldesk.API.Controllers
@@ -22,6 +24,25 @@ namespace Zygieldesk.API.Controllers
         {
             _mediator = mediator;
         }
+
+
+        /// <summary>
+        /// Creates new ticket, existing category id from body dto has to be provided
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult<CreateTicketCommandResponse>> CreateCategory([FromBody] CreateTicketCommand dto)
+        {
+            var response = await _mediator.Send(dto);
+            if (!response.Success)
+            {
+                return NotFound(response.Message);
+            }
+
+            return Ok(response.TicketId);
+        }
+
         /// <summary>
         /// Get all tickets under provided category from database.
         /// </summary>

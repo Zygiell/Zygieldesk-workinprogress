@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -20,8 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Functions\TicketComment\Commands\" />
-    <Folder Include="Functions\Ticket\Commands\" />
+    <Folder Include="Functions\TicketComments\Commands\" />
+    <Folder Include="Functions\Tickets\Commands\DeleteTicket\" />
+    <Folder Include="Functions\Tickets\Commands\UpdateTicket\" />
   </ItemGroup>
 
 </Project>

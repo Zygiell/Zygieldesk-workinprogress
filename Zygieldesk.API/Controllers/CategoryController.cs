@@ -65,6 +65,11 @@ namespace Zygieldesk.API.Controllers
             return Ok(response.CategoryId);
         }
 
+        /// <summary>
+        /// Updates existing category, valid category id provided from body is required.
+        /// </summary>
+        /// <param name="updateCategoryCommand"></param>
+        /// <returns></returns>
         [HttpPut]
         public async Task<ActionResult> UpdateCategory([FromBody] UpdateCategoryCommand updateCategoryCommand)
         {

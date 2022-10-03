@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Zygieldesk.Domain.Entities;
 
-namespace Zygieldesk.Application.Functions.Ticket.Queries.GetTicketById
+namespace Zygieldesk.Application.Functions.Tickets.Queries.GetTicketById
 {
     public class TicketViewModel
     {

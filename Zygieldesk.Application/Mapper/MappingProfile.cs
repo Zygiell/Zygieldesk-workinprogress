@@ -8,7 +8,8 @@ using Zygieldesk.Application.Functions.Categories.Commands.CreateCategory;
 using Zygieldesk.Application.Functions.Categories.Commands.UpdateCategory;
 using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryList;
 using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryWithTickets;
-using Zygieldesk.Application.Functions.Ticket.Queries.GetTicketById;
+using Zygieldesk.Application.Functions.Tickets.Commands.CreateTicket;
+using Zygieldesk.Application.Functions.Tickets.Queries.GetTicketById;
 using Zygieldesk.Application.Functions.Tickets.Queries.GetTicketList;
 using Zygieldesk.Domain.Entities;
 
@@ -25,6 +26,7 @@ namespace Zygieldesk.Application.Mapper
             CreateMap<Ticket, CategoryTicketDto>();
             CreateMap<Ticket, TicketListViewModel>();
             CreateMap<Ticket, TicketViewModel>();
+            CreateMap<Ticket, CreateTicketCommand>().ReverseMap();
         }
     }
 }
