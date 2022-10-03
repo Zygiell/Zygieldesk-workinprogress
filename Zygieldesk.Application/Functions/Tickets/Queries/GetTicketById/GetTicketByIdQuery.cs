@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Zygieldesk.Application.Functions.Ticket.Queries.GetTicketById
+namespace Zygieldesk.Application.Functions.Tickets.Queries.GetTicketById
 {
     public class GetTicketByIdQuery : IRequest<TicketViewModel>
     {
