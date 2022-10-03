@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,7 @@ namespace Zygieldesk.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [SwaggerOperation(Summary ="Returns all categories from database")]
         public async Task<ActionResult<List<CategoryListViewModel>>> GetAllCategories()
         {
             var categoryListViewModel = await _mediator.Send(new GetCategoryListQuery());
@@ -41,6 +43,7 @@ namespace Zygieldesk.API.Controllers
         /// <param name="id">Id of the category</param>
         /// <returns></returns>
         [HttpGet("{id}")]
+        [SwaggerOperation(Summary = "Returns category found by {id} with tickets associated with category.")]
         public async Task<ActionResult<CategoryWithTitcketsViewModel>> GetCategoryWithTickets(int id)
         {
             var dto = await _mediator.Send(new GetCategoryWithTicketsQuery { CategoryId = id });
@@ -59,6 +62,7 @@ namespace Zygieldesk.API.Controllers
         /// <param name="dto">Model received from body</param>
         /// <returns></returns>
         [HttpPost]
+        [SwaggerOperation(Summary = "Creates new category.")]
         public async Task<ActionResult<CreatedCategoryCommandResponse>> CreateCategory([FromBody] CreatedCategoryCommand dto)
         {
             var response = await _mediator.Send(dto);
@@ -77,6 +81,7 @@ namespace Zygieldesk.API.Controllers
         /// <param name="updateCategoryCommand"></param>
         /// <returns></returns>
         [HttpPut]
+        [SwaggerOperation(Summary = "Updates existing category")]
         public async Task<ActionResult> UpdateCategory([FromBody] UpdateCategoryCommand updateCategoryCommand)
         {
             var categoryWasFound = await _mediator.Send(updateCategoryCommand);
@@ -99,6 +104,7 @@ namespace Zygieldesk.API.Controllers
         /// <param name="id">Id of category to delete</param>
         /// <returns></returns>
         [HttpDelete("{id}")]
+        [SwaggerOperation(Summary = "Deletes existing category")]
         public async Task<ActionResult> DeleteCategory(int id)
         {
             var deleteCategoryCommand = new DeleteCategoryCommand() { CategoryId=id };

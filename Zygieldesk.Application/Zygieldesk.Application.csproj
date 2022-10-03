@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <Folder Include="Functions\TicketComments\Commands\" />
+    <Folder Include="Functions\TicketComments\Queries\GetAllTicketComments\" />
   </ItemGroup>
 
 </Project>

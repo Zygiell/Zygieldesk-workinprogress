@@ -23,7 +23,7 @@ namespace Zygieldesk.Application.Functions.Tickets.Queries.GetTicketById
         }
         public async Task<TicketViewModel> Handle(GetTicketByIdQuery request, CancellationToken cancellationToken)
         {
-            var ticket = await _ticketRepository.GetTicketByIdWithTicketComments(request.TicketId);
+            var ticket = await _ticketRepository.GetByIdAsync(request.TicketId);
             
 
             return _mapper.Map<TicketViewModel>(ticket);
