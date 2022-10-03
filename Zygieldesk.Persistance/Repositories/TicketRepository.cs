@@ -21,6 +21,7 @@ namespace Zygieldesk.Persistance.Repositories
                 .Include(t=>t.Tickets)
                 .FirstOrDefaultAsync(c=>c.Id == categoryId);
             
+            
             if(category!=null)
             {
                 return category.Tickets.ToList();
@@ -28,6 +29,15 @@ namespace Zygieldesk.Persistance.Repositories
             }
 
             return null;
+        }
+
+        public async Task<Ticket> GetTicketByIdWithTicketComments(int ticketid)
+        {
+            var ticket = await _dbContext.Tickets
+                .Include(t => t.TicketComments)
+                .FirstOrDefaultAsync(ti=>ti.Id == ticketid);
+
+            return ticket;
         }
     }
 }

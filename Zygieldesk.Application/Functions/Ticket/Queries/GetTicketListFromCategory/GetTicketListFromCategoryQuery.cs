@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Zygieldesk.Application.Functions.Tickets.Queries.GetTicketList
 {
-    public class GetTicketListQuery : IRequest<List<TicketListViewModel>>
+    public class GetTicketListFromCategoryQuery : IRequest<List<TicketListViewModel>>
     {
         public int CategoryId { get; set; }
     }

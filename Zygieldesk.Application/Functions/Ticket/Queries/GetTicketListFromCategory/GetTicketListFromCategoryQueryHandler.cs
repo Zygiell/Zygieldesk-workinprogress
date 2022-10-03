@@ -10,18 +10,18 @@ using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryList;
 
 namespace Zygieldesk.Application.Functions.Tickets.Queries.GetTicketList
 {
-    public class GetTicketListQueryHandler : IRequestHandler<GetTicketListQuery, List<TicketListViewModel>>
+    public class GetTicketListFromCategoryQueryHandler : IRequestHandler<GetTicketListFromCategoryQuery, List<TicketListViewModel>>
     {
         private readonly IMapper _mapper;
         private readonly ITicketRepository _ticketRepository;
 
-        public GetTicketListQueryHandler(IMapper mapper, ITicketRepository ticketRepository)
+        public GetTicketListFromCategoryQueryHandler(IMapper mapper, ITicketRepository ticketRepository)
         {
             _mapper = mapper;
             _ticketRepository = ticketRepository;
         }
 
-        public async Task<List<TicketListViewModel>> Handle(GetTicketListQuery request, CancellationToken cancellationToken)
+        public async Task<List<TicketListViewModel>> Handle(GetTicketListFromCategoryQuery request, CancellationToken cancellationToken)
         {
             var tickets = await _ticketRepository.GetAllTicketsFromCategoryAsync(request.CategoryId);
             if(tickets == null)

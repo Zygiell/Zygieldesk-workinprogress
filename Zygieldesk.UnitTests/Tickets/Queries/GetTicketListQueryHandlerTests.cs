@@ -35,9 +35,9 @@ namespace Zygieldesk.UnitTests.Tickets.Queries
         [Fact]
         public async Task GetTicketListForCategoryTests()
         {
-            var query = new GetTicketListQuery();
+            var query = new GetTicketListFromCategoryQuery();
             query.CategoryId = 1;
-            var handler = new GetTicketListQueryHandler(_mapper, _mockTicketRepository.Object);
+            var handler = new GetTicketListFromCategoryQueryHandler(_mapper, _mockTicketRepository.Object);
             var result = await handler.Handle(query, CancellationToken.None);
 
             query.CategoryId = 2;
@@ -48,14 +48,31 @@ namespace Zygieldesk.UnitTests.Tickets.Queries
 
             result.ShouldBeOfType<List<TicketListViewModel>>();
             result.Count.ShouldBe(3);
+            foreach(var e in result)
+            {
+                e.CategoryId.ShouldBe(1);
+            }
+
             
 
             result2.ShouldBeOfType<List<TicketListViewModel>>();
             result2.Count.ShouldBe(3);
+            foreach (var e in result2)
+            {
+                e.CategoryId.ShouldBe(2);
+            }
+
+
 
 
             result3.ShouldBeOfType<List<TicketListViewModel>>();
             result3.Count.ShouldBe(3);
+            foreach (var e in result3)
+            {
+                e.CategoryId.ShouldBe(3);
+            }
+
+
 
 
 
