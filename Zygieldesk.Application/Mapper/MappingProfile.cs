@@ -30,7 +30,8 @@ namespace Zygieldesk.Application.Mapper
             CreateMap<Ticket, TicketViewModel>();
             CreateMap<Ticket, CreateTicketCommand>().ReverseMap();
             CreateMap<TicketComment, TicketCommentListViewModel>();
-            CreateMap<TicketComment, TicketCommentViewModel>();                
+            CreateMap<TicketComment, TicketCommentViewModel>();
+
         }
     }
 }
