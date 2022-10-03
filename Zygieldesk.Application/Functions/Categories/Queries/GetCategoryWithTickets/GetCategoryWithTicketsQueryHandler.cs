@@ -33,7 +33,7 @@ namespace Zygieldesk.Application.Functions.Categories.Queries.GetCategoryWithTic
 
             var mappedTicketsList = new List<CategoryTicketDto>();
 
-            foreach(Ticket ticket in category.Tickets)            
+            foreach(var ticket in category.Tickets)            
             {
                 
                 mappedTicketsList.Add(_mapper.Map<CategoryTicketDto>(ticket));

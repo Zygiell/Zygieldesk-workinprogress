@@ -15,8 +15,16 @@ namespace Zygieldesk.UnitTests.Mocks
         public static Mock<ITicketRepository> GetTicketRepository()
         {
             var tickets = GetTickets();
+            var categories = GetCategories();
 
             var mockTicketRepository = new Mock<ITicketRepository>();
+
+            mockTicketRepository.Setup(repo => repo.GetAllTicketsFromCategoryAsync(It.IsAny<int>())).ReturnsAsync((int id) =>
+            {
+                var cat = categories.FirstOrDefault(c => c.Id == id);
+                return cat.Tickets.ToList();
+
+            });
 
             mockTicketRepository.Setup(repo => repo.GetAllAsync()).ReturnsAsync(tickets);
 
