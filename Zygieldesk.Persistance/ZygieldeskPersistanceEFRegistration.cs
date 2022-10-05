@@ -24,6 +24,7 @@ namespace Zygieldesk.Persistance
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<ITicketCommentRepository, TicketCommentRepository>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<ZygieldeskSeeder>();
 
             return services;
