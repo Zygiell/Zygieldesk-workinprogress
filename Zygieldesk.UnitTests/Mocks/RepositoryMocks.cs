@@ -1,17 +1,56 @@
-﻿using Zygieldesk.Domain.Entities;
-using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Moq;
 using Zygieldesk.Application.Contracts.Persistance;
-using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryWithTickets;
+using Zygieldesk.Domain.Entities;
 
 namespace Zygieldesk.UnitTests.Mocks
 {
     public class RepositoryMocks
     {
+        public static Mock<ITicketCommentRepository> GetTicketCommentRepository()
+        {
+            var mockTicketCommentRepository = new Mock<ITicketCommentRepository>();
+            var ticketComments = GetTicketComments();
+            var tickets = GetTickets();
+
+            mockTicketCommentRepository.Setup(repo => repo.GetAllTicketCommentsFromTicketAsync(It.IsAny<int>())).ReturnsAsync(
+                (int id) =>
+                {
+                    var tic = tickets.FirstOrDefault(c => c.Id == id);
+                    return tic.TicketComments.ToList();
+                });
+
+            mockTicketCommentRepository.Setup(repo => repo.UpdateAsync(It.IsAny<TicketComment>())).Callback
+                <TicketComment>((entity) =>
+                {
+                    var ticketCommentToBeUpdated = ticketComments.FirstOrDefault(c => c.Id == entity.Id);
+                    var updatedTicketComment = entity;
+                    ticketComments.Remove(ticketCommentToBeUpdated);
+                    ticketComments.Add(updatedTicketComment);
+                });
+
+            mockTicketCommentRepository.Setup(repo => repo.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(
+                (int id) =>
+                {
+                    var ticCom = ticketComments.FirstOrDefault(c => c.Id == id);
+                    return ticCom;
+                });
+
+            mockTicketCommentRepository.Setup(repo => repo.GetAllAsync()).ReturnsAsync(ticketComments);
+
+            mockTicketCommentRepository.Setup(repo => repo.AddAsync(It.IsAny<TicketComment>())).ReturnsAsync((TicketComment ticketComment) =>
+                {
+                    ticketComments.Add(ticketComment);
+                    return ticketComment;
+                });
+
+            mockTicketCommentRepository.Setup(repo => repo.DeleteAsync(It.IsAny<TicketComment>()))
+                .Callback<TicketComment>((entity) => ticketComments.Remove(entity));
+
+
+
+
+            return mockTicketCommentRepository;
+        }
         public static Mock<ITicketRepository> GetTicketRepository()
         {
             var tickets = GetTickets();
@@ -33,7 +72,6 @@ namespace Zygieldesk.UnitTests.Mocks
                 {
                     var cat = categories.FirstOrDefault(c => c.Id == id);
                     return cat.Tickets.ToList();
-
                 });
 
             mockTicketRepository.Setup(repo => repo.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(
@@ -56,12 +94,12 @@ namespace Zygieldesk.UnitTests.Mocks
 
             return mockTicketRepository;
         }
+
         public static Mock<ICategoryRepository> GetCategoryRepository()
         {
             var categories = GetCategories();
             var tickets = GetTickets();
             var mockCategoryRepository = new Mock<ICategoryRepository>();
-
 
             mockCategoryRepository.Setup(repo => repo.UpdateAsync(It.IsAny<Category>())).Callback
                 <Category>((entity) =>
@@ -97,7 +135,6 @@ namespace Zygieldesk.UnitTests.Mocks
             mockCategoryRepository.Setup(repo => repo.DeleteAsync(It.IsAny<Category>()))
                 .Callback<Category>((entity) => categories.Remove(entity));
 
-
             return mockCategoryRepository;
         }
 
@@ -119,8 +156,28 @@ namespace Zygieldesk.UnitTests.Mocks
                             TicketBody = "As i said in title i cant log in, i dont know what to do help!",
                             CreatedDate = DateTime.Now,
                             CategoryId = 1,
-                            Status = TicketStatus.Open
-
+                            Status = TicketStatus.Open ,
+                            TicketComments = new List<TicketComment>()
+                            {
+                                new TicketComment()
+                                {
+                                    Id = 1,
+                                    CommentBody = "Test me daddy",
+                                    TicketId = 1
+                                },
+                                new TicketComment()
+                                {
+                                    Id = 2,
+                                    CommentBody = "Test me daddy2",
+                                    TicketId= 1
+                                },
+                                new TicketComment()
+                                {
+                                    Id = 3,
+                                    CommentBody = "Test me daddy3",
+                                    TicketId = 1
+                                }
+                            }
                         },
                         new Ticket()
                         {
@@ -129,7 +186,28 @@ namespace Zygieldesk.UnitTests.Mocks
                             TicketBody = "As i said in title i cant log in, i dont know what to do help! again",
                             CreatedDate = DateTime.Now,
                             CategoryId = 1,
-                            Status = TicketStatus.Open
+                            Status = TicketStatus.Open,
+                            TicketComments = new List<TicketComment>()
+                            {
+                                new TicketComment()
+                                {
+                                    Id = 4,
+                                    CommentBody = "Test me daddy",
+                                    TicketId = 2
+                                },
+                                new TicketComment()
+                                {
+                                    Id = 5,
+                                    CommentBody = "Test me daddy2",
+                                    TicketId= 2
+                                },
+                                new TicketComment()
+                                {
+                                    Id = 6,
+                                    CommentBody = "Test me daddy3",
+                                    TicketId = 2
+                                }
+                            }
                         },
                         new Ticket()
                         {
@@ -138,10 +216,30 @@ namespace Zygieldesk.UnitTests.Mocks
                             TicketBody = "As i said in title i cant log in, i dont know what to do help! again 3",
                             CreatedDate = DateTime.Now,
                             CategoryId = 1,
-                            Status = TicketStatus.Open
+                            Status = TicketStatus.Open,
+                            TicketComments = new List<TicketComment>()
+                            {
+                                new TicketComment()
+                                {
+                                    Id = 7,
+                                    CommentBody = "Test me daddy",
+                                    TicketId = 3
+                                },
+                                new TicketComment()
+                                {
+                                    Id = 8,
+                                    CommentBody = "Test me daddy2",
+                                    TicketId= 3
+                                },
+                                new TicketComment()
+                                {
+                                    Id = 9,
+                                    CommentBody = "Test me daddy3",
+                                    TicketId = 3
+                                }
+                            }
                         }
                     }
-
                 },
                 new Category()
                 {
@@ -157,8 +255,28 @@ namespace Zygieldesk.UnitTests.Mocks
                             TicketBody = "As i said in title i cant log in, i dont know what to do help!4",
                             CreatedDate = DateTime.Now,
                             CategoryId = 2,
-                            Status = TicketStatus.Open
-
+                            Status = TicketStatus.Open,
+                            TicketComments = new List<TicketComment>()
+                            {
+                                new TicketComment()
+                                {
+                                    Id = 10,
+                                    CommentBody = "Test me daddy",
+                                    TicketId = 4
+                                },
+                                new TicketComment()
+                                {
+                                    Id = 11,
+                                    CommentBody = "Test me daddy2",
+                                    TicketId= 4
+                                },
+                                new TicketComment()
+                                {
+                                    Id = 12,
+                                    CommentBody = "Test me daddy3",
+                                    TicketId = 4
+                                }
+                            }
                         },
                         new Ticket()
                         {
@@ -167,7 +285,28 @@ namespace Zygieldesk.UnitTests.Mocks
                             TicketBody = "As i said in title i cant log in, i dont know what to do help! again",
                             CreatedDate = DateTime.Now,
                             CategoryId = 2,
-                            Status = TicketStatus.Open
+                            Status = TicketStatus.Open,
+                            TicketComments = new List<TicketComment>()
+                            {
+                                new TicketComment()
+                                {
+                                    Id = 13,
+                                    CommentBody = "Test me daddy",
+                                    TicketId = 5
+                                },
+                                new TicketComment()
+                                {
+                                    Id = 14,
+                                    CommentBody = "Test me daddy2",
+                                    TicketId= 5
+                                },
+                                new TicketComment()
+                                {
+                                    Id = 15,
+                                    CommentBody = "Test me daddy3",
+                                    TicketId = 5
+                                }
+                            }
                         },
                         new Ticket()
                         {
@@ -176,9 +315,29 @@ namespace Zygieldesk.UnitTests.Mocks
                             TicketBody = "As i said in title i cant log in, i dont know what to do help! again 3",
                             CreatedDate = DateTime.Now,
                             CategoryId = 2,
-                            Status = TicketStatus.Open
+                            Status = TicketStatus.Open,
+                            TicketComments = new List<TicketComment>()
+                            {
+                                new TicketComment()
+                                {
+                                    Id = 16,
+                                    CommentBody = "Test me daddy",
+                                    TicketId = 6
+                                },
+                                new TicketComment()
+                                {
+                                    Id = 17,
+                                    CommentBody = "Test me daddy2",
+                                    TicketId= 6
+                                },
+                                new TicketComment()
+                                {
+                                    Id = 18,
+                                    CommentBody = "Test me daddy3",
+                                    TicketId = 6
+                                }
+                            }
                         }
-
                     }
                 },
                 new Category()
@@ -195,8 +354,28 @@ namespace Zygieldesk.UnitTests.Mocks
                             TicketBody = "As i said in title i cant log in, i dont know what to do help!4",
                             CreatedDate = DateTime.Now,
                             CategoryId = 3,
-                            Status = TicketStatus.Open
-
+                            Status = TicketStatus.Open,
+                            TicketComments = new List<TicketComment>()
+                            {
+                                new TicketComment()
+                                {
+                                    Id = 19,
+                                    CommentBody = "Test me daddy",
+                                    TicketId = 7
+                                },
+                                new TicketComment()
+                                {
+                                    Id = 20,
+                                    CommentBody = "Test me daddy2",
+                                    TicketId= 7
+                                },
+                                new TicketComment()
+                                {
+                                    Id = 21,
+                                    CommentBody = "Test me daddy3",
+                                    TicketId = 7
+                                }
+                            }
                         },
                         new Ticket()
                         {
@@ -205,7 +384,28 @@ namespace Zygieldesk.UnitTests.Mocks
                             TicketBody = "As i said in title i cant log in, i dont know what to do help! again",
                             CreatedDate = DateTime.Now,
                             CategoryId = 3,
-                            Status = TicketStatus.Open
+                            Status = TicketStatus.Open,
+                            TicketComments = new List<TicketComment>()
+                            {
+                                new TicketComment()
+                                {
+                                    Id = 22,
+                                    CommentBody = "Test me daddy",
+                                    TicketId = 8
+                                },
+                                new TicketComment()
+                                {
+                                    Id = 23,
+                                    CommentBody = "Test me daddy2",
+                                    TicketId= 8
+                                },
+                                new TicketComment()
+                                {
+                                    Id = 24,
+                                    CommentBody = "Test me daddy3",
+                                    TicketId = 8
+                                }
+                            }
                         },
                         new Ticket()
                         {
@@ -214,13 +414,31 @@ namespace Zygieldesk.UnitTests.Mocks
                             TicketBody = "As i said in title i cant log in, i dont know what to do help! again 3",
                             CreatedDate = DateTime.Now,
                             CategoryId = 3,
-                            Status = TicketStatus.Open
+                            Status = TicketStatus.Open,
+                            TicketComments = new List<TicketComment>()
+                            {
+                                new TicketComment()
+                                {
+                                    Id = 25,
+                                    CommentBody = "Test me daddy",
+                                    TicketId = 9
+                                },
+                                new TicketComment()
+                                {
+                                    Id = 26,
+                                    CommentBody = "Test me daddy2",
+                                    TicketId= 9
+                                },
+                                new TicketComment()
+                                {
+                                    Id = 27,
+                                    CommentBody = "Test me daddy3",
+                                    TicketId = 9
+                                }
+                            }
                         }
-
                     }
-
                 }
-
             };
 
             return categoryList;
@@ -239,9 +457,27 @@ namespace Zygieldesk.UnitTests.Mocks
                         tickets.Add(ticket);
                     }
                 }
-
             }
             return tickets;
+        }
+
+        private static List<TicketComment> GetTicketComments()
+        {
+            var tickets = GetTickets();
+            var ticketComments = new List<TicketComment>();
+
+            foreach(var ticket in tickets)
+            {
+                if (ticket.TicketComments.Any())
+                {
+                    foreach(var comment in ticket.TicketComments)
+                    {
+                        ticketComments.Add(comment);
+                    }
+                }
+            }
+
+            return ticketComments;
         }
     }
 }
