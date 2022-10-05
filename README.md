@@ -3,6 +3,7 @@
  Zygieldesk - zendesk like customer service app. Clean architecture + CQRS + MediatR
 
  # How to launch, to test progress:
+ PRE REQUISITES : .NET 6 FRAMEWORK + IDE (tested on Visual Studio)
 
  1. Clone repository (master branch).
  2. Set Zygieldesk.API as a Startup Project.
