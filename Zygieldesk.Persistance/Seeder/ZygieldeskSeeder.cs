@@ -26,9 +26,34 @@ namespace Zygieldesk.Persistance.Seeder
                     await _dbContext.Categories.AddRangeAsync(categories);
                     await _dbContext.SaveChangesAsync();
                 }
+
+                if (!_dbContext.Roles.Any())
+                {
+                    var roles = GetRoles();
+                    await _dbContext.Roles.AddRangeAsync(roles);
+                    await _dbContext.SaveChangesAsync();
+                }
             }
         }
-
+        private IEnumerable<Role> GetRoles()
+        {
+            var roles = new List<Role>()
+            {
+                new Role()
+                {                    
+                    Name = "User"
+                },
+                new Role()
+                {                    
+                    Name = "Support"
+                },
+                new Role()
+                {                    
+                    Name = "Admin"
+                }
+            };
+            return roles;
+        }
         private IEnumerable<Category> GetCategories()
         {
             var categories = new List<Category>()
