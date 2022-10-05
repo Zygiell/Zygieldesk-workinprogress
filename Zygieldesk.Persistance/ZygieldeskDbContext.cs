@@ -15,6 +15,8 @@ namespace Zygieldesk.Persistance
         public DbSet<Category> Categories { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<TicketComment> TicketComments { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
         public ZygieldeskDbContext(DbContextOptions<ZygieldeskDbContext> options) : base(options)
         {
