@@ -12,8 +12,8 @@ using Zygieldesk.Persistance;
 namespace Zygieldesk.Persistance.Migrations
 {
     [DbContext(typeof(ZygieldeskDbContext))]
-    [Migration("20221006151210_UpdateAuditableEntity")]
-    partial class UpdateAuditableEntity
+    [Migration("20221006211612_Initialization")]
+    partial class Initialization
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
