@@ -1,4 +1,6 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
@@ -16,6 +18,7 @@ namespace Zygieldesk.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CategoryController : Controller
     {
         private readonly IMediator _mediator;
@@ -93,6 +96,10 @@ namespace Zygieldesk.API.Controllers
             if (!categoryWasFound.Success)
             {
                 return NotFound(categoryWasFound.Message);
+            }
+            if (categoryWasFound.Message == "Forbidden")
+            {
+                return StatusCode(403, categoryWasFound.Message);
             }
 
 

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
@@ -13,6 +14,7 @@ namespace Zygieldesk.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly IMediator _mediator;
@@ -24,7 +26,7 @@ namespace Zygieldesk.API.Controllers
 
         [HttpPost("login")]
         [SwaggerOperation(Summary = "Login to user account.")]
-
+        [AllowAnonymous]
         public async Task<ActionResult<LoginUserCommandResponse>> Login([FromBody]LoginUserCommand loginUserCommand)
         {
             var response = await _mediator.Send(loginUserCommand);
@@ -43,6 +45,7 @@ namespace Zygieldesk.API.Controllers
 
         [HttpPost("register")]
         [SwaggerOperation(Summary = "Register new user account.")]
+        [AllowAnonymous]
         public async Task<ActionResult<CreateUserCommandResponse>> CreateUserAccount([FromBody]CreateUserCommand dto)
         {
             var response = await _mediator.Send(dto);
