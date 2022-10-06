@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Zygieldesk.Application.Contracts.Persistance;
-using Zygieldesk.Application.Exceptions;
 using Zygieldesk.Application.Functions.Responses;
 
 namespace Zygieldesk.Application.Functions.Categories.Commands.DeleteCategory
