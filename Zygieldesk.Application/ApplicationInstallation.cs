@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Zygieldesk.Application.Authentication;
 using Zygieldesk.Domain.Entities;
 
 namespace Zygieldesk.Application
@@ -15,6 +16,7 @@ namespace Zygieldesk.Application
     {
         public static IServiceCollection AddZygieldeskApplication(this IServiceCollection services)
         {
+
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());

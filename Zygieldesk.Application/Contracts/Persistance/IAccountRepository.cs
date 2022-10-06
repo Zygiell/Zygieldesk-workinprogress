@@ -11,6 +11,7 @@ namespace Zygieldesk.Application.Contracts.Persistance
     {
         Task<bool> IsEmailAddressFree(string email);
         Task<int> GetUserRoleId();
+        Task<User> GetUserByEmail(string email);
 
     }
 }

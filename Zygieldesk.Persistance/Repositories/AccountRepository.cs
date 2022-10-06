@@ -15,6 +15,16 @@ namespace Zygieldesk.Persistance.Repositories
         {
         }
 
+        public async Task<User> GetUserByEmail(string email)
+        {
+            var user = await _dbContext.Users.Include(u=>u.Role).FirstOrDefaultAsync(u=> u.Email == email);
+            if (user == null)
+            {
+                return null;
+            }
+            return user;
+        }
+
         public async Task<int> GetUserRoleId()
         {
             var userRole = await _dbContext.Roles.FirstOrDefaultAsync(r => r.Name == "User");
@@ -30,5 +40,6 @@ namespace Zygieldesk.Persistance.Repositories
             }
             return false;
         }
+
     }
 }
