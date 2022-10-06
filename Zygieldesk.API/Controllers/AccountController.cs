@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Zygieldesk.Application.Functions.Account.Commands.AddUser;
+using Zygieldesk.Application.Functions.Account.Commands.LoginUser;
 
 namespace Zygieldesk.API.Controllers
 {
@@ -20,6 +21,25 @@ namespace Zygieldesk.API.Controllers
         {
             _mediator = mediator;
         }
+
+        [HttpPost("login")]
+        [SwaggerOperation(Summary = "Login to user account.")]
+
+        public async Task<ActionResult<LoginUserCommandResponse>> Login([FromBody]LoginUserCommand loginUserCommand)
+        {
+            var response = await _mediator.Send(loginUserCommand);
+            if (response.ValidationErrors.Any())
+            {
+                return BadRequest(response.ValidationErrors);
+            }
+            if (!response.Success)
+            {
+                return BadRequest(response.Message);
+            }
+            // Returns jwtToken string
+            return Ok(response.Message);
+        }
+
 
         [HttpPost("register")]
         [SwaggerOperation(Summary = "Register new user account.")]

@@ -62,8 +62,7 @@ namespace Zygieldesk.Persistance.Seeder
                 {
                     Name = "Account",
                     Description = "Issues with account",
-                    CreatedDate = DateTime.Now,
-                    CreatedBy = "Seeder",
+                    CreatedDate = DateTime.Now,                    
                     Tickets = new List<Ticket>()
                     {
                         new Ticket()
@@ -71,27 +70,23 @@ namespace Zygieldesk.Persistance.Seeder
                             TicketTitle = "Dummy ticket",
                             TicketBody = "Lorem ipsum dolor dummy ticket body",
                             Status = TicketStatus.Open,
-                            CreatedDate= DateTime.Now,
-                            CreatedBy = "Seeder",
+                            CreatedDate= DateTime.Now,                            
                             TicketComments = new List<TicketComment>()
                             {
                                 new TicketComment()
                                 {
                                     CommentBody = "Dummy body",
-                                    CreatedDate = DateTime.Now,
-                                    CreatedBy = "Seeder"
+                                    CreatedDate = DateTime.Now                                  
                                 },
                                 new TicketComment()
                                 {
                                     CommentBody = "Dummy body2",
-                                    CreatedDate = DateTime.Now,
-                                    CreatedBy = "Seeder"
+                                    CreatedDate = DateTime.Now                                    
                                 },
                                 new TicketComment()
                                 {
                                     CommentBody = "Dummy body3",
-                                    CreatedDate = DateTime.Now,
-                                    CreatedBy = "Seeder"
+                                    CreatedDate = DateTime.Now
                                 }
 
                             }
@@ -102,26 +97,22 @@ namespace Zygieldesk.Persistance.Seeder
                             TicketBody = "Lorem ipsum dolor dummy ticket body2",
                             Status = TicketStatus.Open,
                             CreatedDate= DateTime.Now,
-                            CreatedBy = "Seeder",
                             TicketComments = new List<TicketComment>()
                             {
                                 new TicketComment()
                                 {
                                     CommentBody = "Dummy body",
-                                    CreatedDate = DateTime.Now,
-                                    CreatedBy = "Seeder"
+                                    CreatedDate = DateTime.Now
                                 },
                                 new TicketComment()
                                 {
                                     CommentBody = "Dummy body2",
-                                    CreatedDate = DateTime.Now,
-                                    CreatedBy = "Seeder"
+                                    CreatedDate = DateTime.Now
                                 },
                                 new TicketComment()
                                 {
                                     CommentBody = "Dummy body3",
-                                    CreatedDate = DateTime.Now,
-                                    CreatedBy = "Seeder"
+                                    CreatedDate = DateTime.Now
                                 }
 
                             }
@@ -133,7 +124,6 @@ namespace Zygieldesk.Persistance.Seeder
                     Name = "Payments",
                     Description = "Issues with payments",
                     CreatedDate = DateTime.Now,
-                    CreatedBy = "Seeder",
                     Tickets = new List<Ticket>()
                     {
                         new Ticket()
@@ -142,26 +132,22 @@ namespace Zygieldesk.Persistance.Seeder
                             TicketBody = "Lorem ipsum dolor dummy ticket body",
                             Status = TicketStatus.Open,
                             CreatedDate= DateTime.Now,
-                            CreatedBy = "Seeder",
                             TicketComments = new List<TicketComment>()
                             {
                                 new TicketComment()
                                 {
                                     CommentBody = "Dummy body",
-                                    CreatedDate = DateTime.Now,
-                                    CreatedBy = "Seeder"
+                                    CreatedDate = DateTime.Now
                                 },
                                 new TicketComment()
                                 {
                                     CommentBody = "Dummy body2",
-                                    CreatedDate = DateTime.Now,
-                                    CreatedBy = "Seeder"
+                                    CreatedDate = DateTime.Now
                                 },
                                 new TicketComment()
                                 {
                                     CommentBody = "Dummy body3",
-                                    CreatedDate = DateTime.Now,
-                                    CreatedBy = "Seeder"
+                                    CreatedDate = DateTime.Now
                                 }
 
                             }
@@ -172,26 +158,22 @@ namespace Zygieldesk.Persistance.Seeder
                             TicketBody = "Lorem ipsum dolor dummy ticket body2",
                             Status = TicketStatus.Open,
                             CreatedDate= DateTime.Now,
-                            CreatedBy = "Seeder",
                             TicketComments = new List<TicketComment>()
                             {
                                 new TicketComment()
                                 {
                                     CommentBody = "Dummy body",
-                                    CreatedDate = DateTime.Now,
-                                    CreatedBy = "Seeder"
+                                    CreatedDate = DateTime.Now
                                 },
                                 new TicketComment()
                                 {
                                     CommentBody = "Dummy body2",
-                                    CreatedDate = DateTime.Now,
-                                    CreatedBy = "Seeder"
+                                    CreatedDate = DateTime.Now
                                 },
                                 new TicketComment()
                                 {
                                     CommentBody = "Dummy body3",
-                                    CreatedDate = DateTime.Now,
-                                    CreatedBy = "Seeder"
+                                    CreatedDate = DateTime.Now
                                 }
 
                             }
@@ -203,7 +185,6 @@ namespace Zygieldesk.Persistance.Seeder
                     Name = "Other",
                     Description = "Other issues",
                     CreatedDate = DateTime.Now,
-                    CreatedBy = "Seeder",
                     Tickets = new List<Ticket>()
                     {
                         new Ticket()
@@ -212,26 +193,22 @@ namespace Zygieldesk.Persistance.Seeder
                             TicketBody = "Lorem ipsum dolor dummy ticket body",
                             Status = TicketStatus.Open,
                             CreatedDate= DateTime.Now,
-                            CreatedBy = "Seeder",
                             TicketComments = new List<TicketComment>()
                             {
                                 new TicketComment()
                                 {
                                     CommentBody = "Dummy body",
-                                    CreatedDate = DateTime.Now,
-                                    CreatedBy = "Seeder"
+                                    CreatedDate = DateTime.Now
                                 },
                                 new TicketComment()
                                 {
                                     CommentBody = "Dummy body2",
-                                    CreatedDate = DateTime.Now,
-                                    CreatedBy = "Seeder"
+                                    CreatedDate = DateTime.Now
                                 },
                                 new TicketComment()
                                 {
                                     CommentBody = "Dummy body3",
-                                    CreatedDate = DateTime.Now,
-                                    CreatedBy = "Seeder"
+                                    CreatedDate = DateTime.Now
                                 }
 
                             }
@@ -242,26 +219,22 @@ namespace Zygieldesk.Persistance.Seeder
                             TicketBody = "Lorem ipsum dolor dummy ticket body2",
                             Status = TicketStatus.Open,
                             CreatedDate= DateTime.Now,
-                            CreatedBy = "Seeder",
                             TicketComments = new List<TicketComment>()
                             {
                                 new TicketComment()
                                 {
                                     CommentBody = "Dummy body",
-                                    CreatedDate = DateTime.Now,
-                                    CreatedBy = "Seeder"
+                                    CreatedDate = DateTime.Now
                                 },
                                 new TicketComment()
                                 {
                                     CommentBody = "Dummy body2",
-                                    CreatedDate = DateTime.Now,
-                                    CreatedBy = "Seeder"
+                                    CreatedDate = DateTime.Now
                                 },
                                 new TicketComment()
                                 {
                                     CommentBody = "Dummy body3",
-                                    CreatedDate = DateTime.Now,
-                                    CreatedBy = "Seeder"
+                                    CreatedDate = DateTime.Now
                                 }
 
                             }
