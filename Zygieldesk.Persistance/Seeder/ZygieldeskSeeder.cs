@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,10 +12,12 @@ namespace Zygieldesk.Persistance.Seeder
     public class ZygieldeskSeeder
     {
         private readonly ZygieldeskDbContext _dbContext;
+        private readonly IPasswordHasher<User> _passwordHasher;
 
-        public ZygieldeskSeeder(ZygieldeskDbContext dbContext)
+        public ZygieldeskSeeder(ZygieldeskDbContext dbContext, IPasswordHasher<User> passwordHasher)
         {
             _dbContext = dbContext;
+            _passwordHasher = passwordHasher;
         }
 
         public async Task Seed()
@@ -31,6 +35,25 @@ namespace Zygieldesk.Persistance.Seeder
                 {
                     var roles = GetRoles();
                     await _dbContext.Roles.AddRangeAsync(roles);
+                    await _dbContext.SaveChangesAsync();
+                }
+                if(!_dbContext.Roles.Any(r=>r.Name == "Admin"))
+                {
+                    var roles = GetRoles();
+                    var adminRole = roles.FirstOrDefault(r => r.Name == "Admin");
+                    await _dbContext.Roles.AddAsync(adminRole);
+                    await _dbContext.SaveChangesAsync();
+                }
+                if (!_dbContext.Users.Any(u => u.Role.Name == "Admin"))
+                {
+                    if(_dbContext.Users.Any(u=>u.Email == "admin@admin.com"))
+                    {
+                        var brickedAdminAccount = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == "admin@admin.com");
+                        _dbContext.Remove(brickedAdminAccount);
+                        await _dbContext.SaveChangesAsync();
+                    }
+                    var adminAccount = await GetAdminAccount();
+                    await _dbContext.Users.AddAsync(adminAccount);
                     await _dbContext.SaveChangesAsync();
                 }
             }
@@ -245,6 +268,20 @@ namespace Zygieldesk.Persistance.Seeder
 
 
             return categories;
+        }
+        private async Task<User> GetAdminAccount()
+        {
+            var adminRole = await _dbContext.Roles.FirstOrDefaultAsync(r => r.Name == "Admin");
+            var admin = new User()
+            {
+                Email = "admin@admin.com",
+                RoleId = adminRole.Id,
+                FirstName = "",
+                LastName = ""
+            };
+            admin.PasswordHash = _passwordHasher.HashPassword(admin, "admin");
+
+            return admin;
         }
     }
 }

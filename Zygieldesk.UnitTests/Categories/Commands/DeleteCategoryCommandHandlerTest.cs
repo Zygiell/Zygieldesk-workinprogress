@@ -8,7 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Zygieldesk.Application.Contracts.Persistance;
-using Zygieldesk.Application.Exceptions;
 using Zygieldesk.Application.Functions.Categories.Commands.CreateCategory;
 using Zygieldesk.Application.Functions.Categories.Commands.DeleteCategory;
 using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryList;
