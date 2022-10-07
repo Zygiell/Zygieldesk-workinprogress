@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Moq;
 using Shouldly;
 using System;
@@ -10,6 +11,7 @@ using Zygieldesk.Application.Contracts.Persistance;
 using Zygieldesk.Application.Functions.Categories.Commands.CreateCategory;
 using Zygieldesk.Application.Functions.Tickets.Commands.CreateTicket;
 using Zygieldesk.Application.Mapper;
+using Zygieldesk.Application.Services;
 using Zygieldesk.UnitTests.Mocks;
 
 namespace Zygieldesk.UnitTests.Tickets.Commands
@@ -19,10 +21,12 @@ namespace Zygieldesk.UnitTests.Tickets.Commands
         private readonly IMapper _mapper;
         private readonly Mock<ITicketRepository> _mockTicketRepository;
         private readonly Mock<ICategoryRepository> _mockCategoryRepository;
+
         public CreateTicketCommandHandlerTest()
         {
             _mockTicketRepository = RepositoryMocks.GetTicketRepository();
             _mockCategoryRepository = RepositoryMocks.GetCategoryRepository();
+
             var configuration = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<MappingProfile>();
