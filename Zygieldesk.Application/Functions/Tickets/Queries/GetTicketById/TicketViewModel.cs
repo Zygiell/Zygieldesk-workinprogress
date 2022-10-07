@@ -14,9 +14,9 @@ namespace Zygieldesk.Application.Functions.Tickets.Queries.GetTicketById
         public string TicketBody { get; set; }
         public int CategoryId { get; set; }
         public TicketStatus Status { get; set; }
-        public string? CreatedBy { get; set; }
+        public int? CreatedByUserId { get; set; }
         public DateTime CreatedDate { get; set; }
-        public string? LastModifiedBy { get; set; }
+        public int? LastModifiedByUserId { get; set; }
         public DateTime? LastModifiedDate { get; set; }
         public ICollection<TicketComment> TicketComments { get; set; }
 
