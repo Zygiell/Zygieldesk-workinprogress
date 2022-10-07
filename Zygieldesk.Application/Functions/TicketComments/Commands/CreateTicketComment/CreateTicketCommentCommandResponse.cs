@@ -30,5 +30,13 @@ namespace Zygieldesk.Application.Functions.TicketComments.Commands.CreateTicketC
         {
             TicketCommentId = ticketCommentId;
         }
+
+        public CreateTicketCommentCommandResponse(ResponseStatus status, string message) : base(status, message)
+        {
+        }
+
+        public CreateTicketCommentCommandResponse(ResponseStatus status, string message, ValidationResult validationResult) : base(status, message, validationResult)
+        {
+        }
     }
 }

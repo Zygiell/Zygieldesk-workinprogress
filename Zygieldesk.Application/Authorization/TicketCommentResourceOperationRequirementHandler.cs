@@ -9,9 +9,9 @@ using Zygieldesk.Domain.Entities;
 
 namespace Zygieldesk.Application.Authorization
 {
-    public class TicketResourceOperationRequirementHandler : AuthorizationHandler<ResourceOperationRequirement, Ticket>
+    public class TicketCommentResourceOperationRequirementHandler : AuthorizationHandler<ResourceOperationRequirement, TicketComment>
     {
-        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ResourceOperationRequirement requirement, Ticket resource)
+        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ResourceOperationRequirement requirement, TicketComment resource)
         {
             var userId = context.User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value;
             var userRole = context.User.FindFirst(c => c.Type == ClaimTypes.Role).Value;
@@ -25,29 +25,13 @@ namespace Zygieldesk.Application.Authorization
                 }
 
             }
-            if (requirement.ResourceOperation == ResourceOperation.Reply &&
-                resource.Status != TicketStatus.Closed)
-            {
-                if (int.Parse(userId) == resource.CreatedByUserId ||
-                    userRole == "Support")
-                {
-                    context.Succeed(requirement);
-                }
-            }
 
-            if (requirement.ResourceOperation == ResourceOperation.Delete)
-            {
-                if (int.Parse(userId) == resource.CreatedByUserId && resource.Status == TicketStatus.Open)
-                {
-                    context.Succeed(requirement);
-                }
-            }
+
 
             if (requirement.ResourceOperation == ResourceOperation.Create ||
                 requirement.ResourceOperation == ResourceOperation.Read ||
                 requirement.ResourceOperation == ResourceOperation.Update ||
-                requirement.ResourceOperation == ResourceOperation.Delete ||
-                requirement.ResourceOperation == ResourceOperation.Reply)
+                requirement.ResourceOperation == ResourceOperation.Delete)
             {
                 if (userRole == "Admin")
                 {

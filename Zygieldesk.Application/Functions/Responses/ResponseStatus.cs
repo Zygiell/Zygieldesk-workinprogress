@@ -14,6 +14,7 @@ namespace Zygieldesk.Application.Functions.Responses
         ValidationError = 3,
         Forbidden = 4,
         DataBaseError = 5,
-        OtherClientApiError = 6
+        TicketStatusClosed = 6,
+        OtherClientApiError = 7
     }
 }

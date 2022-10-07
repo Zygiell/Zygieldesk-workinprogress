@@ -23,6 +23,8 @@ namespace Zygieldesk.Application
             services.AddScoped<IAuthorizationHandler, CategoryResourceOperationRequirementHandler>();
             services.AddScoped<IAuthorizationHandler, TicketResourceOperationRequirementHandler>();
             services.AddScoped<IAuthorizationHandler, TicketListResourceOperationRequirementHandler>();
+            services.AddScoped<IAuthorizationHandler, TicketCommentResourceOperationRequirementHandler>();
+            services.AddScoped<IAuthorizationHandler, TicketCommentListResourceOperationRequirementHandler>();
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
