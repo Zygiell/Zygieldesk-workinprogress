@@ -1,10 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Contracts.Persistance;
 using Zygieldesk.Domain.Entities;
 
@@ -22,6 +17,7 @@ namespace Zygieldesk.Application.Functions.Tickets.Commands.CreateTicket
             _ticketRepository = ticketRepository;
             _categoryRepository = categoryRepository;
         }
+
         public async Task<CreateTicketCommandResponse> Handle(CreateTicketCommand request, CancellationToken cancellationToken)
         {
             var validator = new CreateTicketCommandValidator();
@@ -45,7 +41,6 @@ namespace Zygieldesk.Application.Functions.Tickets.Commands.CreateTicket
             ticket = await _ticketRepository.AddAsync(ticket);
 
             return new CreateTicketCommandResponse(ticket.Id);
-            
         }
     }
 }

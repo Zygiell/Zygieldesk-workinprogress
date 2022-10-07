@@ -1,10 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Domain.Entities;
 
 namespace Zygieldesk.Application.Authorization
@@ -23,10 +18,7 @@ namespace Zygieldesk.Application.Authorization
                 {
                     context.Succeed(requirement);
                 }
-
             }
-
-
 
             if (requirement.ResourceOperation == ResourceOperation.Create ||
                 requirement.ResourceOperation == ResourceOperation.Read ||

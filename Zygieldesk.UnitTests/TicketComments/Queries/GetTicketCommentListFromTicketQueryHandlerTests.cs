@@ -2,11 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Moq;
 using Shouldly;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Contracts.Persistance;
 using Zygieldesk.Application.Functions.TicketComments.Queries.GetTicketCommentsList;
 using Zygieldesk.Application.Mapper;
@@ -52,7 +47,7 @@ namespace Zygieldesk.UnitTests.TicketComments.Queries
 
             result.ShouldBeOfType<List<TicketCommentListViewModel>>();
             result.Count.ShouldBe(3);
-            foreach(var e in result)
+            foreach (var e in result)
             {
                 e.TicketId.ShouldBe(1);
             }

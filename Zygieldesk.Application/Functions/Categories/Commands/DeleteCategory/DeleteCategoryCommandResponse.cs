@@ -1,9 +1,4 @@
 ﻿using FluentValidation.Results;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Functions.Responses;
 
 namespace Zygieldesk.Application.Functions.Categories.Commands.DeleteCategory
@@ -11,6 +6,7 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.DeleteCategory
     public class DeleteCategoryCommandResponse : BaseResponse
     {
         public int? CategoryId { get; set; }
+
         public DeleteCategoryCommandResponse()
         {
         }
@@ -26,6 +22,7 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.DeleteCategory
         public DeleteCategoryCommandResponse(string message, bool success) : base(message, success)
         {
         }
+
         public DeleteCategoryCommandResponse(int? categoryId)
         {
             CategoryId = categoryId;

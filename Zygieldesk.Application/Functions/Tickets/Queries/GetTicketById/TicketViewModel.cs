@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Zygieldesk.Domain.Entities;
+﻿using Zygieldesk.Domain.Entities;
 
 namespace Zygieldesk.Application.Functions.Tickets.Queries.GetTicketById
 {
@@ -19,6 +14,5 @@ namespace Zygieldesk.Application.Functions.Tickets.Queries.GetTicketById
         public int? LastModifiedByUserId { get; set; }
         public DateTime? LastModifiedDate { get; set; }
         public ICollection<TicketComment> TicketComments { get; set; }
-
     }
 }

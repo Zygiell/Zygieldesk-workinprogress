@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Zygieldesk.Application.Functions.Responses
+﻿namespace Zygieldesk.Application.Functions.Responses
 {
     public enum ResponseStatus
     {
@@ -14,7 +8,6 @@ namespace Zygieldesk.Application.Functions.Responses
         ValidationError = 3,
         Forbidden = 4,
         DataBaseError = 5,
-        TicketStatusClosed = 6,
-        OtherClientApiError = 7
+        TicketStatusClosed = 6
     }
 }

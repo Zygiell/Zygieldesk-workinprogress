@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Zygieldesk.Application.Functions.Categories.Queries.GetCategoryList
+﻿namespace Zygieldesk.Application.Functions.Categories.Queries.GetCategoryList
 {
     public class CategoryListViewModel
     {

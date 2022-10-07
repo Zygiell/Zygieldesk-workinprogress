@@ -2,11 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Moq;
 using Shouldly;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Contracts.Persistance;
 using Zygieldesk.Application.Functions.Categories.Commands.UpdateCategory;
 using Zygieldesk.Application.Mapper;
@@ -35,7 +30,6 @@ namespace Zygieldesk.UnitTests.Categories.Commands
             _mapper = configurationProvider.CreateMapper();
         }
 
-
         [Fact]
         public async Task UpdateCategoryTest()
         {
@@ -44,11 +38,8 @@ namespace Zygieldesk.UnitTests.Categories.Commands
             var result = await handler.Handle(new UpdateCategoryCommand { Name = "New name", Id = 1 }, CancellationToken.None);
             var categoryToUpdate = await _mockCategoryRepository.Object.GetByIdAsync(1);
 
-
-
             result.ShouldBeOfType<UpdateCategoryCommandResponse>();
             categoryToUpdate.Name.ShouldBe("New name");
-            
         }
     }
 }

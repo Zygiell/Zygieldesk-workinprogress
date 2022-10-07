@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Contracts.Persistance;
 using Zygieldesk.Domain.Entities;
 
@@ -17,12 +12,13 @@ namespace Zygieldesk.Application.Functions.Account.Commands.AddUser
         private readonly IAccountRepository _accountRepository;
         private readonly IPasswordHasher<User> _passwordHasher;
 
-        public CreateUserCommandHandler(IMapper mapper, IAccountRepository accountRepository, IPasswordHasher<User> passwordHasher) 
+        public CreateUserCommandHandler(IMapper mapper, IAccountRepository accountRepository, IPasswordHasher<User> passwordHasher)
         {
             _mapper = mapper;
             _accountRepository = accountRepository;
             _passwordHasher = passwordHasher;
         }
+
         public async Task<CreateUserCommandResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             var validator = new CreateUserCommandValidator();
@@ -46,7 +42,6 @@ namespace Zygieldesk.Application.Functions.Account.Commands.AddUser
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 RoleId = userRole
-
             };
             var hashedPassword = _passwordHasher.HashPassword(newUser, request.Password);
             newUser.PasswordHash = hashedPassword;

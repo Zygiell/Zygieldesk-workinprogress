@@ -1,9 +1,4 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Functions.Categories.Commands.CreateCategory;
 using Zygieldesk.Application.Functions.Categories.Commands.UpdateCategory;
 using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryList;
@@ -33,7 +28,6 @@ namespace Zygieldesk.Application.Mapper
             CreateMap<TicketComment, TicketCommentListViewModel>();
             CreateMap<TicketComment, TicketCommentViewModel>();
             CreateMap<TicketComment, CreateTicketCommentCommand>().ReverseMap();
-
         }
     }
 }

@@ -1,17 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Authorization;
 using Zygieldesk.Application.Contracts.Persistance;
 using Zygieldesk.Application.Exceptions;
-using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryList;
 using Zygieldesk.Application.Services;
-using Zygieldesk.Domain.Entities;
 
 namespace Zygieldesk.Application.Functions.Tickets.Queries.GetTicketList
 {
@@ -34,7 +27,7 @@ namespace Zygieldesk.Application.Functions.Tickets.Queries.GetTicketList
         public async Task<List<TicketListViewModel>> Handle(GetTicketListFromCategoryQuery request, CancellationToken cancellationToken)
         {
             var tickets = await _ticketRepository.GetAllTicketsFromCategoryAsync(request.CategoryId);
-            if(tickets == null)
+            if (tickets == null)
             {
                 throw new NotFoundException($"Category with {request.CategoryId} id does not exist.");
             }

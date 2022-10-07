@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Contracts.Persistance;
 
 namespace Zygieldesk.Persistance.Repositories
@@ -16,6 +11,7 @@ namespace Zygieldesk.Persistance.Repositories
         {
             _dbContext = dbContext;
         }
+
         public async Task<T> AddAsync(T entity)
         {
             await _dbContext.Set<T>().AddAsync(entity);
@@ -42,7 +38,7 @@ namespace Zygieldesk.Persistance.Repositories
         }
 
         public async Task UpdateAsync(T entity)
-        {            
+        {
             _dbContext.Entry(entity).State = EntityState.Modified;
             await _dbContext.SaveChangesAsync();
         }

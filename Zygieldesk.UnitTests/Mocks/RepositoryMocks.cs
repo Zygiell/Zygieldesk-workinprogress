@@ -46,11 +46,9 @@ namespace Zygieldesk.UnitTests.Mocks
             mockTicketCommentRepository.Setup(repo => repo.DeleteAsync(It.IsAny<TicketComment>()))
                 .Callback<TicketComment>((entity) => ticketComments.Remove(entity));
 
-
-
-
             return mockTicketCommentRepository;
         }
+
         public static Mock<ITicketRepository> GetTicketRepository()
         {
             var tickets = GetTickets();
@@ -466,11 +464,11 @@ namespace Zygieldesk.UnitTests.Mocks
             var tickets = GetTickets();
             var ticketComments = new List<TicketComment>();
 
-            foreach(var ticket in tickets)
+            foreach (var ticket in tickets)
             {
                 if (ticket.TicketComments.Any())
                 {
-                    foreach(var comment in ticket.TicketComments)
+                    foreach (var comment in ticket.TicketComments)
                     {
                         ticketComments.Add(comment);
                     }

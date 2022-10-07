@@ -1,13 +1,7 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Functions.Categories.Commands.CreateCategory;
 using Zygieldesk.Application.Functions.Categories.Commands.DeleteCategory;
 using Zygieldesk.Application.Functions.Categories.Commands.UpdateCategory;
@@ -34,7 +28,7 @@ namespace Zygieldesk.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [SwaggerOperation(Summary ="Returns all categories from database")]
+        [SwaggerOperation(Summary = "Returns all categories from database")]
         public async Task<ActionResult<List<CategoryListViewModel>>> GetAllCategories()
         {
             var categoryListViewModel = await _mediator.Send(new GetCategoryListQuery());
@@ -102,9 +96,9 @@ namespace Zygieldesk.API.Controllers
                 return StatusCode(403, categoryWasFound.Message);
             }
 
-
             return NoContent();
         }
+
         /// <summary>
         /// Delete category by id.
         /// </summary>
@@ -114,7 +108,7 @@ namespace Zygieldesk.API.Controllers
         [SwaggerOperation(Summary = "Deletes existing category")]
         public async Task<ActionResult> DeleteCategory(int id)
         {
-            var deleteCategoryCommand = new DeleteCategoryCommand() { CategoryId=id };
+            var deleteCategoryCommand = new DeleteCategoryCommand() { CategoryId = id };
             var categoryWasFound = await _mediator.Send(deleteCategoryCommand);
             if (categoryWasFound.Status == ResponseStatus.NotFound)
             {
@@ -127,6 +121,5 @@ namespace Zygieldesk.API.Controllers
 
             return NoContent();
         }
-
     }
 }

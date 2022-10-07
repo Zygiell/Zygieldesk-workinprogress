@@ -2,12 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Zygieldesk.Application.Functions.Categories.Commands.CreateCategory;
 using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryList;
 using Zygieldesk.Application.Functions.Responses;
 using Zygieldesk.Application.Functions.Tickets.Commands.CreateTicket;
@@ -81,7 +75,6 @@ namespace Zygieldesk.API.Controllers
             return NoContent();
         }
 
-
         /// <summary>
         /// Creates new ticket, existing category id from body dto has to be provided
         /// </summary>
@@ -115,7 +108,7 @@ namespace Zygieldesk.API.Controllers
         [SwaggerOperation(Summary = "Returns all tickets associated with category id {categoryId}")]
         public async Task<ActionResult<List<CategoryListViewModel>>> GetAllTicketsFromCategory(int categoryId)
         {
-            var ticketsListViewModel = await _mediator.Send(new GetTicketListFromCategoryQuery() { CategoryId = categoryId});
+            var ticketsListViewModel = await _mediator.Send(new GetTicketListFromCategoryQuery() { CategoryId = categoryId });
 
             return Ok(ticketsListViewModel);
         }
@@ -143,7 +136,7 @@ namespace Zygieldesk.API.Controllers
         public async Task<ActionResult<List<TicketViewModel>>> GetAllTickets()
         {
             var ticketsList = await _mediator.Send(new GetAllTicketsQuery());
-            if(ticketsList == null)
+            if (ticketsList == null)
             {
                 return NotFound("There are not any tickets in database");
             }

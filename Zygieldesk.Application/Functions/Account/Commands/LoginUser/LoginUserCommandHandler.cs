@@ -1,16 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Authentication;
 using Zygieldesk.Application.Contracts.Persistance;
-using Zygieldesk.Application.Functions.Account.Commands.AddUser;
 using Zygieldesk.Domain.Entities;
 
 namespace Zygieldesk.Application.Functions.Account.Commands.LoginUser
@@ -27,6 +22,7 @@ namespace Zygieldesk.Application.Functions.Account.Commands.LoginUser
             _passwordHasher = passwordHasher;
             _authenticationSettings = authenticationSettings;
         }
+
         public async Task<LoginUserCommandResponse> Handle(LoginUserCommand request, CancellationToken cancellationToken)
         {
             var validator = new LoginUserCommandValidator();
@@ -37,17 +33,17 @@ namespace Zygieldesk.Application.Functions.Account.Commands.LoginUser
             }
 
             var user = await _accountRepository.GetUserByEmail(request.Email);
-            if(user == null)
+            if (user == null)
             {
                 return new LoginUserCommandResponse("Invalid username or password", false);
             }
 
-           var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, request.Password);
-            if(result == PasswordVerificationResult.Failed)
+            var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, request.Password);
+            if (result == PasswordVerificationResult.Failed)
             {
                 return new LoginUserCommandResponse("Invalid username or password", false);
             }
-            var claims = new List<Claim>() 
+            var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),

@@ -1,17 +1,9 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Moq;
 using Shouldly;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Contracts.Persistance;
-using Zygieldesk.Application.Functions.Categories.Commands.CreateCategory;
 using Zygieldesk.Application.Functions.Tickets.Commands.CreateTicket;
 using Zygieldesk.Application.Mapper;
-using Zygieldesk.Application.Services;
 using Zygieldesk.UnitTests.Mocks;
 
 namespace Zygieldesk.UnitTests.Tickets.Commands
@@ -42,18 +34,16 @@ namespace Zygieldesk.UnitTests.Tickets.Commands
 
             var response = await handler.Handle(new CreateTicketCommand()
             {
-                
                 CategoryId = 1,
                 TicketTitle = "TestTitle",
                 TicketBody = "TestBody"
-                
             }, CancellationToken.None);
 
             var allTickets = await _mockTicketRepository.Object.GetAllAsync();
 
             response.Success.ShouldBe(true);
             response.ValidationErrors.Count.ShouldBe(0);
-            allTickets.Count.ShouldBe(allTicketsBeforeCount + 1);            
+            allTickets.Count.ShouldBe(allTicketsBeforeCount + 1);
         }
     }
 }

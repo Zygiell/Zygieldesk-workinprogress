@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Services;
 using Zygieldesk.Domain.Common;
 using Zygieldesk.Domain.Entities;
@@ -27,7 +22,7 @@ namespace Zygieldesk.Persistance
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            foreach(var entry in ChangeTracker.Entries<AuditableEntity>())
+            foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
             {
                 switch (entry.State)
                 {
@@ -35,12 +30,12 @@ namespace Zygieldesk.Persistance
                         entry.Entity.CreatedDate = DateTime.Now;
                         entry.Entity.CreatedByUserId = _userContextService.GetUserId;
                         break;
+
                     case EntityState.Modified:
                         entry.Entity.LastModifiedDate = DateTime.Now;
                         entry.Entity.LastModifiedByUserId = _userContextService.GetUserId;
                         break;
                 }
-
             }
             return base.SaveChangesAsync(cancellationToken);
         }

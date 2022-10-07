@@ -2,11 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Functions.Responses;
 using Zygieldesk.Application.Functions.TicketComments.Commands.CreateTicketComment;
 using Zygieldesk.Application.Functions.TicketComments.Commands.DeleteTicketComment;
@@ -14,7 +9,6 @@ using Zygieldesk.Application.Functions.TicketComments.Commands.UpdateTicketComme
 using Zygieldesk.Application.Functions.TicketComments.Queries.GetAllTicketsComments;
 using Zygieldesk.Application.Functions.TicketComments.Queries.GetTicketCommentsList;
 using Zygieldesk.Application.Functions.TicketComments.Queries.GetTicketCommetById;
-using Zygieldesk.Application.Functions.Tickets.Commands.CreateTicket;
 
 namespace Zygieldesk.API.Controllers
 {
@@ -30,10 +24,9 @@ namespace Zygieldesk.API.Controllers
             _mediator = mediator;
         }
 
-
         [HttpPut]
         [SwaggerOperation(Summary = "Updates existing ticket comment")]
-        public async Task<ActionResult> UpdateTicketComment([FromBody]UpdateTicketCommentCommand updateTicketCommentCommand)
+        public async Task<ActionResult> UpdateTicketComment([FromBody] UpdateTicketCommentCommand updateTicketCommentCommand)
         {
             var ticketCommentWasFound = await _mediator.Send(updateTicketCommentCommand);
             if (ticketCommentWasFound.ValidationErrors.Any())
@@ -71,7 +64,7 @@ namespace Zygieldesk.API.Controllers
 
         [HttpPost]
         [SwaggerOperation(Summary = "Creates new ticket comment.")]
-        public async Task<ActionResult<CreateTicketCommentCommandResponse>> CreateTicketComment([FromBody]CreateTicketCommentCommand dto)
+        public async Task<ActionResult<CreateTicketCommentCommandResponse>> CreateTicketComment([FromBody] CreateTicketCommentCommand dto)
         {
             var response = await _mediator.Send(dto);
             if (response.ValidationErrors.Any())
@@ -90,7 +83,6 @@ namespace Zygieldesk.API.Controllers
             return Ok(response.TicketCommentId);
         }
 
-
         [HttpGet]
         [SwaggerOperation(Summary = "Returns all ticket comments from database.")]
         public async Task<ActionResult<List<TicketCommentViewModel>>> GetAllTicketComments()
@@ -100,19 +92,17 @@ namespace Zygieldesk.API.Controllers
             return Ok(ticketCommentsList);
         }
 
-
         [HttpGet("ticket/{ticketId}")]
         [SwaggerOperation(Summary = "Returns all ticket comments associated with {ticketId}.")]
         public async Task<ActionResult<List<TicketCommentListViewModel>>> GetTicketCommentsFromTicket(int ticketId)
         {
-            var ticketCommentsListViewModel = await _mediator.Send(new GetTicketCommentListFromTicketQuery() { TicketId = ticketId});
+            var ticketCommentsListViewModel = await _mediator.Send(new GetTicketCommentListFromTicketQuery() { TicketId = ticketId });
 
             return Ok(ticketCommentsListViewModel);
         }
 
         [HttpGet("{id}")]
         [SwaggerOperation(Summary = "Returns ticket comment found by {id}.")]
-
         public async Task<ActionResult<TicketCommentViewModel>> GetTicketCommentById(int id)
         {
             var ticketComment = await _mediator.Send(new GetTicketCommentByIdQuery() { TicketCommentId = id });

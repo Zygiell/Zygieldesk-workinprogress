@@ -1,9 +1,4 @@
 ﻿using FluentValidation.Results;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Functions.Responses;
 
 namespace Zygieldesk.Application.Functions.Categories.Commands.CreateCategory
@@ -11,6 +6,7 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.CreateCategory
     public class CreatedCategoryCommandResponse : BaseResponse
     {
         public int? CategoryId { get; set; }
+
         public CreatedCategoryCommandResponse()
         {
         }
@@ -26,6 +22,7 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.CreateCategory
         public CreatedCategoryCommandResponse(string message, bool success) : base(message, success)
         {
         }
+
         public CreatedCategoryCommandResponse(int categoryId)
         {
             CategoryId = categoryId;

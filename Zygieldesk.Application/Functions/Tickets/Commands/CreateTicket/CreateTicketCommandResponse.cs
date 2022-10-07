@@ -1,9 +1,4 @@
 ﻿using FluentValidation.Results;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Functions.Responses;
 
 namespace Zygieldesk.Application.Functions.Tickets.Commands.CreateTicket
@@ -11,6 +6,7 @@ namespace Zygieldesk.Application.Functions.Tickets.Commands.CreateTicket
     public class CreateTicketCommandResponse : BaseResponse
     {
         public int TicketId { get; set; }
+
         public CreateTicketCommandResponse()
         {
         }
@@ -26,6 +22,7 @@ namespace Zygieldesk.Application.Functions.Tickets.Commands.CreateTicket
         public CreateTicketCommandResponse(string message, bool success) : base(message, success)
         {
         }
+
         public CreateTicketCommandResponse(int ticketId)
         {
             TicketId = ticketId;

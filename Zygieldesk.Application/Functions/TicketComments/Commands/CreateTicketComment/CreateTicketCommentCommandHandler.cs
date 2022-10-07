@@ -1,14 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Authorization;
 using Zygieldesk.Application.Contracts.Persistance;
-using Zygieldesk.Application.Functions.Categories.Commands.CreateCategory;
 using Zygieldesk.Application.Functions.Responses;
 using Zygieldesk.Application.Services;
 using Zygieldesk.Domain.Entities;
@@ -32,6 +26,7 @@ namespace Zygieldesk.Application.Functions.TicketComments.Commands.CreateTicketC
             _authorizationService = authorizationService;
             _userContextService = userContextService;
         }
+
         public async Task<CreateTicketCommentCommandResponse> Handle(CreateTicketCommentCommand request, CancellationToken cancellationToken)
         {
             var validator = new CreateTicketCommentCommandValidator();
@@ -43,7 +38,7 @@ namespace Zygieldesk.Application.Functions.TicketComments.Commands.CreateTicketC
             }
 
             var ticket = await _ticketRepository.GetByIdAsync(request.TicketId);
-            if(ticket == null)
+            if (ticket == null)
             {
                 return new CreateTicketCommentCommandResponse(ResponseStatus.NotFound, $"Ticket id {request.TicketId} you are trying to comment does not exist",
                     validationResult);
@@ -56,7 +51,6 @@ namespace Zygieldesk.Application.Functions.TicketComments.Commands.CreateTicketC
             {
                 return new CreateTicketCommentCommandResponse(ResponseStatus.Forbidden, "Forbidden", validationResult);
             }
-
 
             var ticketComment = _mapper.Map<TicketComment>(request);
             ticketComment = await _ticketCommentRepository.AddAsync(ticketComment);

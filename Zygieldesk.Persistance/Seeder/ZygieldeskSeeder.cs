@@ -1,10 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Domain.Entities;
 
 namespace Zygieldesk.Persistance.Seeder
@@ -22,7 +17,7 @@ namespace Zygieldesk.Persistance.Seeder
 
         public async Task Seed()
         {
-            if(await _dbContext.Database.CanConnectAsync())
+            if (await _dbContext.Database.CanConnectAsync())
             {
                 if (!_dbContext.Categories.Any())
                 {
@@ -37,7 +32,7 @@ namespace Zygieldesk.Persistance.Seeder
                     await _dbContext.Roles.AddRangeAsync(roles);
                     await _dbContext.SaveChangesAsync();
                 }
-                if(!_dbContext.Roles.Any(r=>r.Name == "Admin"))
+                if (!_dbContext.Roles.Any(r => r.Name == "Admin"))
                 {
                     var roles = GetRoles();
                     var adminRole = roles.FirstOrDefault(r => r.Name == "Admin");
@@ -46,7 +41,7 @@ namespace Zygieldesk.Persistance.Seeder
                 }
                 if (!_dbContext.Users.Any(u => u.Role.Name == "Admin"))
                 {
-                    if(_dbContext.Users.Any(u=>u.Email == "admin@admin.com"))
+                    if (_dbContext.Users.Any(u => u.Email == "admin@admin.com"))
                     {
                         var brickedAdminAccount = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == "admin@admin.com");
                         _dbContext.Remove(brickedAdminAccount);
@@ -58,25 +53,27 @@ namespace Zygieldesk.Persistance.Seeder
                 }
             }
         }
+
         private IEnumerable<Role> GetRoles()
         {
             var roles = new List<Role>()
             {
                 new Role()
-                {                    
+                {
                     Name = "User"
                 },
                 new Role()
-                {                    
+                {
                     Name = "Support"
                 },
                 new Role()
-                {                    
+                {
                     Name = "Admin"
                 }
             };
             return roles;
         }
+
         private IEnumerable<Category> GetCategories()
         {
             var categories = new List<Category>()
@@ -85,7 +82,7 @@ namespace Zygieldesk.Persistance.Seeder
                 {
                     Name = "Account",
                     Description = "Issues with account",
-                    CreatedDate = DateTime.Now,                    
+                    CreatedDate = DateTime.Now,
                     Tickets = new List<Ticket>()
                     {
                         new Ticket()
@@ -93,25 +90,24 @@ namespace Zygieldesk.Persistance.Seeder
                             TicketTitle = "Dummy ticket",
                             TicketBody = "Lorem ipsum dolor dummy ticket body",
                             Status = TicketStatus.Open,
-                            CreatedDate= DateTime.Now,                            
+                            CreatedDate= DateTime.Now,
                             TicketComments = new List<TicketComment>()
                             {
                                 new TicketComment()
                                 {
                                     CommentBody = "Dummy body",
-                                    CreatedDate = DateTime.Now                                  
+                                    CreatedDate = DateTime.Now
                                 },
                                 new TicketComment()
                                 {
                                     CommentBody = "Dummy body2",
-                                    CreatedDate = DateTime.Now                                    
+                                    CreatedDate = DateTime.Now
                                 },
                                 new TicketComment()
                                 {
                                     CommentBody = "Dummy body3",
                                     CreatedDate = DateTime.Now
                                 }
-
                             }
                         },
                         new Ticket()
@@ -137,7 +133,6 @@ namespace Zygieldesk.Persistance.Seeder
                                     CommentBody = "Dummy body3",
                                     CreatedDate = DateTime.Now
                                 }
-
                             }
                         }
                     }
@@ -172,7 +167,6 @@ namespace Zygieldesk.Persistance.Seeder
                                     CommentBody = "Dummy body3",
                                     CreatedDate = DateTime.Now
                                 }
-
                             }
                         },
                         new Ticket()
@@ -198,7 +192,6 @@ namespace Zygieldesk.Persistance.Seeder
                                     CommentBody = "Dummy body3",
                                     CreatedDate = DateTime.Now
                                 }
-
                             }
                         }
                     }
@@ -233,7 +226,6 @@ namespace Zygieldesk.Persistance.Seeder
                                     CommentBody = "Dummy body3",
                                     CreatedDate = DateTime.Now
                                 }
-
                             }
                         },
                         new Ticket()
@@ -259,16 +251,15 @@ namespace Zygieldesk.Persistance.Seeder
                                     CommentBody = "Dummy body3",
                                     CreatedDate = DateTime.Now
                                 }
-
                             }
                         }
                     }
                 }
             };
 
-
             return categories;
         }
+
         private async Task<User> GetAdminAccount()
         {
             var adminRole = await _dbContext.Roles.FirstOrDefaultAsync(r => r.Name == "Admin");

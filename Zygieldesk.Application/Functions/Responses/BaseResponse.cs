@@ -1,9 +1,4 @@
 ﻿using FluentValidation.Results;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Zygieldesk.Application.Functions.Responses
 {
@@ -42,13 +37,14 @@ namespace Zygieldesk.Application.Functions.Responses
             {
                 ValidationErrors.Add(item.ErrorMessage);
             }
-
         }
+
         public BaseResponse(ResponseStatus status, string message)
         {
             Status = status;
             Message = message;
         }
+
         public BaseResponse(ResponseStatus status, string message, ValidationResult validationResult)
         {
             Status = status;

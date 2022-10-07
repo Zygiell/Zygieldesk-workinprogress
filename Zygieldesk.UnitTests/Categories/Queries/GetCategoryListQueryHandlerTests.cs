@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
 using Moq;
 using Shouldly;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Contracts.Persistance;
 using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryList;
 using Zygieldesk.Application.Mapper;
@@ -17,6 +12,7 @@ namespace Zygieldesk.UnitTests.Categories.Queries
     {
         private readonly IMapper _mapper;
         private readonly Mock<ICategoryRepository> _mockCategoryRepository;
+
         public GetCategoryListQueryHandlerTests()
         {
             _mockCategoryRepository = RepositoryMocks.GetCategoryRepository();
