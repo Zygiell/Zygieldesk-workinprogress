@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Zygieldesk.Application.Contracts.Persistance;
+using Zygieldesk.Application.Exceptions;
 using Zygieldesk.Application.Functions.Tickets.Queries.GetTicketById;
 
 namespace Zygieldesk.Application.Functions.TicketComments.Queries.GetTicketCommetById
@@ -23,6 +24,10 @@ namespace Zygieldesk.Application.Functions.TicketComments.Queries.GetTicketComme
         public async Task<TicketCommentViewModel> Handle(GetTicketCommentByIdQuery request, CancellationToken cancellationToken)
         {
             var ticketComment = await _ticketCommentRepository.GetByIdAsync(request.TicketCommentId);
+            if (ticketComment == null)
+            {
+                throw new NotFoundException($"Ticket comment with {request.TicketCommentId} id does not exist.");
+            }
 
             return _mapper.Map<TicketCommentViewModel>(ticketComment);
         }
