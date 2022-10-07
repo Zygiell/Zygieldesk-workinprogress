@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Moq;
 using Shouldly;
 using System;
@@ -10,6 +11,7 @@ using Zygieldesk.Application.Contracts.Persistance;
 using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryList;
 using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryWithTickets;
 using Zygieldesk.Application.Mapper;
+using Zygieldesk.Application.Services;
 using Zygieldesk.Domain.Entities;
 using Zygieldesk.UnitTests.Mocks;
 
@@ -19,10 +21,14 @@ namespace Zygieldesk.UnitTests.Categories.Queries
     {
         private readonly IMapper _mapper;
         private readonly Mock<ICategoryRepository> _mockCategoryRepository;
+        private readonly Mock<IAuthorizationService> _mockAuthorizationService;
+        private readonly Mock<IUserContextService> _mockUserContextService;
 
         public GetCategoryWithTicketsQueryHandlerTests()
         {
             _mockCategoryRepository = RepositoryMocks.GetCategoryRepository();
+            _mockAuthorizationService = ServiceMocks.GetAuthorizationService();
+            _mockUserContextService = ServiceMocks.GetUserContextService();
 
             var configuration = new MapperConfiguration(cfg =>
             {
@@ -37,7 +43,8 @@ namespace Zygieldesk.UnitTests.Categories.Queries
         {
             var query = new GetCategoryWithTicketsQuery();
             query.CategoryId = 1;
-            var handler = new GetCategoryWithTicketsQueryHandler(_mapper, _mockCategoryRepository.Object);
+            var handler = new GetCategoryWithTicketsQueryHandler(_mapper, _mockCategoryRepository.Object,
+                _mockAuthorizationService.Object, _mockUserContextService.Object);
             var result = await handler.Handle(query, CancellationToken.None);
 
             query.CategoryId = 2;
