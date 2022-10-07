@@ -52,11 +52,6 @@ namespace Zygieldesk.API.Controllers
         {
             var dto = await _mediator.Send(new GetCategoryWithTicketsQuery { CategoryId = id });
 
-            if(dto == null)
-            {
-                return NotFound($"Category with {id} id does not exist");
-            }
-
             return Ok(dto);
         }
 

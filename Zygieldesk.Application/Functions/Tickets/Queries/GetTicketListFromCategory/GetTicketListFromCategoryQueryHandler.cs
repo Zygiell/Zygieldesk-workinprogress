@@ -6,7 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Zygieldesk.Application.Contracts.Persistance;
+using Zygieldesk.Application.Exceptions;
 using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryList;
+using Zygieldesk.Domain.Entities;
 
 namespace Zygieldesk.Application.Functions.Tickets.Queries.GetTicketList
 {
@@ -26,7 +28,7 @@ namespace Zygieldesk.Application.Functions.Tickets.Queries.GetTicketList
             var tickets = await _ticketRepository.GetAllTicketsFromCategoryAsync(request.CategoryId);
             if(tickets == null)
             {
-                return null;
+                throw new NotFoundException($"Category with {request.CategoryId} id does not exist.");
             }
 
             return _mapper.Map<List<TicketListViewModel>>(tickets);

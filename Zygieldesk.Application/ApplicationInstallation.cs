@@ -12,6 +12,7 @@ using Zygieldesk.Application.Authorization;
 using Zygieldesk.Application.Authentication;
 using Zygieldesk.Domain.Entities;
 using Zygieldesk.Application.Services;
+using Zygieldesk.Application.Middlewares;
 
 namespace Zygieldesk.Application
 {
@@ -24,6 +25,7 @@ namespace Zygieldesk.Application
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddScoped<IUserContextService, UserContextService>();
+            services.AddScoped<ErrorHandlingMiddleware>();
             services.AddHttpContextAccessor();
 
             return services;

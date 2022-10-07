@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Zygieldesk.Application.Contracts.Persistance;
+using Zygieldesk.Application.Exceptions;
 using Zygieldesk.Application.Functions.Tickets.Queries.GetTicketList;
 
 namespace Zygieldesk.Application.Functions.TicketComments.Queries.GetTicketCommentsList
@@ -26,7 +27,7 @@ namespace Zygieldesk.Application.Functions.TicketComments.Queries.GetTicketComme
 
             if (ticketComments== null)
             {
-                return null;
+                throw new NotFoundException($"Ticket with {request.TicketId} id does not exist.");
             }
 
             return _mapper.Map<List<TicketCommentListViewModel>>(ticketComments);

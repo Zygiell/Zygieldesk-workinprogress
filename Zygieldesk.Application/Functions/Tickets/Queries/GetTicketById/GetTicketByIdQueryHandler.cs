@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Zygieldesk.Application.Contracts.Persistance;
+using Zygieldesk.Application.Exceptions;
 using Zygieldesk.Domain.Entities;
 
 namespace Zygieldesk.Application.Functions.Tickets.Queries.GetTicketById
@@ -24,6 +25,10 @@ namespace Zygieldesk.Application.Functions.Tickets.Queries.GetTicketById
         public async Task<TicketViewModel> Handle(GetTicketByIdQuery request, CancellationToken cancellationToken)
         {
             var ticket = await _ticketRepository.GetByIdAsync(request.TicketId);
+            if (ticket == null)
+            {
+                throw new NotFoundException($"Ticket with {request.TicketId} id does not exist.");
+            }
             
 
             return _mapper.Map<TicketViewModel>(ticket);

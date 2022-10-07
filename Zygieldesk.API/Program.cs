@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Zygieldesk.Application;
 using Zygieldesk.Application.Authentication;
+using Zygieldesk.Application.Middlewares;
 using Zygieldesk.Persistance;
 using Zygieldesk.Persistance.Seeder;
 
@@ -67,6 +68,7 @@ app.UseCors("Open");
 seeder.Seed();
 
 app.UseAuthentication();
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 

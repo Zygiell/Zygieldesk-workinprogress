@@ -107,10 +107,6 @@ namespace Zygieldesk.API.Controllers
         public async Task<ActionResult<List<CategoryListViewModel>>> GetAllTicketsFromCategory(int categoryId)
         {
             var ticketsListViewModel = await _mediator.Send(new GetTicketListFromCategoryQuery() { CategoryId = categoryId});
-            if(ticketsListViewModel == null)
-            {
-                return NotFound($"Category with {categoryId} id does not exist.");
-            }
 
             return Ok(ticketsListViewModel);
         }
@@ -125,10 +121,6 @@ namespace Zygieldesk.API.Controllers
         public async Task<ActionResult<TicketViewModel>> GetTicketById(int id)
         {
             var ticket = await _mediator.Send(new GetTicketByIdQuery() { TicketId = id });
-            if(ticket == null)
-            {
-                return NotFound($"Ticket with {id} id does not exist.");
-            }
 
             return Ok(ticket);
         }
