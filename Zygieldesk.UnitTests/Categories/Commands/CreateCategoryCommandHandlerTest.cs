@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Moq;
 using Shouldly;
 using System;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 using Zygieldesk.Application.Contracts.Persistance;
 using Zygieldesk.Application.Functions.Categories.Commands.CreateCategory;
 using Zygieldesk.Application.Mapper;
+using Zygieldesk.Application.Services;
 using Zygieldesk.UnitTests.Mocks;
 
 namespace Zygieldesk.UnitTests.Categories.Commands
@@ -17,10 +19,14 @@ namespace Zygieldesk.UnitTests.Categories.Commands
     {
         private readonly IMapper _mapper;
         private readonly Mock<ICategoryRepository> _mockCategoryRepository;
+        private readonly Mock<IAuthorizationService> _mockAuthorizationService;
+        private readonly Mock<IUserContextService> _mockUserContextService;
 
         public CreateCategoryCommandHandlerTest()
         {
             _mockCategoryRepository = RepositoryMocks.GetCategoryRepository();
+            _mockAuthorizationService = ServiceMocks.GetAuthorizationService();
+            _mockUserContextService = ServiceMocks.GetUserContextService();
             var configurationProvider = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<MappingProfile>();
@@ -32,7 +38,8 @@ namespace Zygieldesk.UnitTests.Categories.Commands
         [Fact]
         public async Task Handle_ValidCategory_AddedToCategoriesRepo()
         {
-            var handler = new CreatedCategoryCommandHandler(_mapper, _mockCategoryRepository.Object);
+            var handler = new CreatedCategoryCommandHandler(_mapper, _mockCategoryRepository.Object,
+                _mockAuthorizationService.Object, _mockUserContextService.Object);
             var allCategoriesBeforeCount = (await _mockCategoryRepository.Object.GetAllAsync()).Count;
 
             var response = await handler.Handle(new CreatedCategoryCommand()

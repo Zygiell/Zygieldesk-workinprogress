@@ -13,6 +13,7 @@ using Zygieldesk.Application.Functions.Categories.Commands.DeleteCategory;
 using Zygieldesk.Application.Functions.Categories.Commands.UpdateCategory;
 using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryList;
 using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryWithTickets;
+using Zygieldesk.Application.Functions.Responses;
 
 namespace Zygieldesk.API.Controllers
 {
@@ -74,6 +75,10 @@ namespace Zygieldesk.API.Controllers
             {
                 return BadRequest(response.ValidationErrors);
             }
+            if (response.Status == ResponseStatus.Forbidden)
+            {
+                return StatusCode(403, response.Message);
+            }
 
             return Ok(response.CategoryId);
         }
@@ -88,16 +93,16 @@ namespace Zygieldesk.API.Controllers
         public async Task<ActionResult> UpdateCategory([FromBody] UpdateCategoryCommand updateCategoryCommand)
         {
             var categoryWasFound = await _mediator.Send(updateCategoryCommand);
+            if (categoryWasFound.Status == ResponseStatus.NotFound)
+            {
+                return NotFound(categoryWasFound.Message);
+            }
             if (categoryWasFound.ValidationErrors.Any())
             {
                 return BadRequest(categoryWasFound.ValidationErrors);
             }
 
-            if (!categoryWasFound.Success)
-            {
-                return NotFound(categoryWasFound.Message);
-            }
-            if (categoryWasFound.Message == "Forbidden")
+            if (categoryWasFound.Status == ResponseStatus.Forbidden)
             {
                 return StatusCode(403, categoryWasFound.Message);
             }
@@ -116,10 +121,15 @@ namespace Zygieldesk.API.Controllers
         {
             var deleteCategoryCommand = new DeleteCategoryCommand() { CategoryId=id };
             var categoryWasFound = await _mediator.Send(deleteCategoryCommand);
-            if (!categoryWasFound.Success)
+            if (categoryWasFound.Status == ResponseStatus.NotFound)
             {
                 return NotFound(categoryWasFound.Message);
             }
+            if (categoryWasFound.Status == ResponseStatus.Forbidden)
+            {
+                return StatusCode(403, categoryWasFound.Message);
+            }
+
             return NoContent();
         }
 

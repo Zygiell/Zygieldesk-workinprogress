@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Zygieldesk.Application.Authorization;
 using Zygieldesk.Application.Contracts.Persistance;
 using Zygieldesk.Application.Functions.Categories.Commands.CreateCategory;
+using Zygieldesk.Application.Functions.Responses;
 using Zygieldesk.Application.Services;
 using Zygieldesk.Domain.Entities;
 
@@ -45,14 +46,14 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.UpdateCategory
 
             if (categoryToUpdate == null)
             {
-                return new UpdateCategoryCommandResponse($"Category with {request.Id} id does not exist", false);
+                return new UpdateCategoryCommandResponse(ResponseStatus.NotFound ,$"Category with {request.Id} id does not exist");
             }
             var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, categoryToUpdate, 
                 new ResourceOperationRequirement(ResourceOperation.Update)).Result;
 
             if (!authorizationResult.Succeeded)
             {
-                return new UpdateCategoryCommandResponse("Forbidden");
+                return new UpdateCategoryCommandResponse(ResponseStatus.Forbidden, "Forbidden", validatorResult);
             }
 
             categoryToUpdate.Name = request.Name;
