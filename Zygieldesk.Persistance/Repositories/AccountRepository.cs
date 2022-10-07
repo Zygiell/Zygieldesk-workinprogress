@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Contracts.Persistance;
 using Zygieldesk.Domain.Entities;
 
@@ -17,7 +12,7 @@ namespace Zygieldesk.Persistance.Repositories
 
         public async Task<User> GetUserByEmail(string email)
         {
-            var user = await _dbContext.Users.Include(u=>u.Role).FirstOrDefaultAsync(u=> u.Email == email);
+            var user = await _dbContext.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Email == email);
             if (user == null)
             {
                 return null;
@@ -34,12 +29,11 @@ namespace Zygieldesk.Persistance.Repositories
         public async Task<bool> IsEmailAddressFree(string email)
         {
             var isEmailTaken = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
-            if(isEmailTaken == null)
+            if (isEmailTaken == null)
             {
                 return true;
             }
             return false;
         }
-
     }
 }

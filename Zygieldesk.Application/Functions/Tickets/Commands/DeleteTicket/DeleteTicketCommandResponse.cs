@@ -1,9 +1,4 @@
 ﻿using FluentValidation.Results;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Functions.Responses;
 
 namespace Zygieldesk.Application.Functions.Tickets.Commands.DeleteTicket
@@ -11,6 +6,7 @@ namespace Zygieldesk.Application.Functions.Tickets.Commands.DeleteTicket
     public class DeleteTicketCommandResponse : BaseResponse
     {
         public int TicketId { get; set; }
+
         public DeleteTicketCommandResponse()
         {
         }

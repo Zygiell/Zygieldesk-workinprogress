@@ -2,11 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Moq;
 using Shouldly;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Contracts.Persistance;
 using Zygieldesk.Application.Functions.TicketComments.Queries.GetAllTicketComments;
 using Zygieldesk.Application.Functions.TicketComments.Queries.GetAllTicketsComments;
@@ -35,6 +30,7 @@ namespace Zygieldesk.UnitTests.TicketComments.Queries
             });
             _mapper = configuration.CreateMapper();
         }
+
         [Fact]
         public async Task GetAllTicketComentsTests()
         {

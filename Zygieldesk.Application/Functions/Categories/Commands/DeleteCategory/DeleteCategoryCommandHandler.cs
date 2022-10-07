@@ -1,14 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Authorization;
 using Zygieldesk.Application.Contracts.Persistance;
-using Zygieldesk.Application.Functions.Categories.Commands.UpdateCategory;
 using Zygieldesk.Application.Functions.Responses;
 using Zygieldesk.Application.Services;
 
@@ -29,13 +23,14 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.DeleteCategory
             _authorizationService = authorizationService;
             _userContextService = userContextService;
         }
+
         public async Task<DeleteCategoryCommandResponse> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
         {
             var categoryToDelete = await _categoryRepository.GetByIdAsync(request.CategoryId);
 
             if (categoryToDelete == null)
             {
-                return new DeleteCategoryCommandResponse(ResponseStatus.NotFound ,$"Category with {request.CategoryId} id, do not exist");
+                return new DeleteCategoryCommandResponse(ResponseStatus.NotFound, $"Category with {request.CategoryId} id, do not exist");
             }
             var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, categoryToDelete,
                 new ResourceOperationRequirement(ResourceOperation.Delete)).Result;

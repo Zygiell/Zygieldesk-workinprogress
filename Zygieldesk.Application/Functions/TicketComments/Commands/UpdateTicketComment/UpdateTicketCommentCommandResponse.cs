@@ -1,9 +1,4 @@
 ﻿using FluentValidation.Results;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Functions.Responses;
 
 namespace Zygieldesk.Application.Functions.TicketComments.Commands.UpdateTicketComment
@@ -11,6 +6,7 @@ namespace Zygieldesk.Application.Functions.TicketComments.Commands.UpdateTicketC
     public class UpdateTicketCommentCommandResponse : BaseResponse
     {
         public int TicketCommentId { get; set; }
+
         public UpdateTicketCommentCommandResponse()
         {
         }
@@ -26,9 +22,10 @@ namespace Zygieldesk.Application.Functions.TicketComments.Commands.UpdateTicketC
         public UpdateTicketCommentCommandResponse(string message, bool success) : base(message, success)
         {
         }
+
         public UpdateTicketCommentCommandResponse(int ticketCommentId)
         {
-            TicketCommentId = ticketCommentId;  
+            TicketCommentId = ticketCommentId;
         }
 
         public UpdateTicketCommentCommandResponse(ResponseStatus status, string message) : base(status, message)

@@ -1,9 +1,4 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Zygieldesk.Application.Functions.Tickets.Commands.CreateTicket
 {
@@ -23,8 +18,6 @@ namespace Zygieldesk.Application.Functions.Tickets.Commands.CreateTicket
             RuleFor(t => t.TicketBody)
                 .NotEmpty()
                 .WithMessage("{PropertyName} cannot be empty");
-               
-
         }
     }
 }

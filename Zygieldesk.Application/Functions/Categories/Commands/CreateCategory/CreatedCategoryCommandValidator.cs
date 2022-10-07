@@ -1,9 +1,4 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Zygieldesk.Application.Functions.Categories.Commands.CreateCategory
 {
@@ -11,7 +6,7 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.CreateCategory
     {
         public CreatedCategoryCommandValidator()
         {
-            RuleFor(c=>c.Name)
+            RuleFor(c => c.Name)
                 .NotEmpty()
                 .MinimumLength(2)
                 .MaximumLength(15)
@@ -20,7 +15,6 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.CreateCategory
             RuleFor(c => c.Description)
                 .MaximumLength(300)
                 .WithMessage("{PropertyName} Maximum length is 300 characters");
-            
         }
     }
 }

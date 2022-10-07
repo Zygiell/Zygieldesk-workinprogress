@@ -2,17 +2,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Moq;
 using Shouldly;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Contracts.Persistance;
-using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryList;
 using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryWithTickets;
 using Zygieldesk.Application.Mapper;
 using Zygieldesk.Application.Services;
-using Zygieldesk.Domain.Entities;
 using Zygieldesk.UnitTests.Mocks;
 
 namespace Zygieldesk.UnitTests.Categories.Queries
@@ -64,8 +57,6 @@ namespace Zygieldesk.UnitTests.Categories.Queries
             result3.ShouldBeOfType<CategoryWithTitcketsViewModel>();
             result3.Tickets.Count.ShouldBe(3);
             result3.Tickets.ShouldBeOfType<List<CategoryTicketDto>>();
-
-
         }
     }
 }

@@ -2,11 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Moq;
 using Shouldly;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Contracts.Persistance;
 using Zygieldesk.Application.Functions.Tickets.Queries.GetTicketById;
 using Zygieldesk.Application.Mapper;
@@ -21,6 +16,7 @@ namespace Zygieldesk.UnitTests.Tickets.Queries
         private readonly Mock<ITicketRepository> _mockTicketRepository;
         private readonly Mock<IAuthorizationService> _mockAuthorizationService;
         private readonly Mock<IUserContextService> _mockUserContextService;
+
         public GetTicketByIdQueryHandlerTests()
         {
             _mockTicketRepository = RepositoryMocks.GetTicketRepository();
@@ -51,8 +47,6 @@ namespace Zygieldesk.UnitTests.Tickets.Queries
             result2.Result.Id.ShouldBe(4);
             result2.Result.ShouldBeOfType<TicketViewModel>();
             result2.Result.CategoryId.ShouldBe(2);
-
-
         }
     }
 }

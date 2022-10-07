@@ -1,20 +1,11 @@
 ﻿using AutoMapper;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Moq;
 using Shouldly;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Contracts.Persistance;
-using Zygieldesk.Application.Functions.Categories.Commands.CreateCategory;
 using Zygieldesk.Application.Functions.Categories.Commands.DeleteCategory;
-using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryList;
 using Zygieldesk.Application.Mapper;
 using Zygieldesk.Application.Services;
-using Zygieldesk.Domain.Entities;
 using Zygieldesk.UnitTests.Mocks;
 
 namespace Zygieldesk.UnitTests.Categories.Commands
@@ -50,9 +41,6 @@ namespace Zygieldesk.UnitTests.Categories.Commands
 
             result.ShouldBeOfType<DeleteCategoryCommandResponse>();
             allCategories.Count.ShouldBe(2);
-
-
         }
-
     }
 }

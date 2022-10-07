@@ -1,17 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Authorization;
 using Zygieldesk.Application.Contracts.Persistance;
-using Zygieldesk.Application.Functions.Categories.Commands.CreateCategory;
 using Zygieldesk.Application.Functions.Responses;
 using Zygieldesk.Application.Services;
-using Zygieldesk.Domain.Entities;
 
 namespace Zygieldesk.Application.Functions.Categories.Commands.UpdateCategory
 {
@@ -31,7 +24,6 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.UpdateCategory
             _userContextService = userContextService;
         }
 
-
         public async Task<UpdateCategoryCommandResponse> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
         {
             var validator = new UpdateCategoryCommandValidator();
@@ -46,9 +38,9 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.UpdateCategory
 
             if (categoryToUpdate == null)
             {
-                return new UpdateCategoryCommandResponse(ResponseStatus.NotFound ,$"Category with {request.Id} id does not exist");
+                return new UpdateCategoryCommandResponse(ResponseStatus.NotFound, $"Category with {request.Id} id does not exist");
             }
-            var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, categoryToUpdate, 
+            var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, categoryToUpdate,
                 new ResourceOperationRequirement(ResourceOperation.Update)).Result;
 
             if (!authorizationResult.Succeeded)
@@ -57,13 +49,11 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.UpdateCategory
             }
 
             categoryToUpdate.Name = request.Name;
-            categoryToUpdate.Description = request.Description;            
-            
+            categoryToUpdate.Description = request.Description;
+
             await _categoryRepository.UpdateAsync(categoryToUpdate);
 
             return new UpdateCategoryCommandResponse("Category successfully updated", true);
-
-
         }
     }
 }

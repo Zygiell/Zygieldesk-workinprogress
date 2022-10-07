@@ -1,18 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Authorization;
 using Zygieldesk.Application.Contracts.Persistance;
 using Zygieldesk.Application.Exceptions;
-using Zygieldesk.Application.Functions.Categories.Commands.CreateCategory;
-using Zygieldesk.Application.Functions.Responses;
 using Zygieldesk.Application.Services;
-using Zygieldesk.Domain.Entities;
 
 namespace Zygieldesk.Application.Functions.Categories.Queries.GetCategoryWithTickets
 {
@@ -31,10 +23,11 @@ namespace Zygieldesk.Application.Functions.Categories.Queries.GetCategoryWithTic
             _authorizationService = authorizationService;
             _userContextService = userContextService;
         }
+
         public async Task<CategoryWithTitcketsViewModel> Handle(GetCategoryWithTicketsQuery request, CancellationToken cancellationToken)
         {
             var category = await _categoryRepository.GetCategoryWithTickets(request.CategoryId);
-            if(category == null)
+            if (category == null)
             {
                 throw new NotFoundException($"Category with {request.CategoryId} id does not exist");
             }
@@ -47,9 +40,8 @@ namespace Zygieldesk.Application.Functions.Categories.Queries.GetCategoryWithTic
 
             var mappedTicketsList = new List<CategoryTicketDto>();
 
-            foreach(var ticket in category.Tickets)            
+            foreach (var ticket in category.Tickets)
             {
-                
                 mappedTicketsList.Add(_mapper.Map<CategoryTicketDto>(ticket));
             }
             var mappedCategory = _mapper.Map<CategoryWithTitcketsViewModel>(category);
@@ -57,6 +49,5 @@ namespace Zygieldesk.Application.Functions.Categories.Queries.GetCategoryWithTic
 
             return mappedCategory;
         }
-
     }
 }

@@ -1,17 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Authorization;
 using Zygieldesk.Application.Contracts.Persistance;
 using Zygieldesk.Application.Functions.Responses;
-using Zygieldesk.Application.Functions.TicketComments.Commands.CreateTicketComment;
 using Zygieldesk.Application.Services;
-using Zygieldesk.Domain.Entities;
 
 namespace Zygieldesk.Application.Functions.TicketComments.Commands.DeleteTicketComment
 {
@@ -30,11 +23,12 @@ namespace Zygieldesk.Application.Functions.TicketComments.Commands.DeleteTicketC
             _authorizationService = authorizationService;
             _userContextService = userContextService;
         }
+
         public async Task<DeleteTicketCommentCommandResponse> Handle(DeleteTicketCommentCommand request, CancellationToken cancellationToken)
         {
             var ticketCommentToDelete = await _ticketCommentRepository.GetByIdAsync(request.TicketCommentId);
 
-            if(ticketCommentToDelete == null)
+            if (ticketCommentToDelete == null)
             {
                 return new DeleteTicketCommentCommandResponse($"Ticket with {request.TicketCommentId} id, does not exist", false);
             }

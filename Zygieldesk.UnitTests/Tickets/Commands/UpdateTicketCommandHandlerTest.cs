@@ -2,11 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Moq;
 using Shouldly;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Contracts.Persistance;
 using Zygieldesk.Application.Functions.Tickets.Commands.UpdateTicket;
 using Zygieldesk.Application.Mapper;
@@ -21,6 +16,7 @@ namespace Zygieldesk.UnitTests.Tickets.Commands
         private readonly Mock<ITicketRepository> _mockTicketRepository;
         private readonly Mock<IAuthorizationService> _mockAuthorizationService;
         private readonly Mock<IUserContextService> _mockUserContextService;
+
         public UpdateTicketCommandHandlerTest()
         {
             _mockTicketRepository = RepositoryMocks.GetTicketRepository();
@@ -43,7 +39,6 @@ namespace Zygieldesk.UnitTests.Tickets.Commands
 
             result.ShouldBeOfType<UpdateTicketCommandResponse>();
             ticketToUpdate.TicketTitle.ShouldBe("New name");
-
         }
     }
 }

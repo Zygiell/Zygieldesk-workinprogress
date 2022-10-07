@@ -2,17 +2,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Authorization;
-using Zygieldesk.Application.Authentication;
-using Zygieldesk.Domain.Entities;
-using Zygieldesk.Application.Services;
 using Zygieldesk.Application.Middlewares;
+using Zygieldesk.Application.Services;
+using Zygieldesk.Domain.Entities;
 
 namespace Zygieldesk.Application
 {

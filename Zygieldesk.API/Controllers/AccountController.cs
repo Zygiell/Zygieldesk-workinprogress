@@ -2,11 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Functions.Account.Commands.AddUser;
 using Zygieldesk.Application.Functions.Account.Commands.LoginUser;
 
@@ -27,7 +22,7 @@ namespace Zygieldesk.API.Controllers
         [HttpPost("login")]
         [SwaggerOperation(Summary = "Login to user account.")]
         [AllowAnonymous]
-        public async Task<ActionResult<LoginUserCommandResponse>> Login([FromBody]LoginUserCommand loginUserCommand)
+        public async Task<ActionResult<LoginUserCommandResponse>> Login([FromBody] LoginUserCommand loginUserCommand)
         {
             var response = await _mediator.Send(loginUserCommand);
             if (response.ValidationErrors.Any())
@@ -42,14 +37,13 @@ namespace Zygieldesk.API.Controllers
             return Ok(response.Message);
         }
 
-
         [HttpPost("register")]
         [SwaggerOperation(Summary = "Register new user account.")]
         [AllowAnonymous]
-        public async Task<ActionResult<CreateUserCommandResponse>> CreateUserAccount([FromBody]CreateUserCommand dto)
+        public async Task<ActionResult<CreateUserCommandResponse>> CreateUserAccount([FromBody] CreateUserCommand dto)
         {
             var response = await _mediator.Send(dto);
-            if(response.ValidationErrors.Any())
+            if (response.ValidationErrors.Any())
             {
                 return BadRequest(response.ValidationErrors);
             }
@@ -61,7 +55,5 @@ namespace Zygieldesk.API.Controllers
 
             return Ok(response.Message);
         }
-
-
     }
 }

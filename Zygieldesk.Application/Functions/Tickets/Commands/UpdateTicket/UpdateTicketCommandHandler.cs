@@ -1,17 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Authorization;
 using Zygieldesk.Application.Contracts.Persistance;
-using Zygieldesk.Application.Functions.Categories.Commands.CreateCategory;
 using Zygieldesk.Application.Functions.Responses;
 using Zygieldesk.Application.Services;
-using Zygieldesk.Domain.Entities;
 
 namespace Zygieldesk.Application.Functions.Tickets.Commands.UpdateTicket
 {
@@ -30,6 +23,7 @@ namespace Zygieldesk.Application.Functions.Tickets.Commands.UpdateTicket
             _authorizationService = authorizationService;
             _userContextService = userContextService;
         }
+
         public async Task<UpdateTicketCommandResponse> Handle(UpdateTicketCommand request, CancellationToken cancellationToken)
         {
             var validator = new UpdateTicketCommandValidator();
@@ -41,7 +35,7 @@ namespace Zygieldesk.Application.Functions.Tickets.Commands.UpdateTicket
             }
 
             var ticketToUpdate = await _ticketRepository.GetByIdAsync(request.TicketId);
-            if(ticketToUpdate == null)
+            if (ticketToUpdate == null)
             {
                 return new UpdateTicketCommandResponse(ResponseStatus.NotFound, $"Ticket with {request.TicketId} id, does not exist", validatorResult);
             }
@@ -58,8 +52,6 @@ namespace Zygieldesk.Application.Functions.Tickets.Commands.UpdateTicket
             await _ticketRepository.UpdateAsync(ticketToUpdate);
 
             return new UpdateTicketCommandResponse("Ticket successfully updated", true);
-
-
         }
     }
 }

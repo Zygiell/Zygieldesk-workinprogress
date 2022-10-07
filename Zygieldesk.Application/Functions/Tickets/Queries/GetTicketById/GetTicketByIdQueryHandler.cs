@@ -1,18 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Authorization;
 using Zygieldesk.Application.Contracts.Persistance;
 using Zygieldesk.Application.Exceptions;
-using Zygieldesk.Application.Functions.Categories.Commands.CreateCategory;
-using Zygieldesk.Application.Functions.Responses;
 using Zygieldesk.Application.Services;
-using Zygieldesk.Domain.Entities;
 
 namespace Zygieldesk.Application.Functions.Tickets.Queries.GetTicketById
 {
@@ -31,6 +23,7 @@ namespace Zygieldesk.Application.Functions.Tickets.Queries.GetTicketById
             _authorizationService = authorizationService;
             _userContextService = userContextService;
         }
+
         public async Task<TicketViewModel> Handle(GetTicketByIdQuery request, CancellationToken cancellationToken)
         {
             var ticket = await _ticketRepository.GetByIdAsync(request.TicketId);
@@ -46,9 +39,7 @@ namespace Zygieldesk.Application.Functions.Tickets.Queries.GetTicketById
                 throw new ForbiddenException("Forbidden");
             }
 
-
             return _mapper.Map<TicketViewModel>(ticket);
-
         }
     }
 }

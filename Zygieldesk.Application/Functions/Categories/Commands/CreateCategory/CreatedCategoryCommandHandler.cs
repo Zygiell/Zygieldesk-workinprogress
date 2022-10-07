@@ -1,14 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Authorization;
 using Zygieldesk.Application.Contracts.Persistance;
-using Zygieldesk.Application.Functions.Categories.Commands.UpdateCategory;
 using Zygieldesk.Application.Functions.Responses;
 using Zygieldesk.Application.Services;
 using Zygieldesk.Domain.Entities;
@@ -30,6 +24,7 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.CreateCategory
             _authorizationService = authorizationService;
             _userContextService = userContextService;
         }
+
         public async Task<CreatedCategoryCommandResponse> Handle(CreatedCategoryCommand request, CancellationToken cancellationToken)
         {
             var validator = new CreatedCategoryCommandValidator();
@@ -46,7 +41,7 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.CreateCategory
 
             if (!authorizationResult.Succeeded)
             {
-                return new CreatedCategoryCommandResponse(ResponseStatus.Forbidden, "Forbidden",validatorResult);
+                return new CreatedCategoryCommandResponse(ResponseStatus.Forbidden, "Forbidden", validatorResult);
             }
 
             category = await _categoryRepository.AddAsync(category);

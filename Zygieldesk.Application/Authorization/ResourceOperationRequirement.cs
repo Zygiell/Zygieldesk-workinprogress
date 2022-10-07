@@ -1,9 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Zygieldesk.Application.Authorization
 {
@@ -15,9 +10,11 @@ namespace Zygieldesk.Application.Authorization
         Delete,
         Reply
     }
+
     public class ResourceOperationRequirement : IAuthorizationRequirement
     {
         public ResourceOperation ResourceOperation { get; set; }
+
         public ResourceOperationRequirement(ResourceOperation resourceOperation)
         {
             ResourceOperation = resourceOperation;

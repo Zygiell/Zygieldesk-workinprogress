@@ -1,10 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Zygieldesk.Application.Services
 {
@@ -16,6 +11,7 @@ namespace Zygieldesk.Application.Services
         {
             _httpContextAccessor = httpContextAccessor;
         }
+
         public int? GetUserId => User is null ? null : (int?)int.Parse(User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
         public ClaimsPrincipal User => _httpContextAccessor.HttpContext?.User;
