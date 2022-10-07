@@ -14,8 +14,8 @@
  7. Launch project
  8. Every function from master branch should be working with SwaggerUI or any other app eg. Postman
  9. To be authorized for every single function, make sure you are logged in to admin account:
- ```login: admin@admin.com
- ```password : admin
+ ``login: admin@admin.com
+ password : admin``
  You can do so by using login method on SwaggerUI/any other app like Postman.
  Than with SwaggerUI paste jwtToken to Value field in Authorize function located on top right.
  With apps like Postman, add Authorize header with "Bearer jwtToken".
