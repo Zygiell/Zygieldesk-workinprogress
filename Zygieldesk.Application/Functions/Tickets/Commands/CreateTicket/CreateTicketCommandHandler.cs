@@ -40,6 +40,7 @@ namespace Zygieldesk.Application.Functions.Tickets.Commands.CreateTicket
             }
 
             var ticket = _mapper.Map<Ticket>(request);
+            ticket.Status = TicketStatus.Open;
 
             ticket = await _ticketRepository.AddAsync(ticket);
 

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Zygieldesk.Application.Functions.Categories.Commands.CreateCategory;
 using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryList;
+using Zygieldesk.Application.Functions.Responses;
 using Zygieldesk.Application.Functions.Tickets.Commands.CreateTicket;
 using Zygieldesk.Application.Functions.Tickets.Commands.DeleteTicket;
 using Zygieldesk.Application.Functions.Tickets.Commands.UpdateTicket;
@@ -46,9 +47,13 @@ namespace Zygieldesk.API.Controllers
                 return BadRequest(ticketWasFound.ValidationErrors);
             }
 
-            if (!ticketWasFound.Success)
+            if (ticketWasFound.Status == ResponseStatus.NotFound)
             {
                 return NotFound(ticketWasFound.Message);
+            }
+            if (ticketWasFound.Status == ResponseStatus.Forbidden)
+            {
+                return StatusCode(403, ticketWasFound.Message);
             }
 
             return NoContent();
@@ -65,9 +70,13 @@ namespace Zygieldesk.API.Controllers
         {
             var ticketWasFound = await _mediator.Send(new DeleteTicketCommand() { TicketId = id });
 
-            if (!ticketWasFound.Success)
+            if (ticketWasFound.Status == ResponseStatus.NotFound)
             {
                 return NotFound(ticketWasFound.Message);
+            }
+            if (ticketWasFound.Status == ResponseStatus.Forbidden)
+            {
+                return StatusCode(403, ticketWasFound.Message);
             }
             return NoContent();
         }

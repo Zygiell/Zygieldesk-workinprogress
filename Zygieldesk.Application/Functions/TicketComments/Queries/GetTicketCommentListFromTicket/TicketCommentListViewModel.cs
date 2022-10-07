@@ -11,9 +11,9 @@ namespace Zygieldesk.Application.Functions.TicketComments.Queries.GetTicketComme
         public int Id { get; set; }
         public string CommentBody { get; set; }
         public int TicketId { get; set; }
-        public string? CreatedBy { get; set; }
+        public int? CreatedByUserId { get; set; }
         public DateTime CreatedDate { get; set; }
-        public string? LastModifiedBy { get; set; }
+        public int? LastModifiedByUserId { get; set; }
         public DateTime? LastModifiedDate { get; set; }
     }
 }

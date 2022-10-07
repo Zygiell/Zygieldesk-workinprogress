@@ -31,5 +31,13 @@ namespace Zygieldesk.Application.Functions.Tickets.Commands.DeleteTicket
         {
             TicketId = ticketId;
         }
+
+        public DeleteTicketCommandResponse(ResponseStatus status, string message) : base(status, message)
+        {
+        }
+
+        public DeleteTicketCommandResponse(ResponseStatus status, string message, ValidationResult validationResult) : base(status, message, validationResult)
+        {
+        }
     }
 }

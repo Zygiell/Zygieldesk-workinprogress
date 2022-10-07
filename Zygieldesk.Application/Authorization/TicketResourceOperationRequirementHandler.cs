@@ -9,24 +9,32 @@ using Zygieldesk.Domain.Entities;
 
 namespace Zygieldesk.Application.Authorization
 {
-    public class CategoryResourceOperationRequirementHandler : AuthorizationHandler<ResourceOperationRequirement, Category>
+    public class TicketResourceOperationRequirementHandler : AuthorizationHandler<ResourceOperationRequirement, Ticket>
     {
-        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ResourceOperationRequirement requirement, Category resource)
+        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ResourceOperationRequirement requirement, Ticket resource)
         {
-
             var userId = context.User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value;
             var userRole = context.User.FindFirst(c => c.Type == ClaimTypes.Role).Value;
 
             if (requirement.ResourceOperation == ResourceOperation.Read)
             {
-                if(userRole == "Support")
+                if (int.Parse(userId) == resource.CreatedByUserId ||
+                    userRole == "Support" )
                 {
                     context.Succeed(requirement);
                 }
 
             }
 
-            if (requirement.ResourceOperation == ResourceOperation.Create ||
+            if (requirement.ResourceOperation == ResourceOperation.Delete)
+            {
+                if (int.Parse(userId) == resource.CreatedByUserId && resource.Status == TicketStatus.Open)
+                {
+                    context.Succeed(requirement);
+                }
+            }
+
+            if(requirement.ResourceOperation == ResourceOperation.Create ||
                 requirement.ResourceOperation == ResourceOperation.Read ||
                 requirement.ResourceOperation == ResourceOperation.Update ||
                 requirement.ResourceOperation == ResourceOperation.Delete)
@@ -38,7 +46,6 @@ namespace Zygieldesk.Application.Authorization
             }
 
             return Task.CompletedTask;
-
         }
     }
 }

@@ -21,6 +21,8 @@ namespace Zygieldesk.Application
         public static IServiceCollection AddZygieldeskApplication(this IServiceCollection services)
         {
             services.AddScoped<IAuthorizationHandler, CategoryResourceOperationRequirementHandler>();
+            services.AddScoped<IAuthorizationHandler, TicketResourceOperationRequirementHandler>();
+            services.AddScoped<IAuthorizationHandler, TicketListResourceOperationRequirementHandler>();
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
