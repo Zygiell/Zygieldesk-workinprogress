@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Zygieldesk.Application.Functions.Responses;
 using Zygieldesk.Application.Functions.TicketComments.Commands.CreateTicketComment;
 using Zygieldesk.Application.Functions.TicketComments.Commands.DeleteTicketComment;
 using Zygieldesk.Application.Functions.TicketComments.Commands.UpdateTicketComment;
@@ -39,9 +40,13 @@ namespace Zygieldesk.API.Controllers
             {
                 return BadRequest(ticketCommentWasFound);
             }
-            if (!ticketCommentWasFound.Success)
+            if (ticketCommentWasFound.Status == ResponseStatus.NotFound)
             {
                 return NotFound(ticketCommentWasFound.Message);
+            }
+            if (ticketCommentWasFound.Status == ResponseStatus.Forbidden)
+            {
+                return StatusCode(403, ticketCommentWasFound.Message);
             }
             return NoContent();
         }
@@ -52,9 +57,13 @@ namespace Zygieldesk.API.Controllers
         {
             var ticketCommentWasFound = await _mediator.Send(new DeleteTicketCommentCommand() { TicketCommentId = id });
 
-            if (!ticketCommentWasFound.Success)
+            if (ticketCommentWasFound.Status == ResponseStatus.NotFound)
             {
                 return NotFound(ticketCommentWasFound.Message);
+            }
+            if (ticketCommentWasFound.Status == ResponseStatus.Forbidden)
+            {
+                return StatusCode(403, ticketCommentWasFound.Message);
             }
 
             return NoContent();
@@ -69,9 +78,13 @@ namespace Zygieldesk.API.Controllers
             {
                 return BadRequest(response.ValidationErrors);
             }
-            if (!response.Success)
+            if (response.Status == ResponseStatus.NotFound)
             {
                 return NotFound(response.Message);
+            }
+            if (response.Status == ResponseStatus.Forbidden)
+            {
+                return StatusCode(403, response.Message);
             }
 
             return Ok(response.TicketCommentId);
@@ -83,10 +96,7 @@ namespace Zygieldesk.API.Controllers
         public async Task<ActionResult<List<TicketCommentViewModel>>> GetAllTicketComments()
         {
             var ticketCommentsList = await _mediator.Send(new GetAllTicketsCommentsQuery());
-            if(ticketCommentsList == null)
-            {
-                return NotFound("There are no ticket comments in database");
-            }
+
             return Ok(ticketCommentsList);
         }
 

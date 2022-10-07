@@ -12,7 +12,8 @@ namespace Zygieldesk.Application.Authorization
         Create,
         Read,
         Update,
-        Delete
+        Delete,
+        Reply
     }
     public class ResourceOperationRequirement : IAuthorizationRequirement
     {
