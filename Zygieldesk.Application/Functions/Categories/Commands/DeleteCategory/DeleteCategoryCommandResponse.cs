@@ -30,5 +30,13 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.DeleteCategory
         {
             CategoryId = categoryId;
         }
+
+        public DeleteCategoryCommandResponse(ResponseStatus status, string message, ValidationResult validationResult) : base(status, message, validationResult)
+        {
+        }
+
+        public DeleteCategoryCommandResponse(ResponseStatus status, string message) : base(status, message)
+        {
+        }
     }
 }

@@ -30,5 +30,13 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.CreateCategory
         {
             CategoryId = categoryId;
         }
+
+        public CreatedCategoryCommandResponse(ResponseStatus status, string message, ValidationResult validationResult) : base(status, message, validationResult)
+        {
+        }
+
+        public CreatedCategoryCommandResponse(ResponseStatus status, string message) : base(status, message)
+        {
+        }
     }
 }

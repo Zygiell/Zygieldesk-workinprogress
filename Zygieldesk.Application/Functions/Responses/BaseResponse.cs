@@ -44,5 +44,21 @@ namespace Zygieldesk.Application.Functions.Responses
             }
 
         }
+        public BaseResponse(ResponseStatus status, string message)
+        {
+            Status = status;
+            Message = message;
+        }
+        public BaseResponse(ResponseStatus status, string message, ValidationResult validationResult)
+        {
+            Status = status;
+            Message = message;
+            ValidationErrors = new List<string>();
+            Success = validationResult.Errors.Count < 0;
+            foreach (var item in validationResult.Errors)
+            {
+                ValidationErrors.Add(item.ErrorMessage);
+            }
+        }
     }
 }

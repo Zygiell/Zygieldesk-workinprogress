@@ -12,7 +12,7 @@ namespace Zygieldesk.Application.Functions.Responses
         NotFound = 1,
         BadQueryRequest = 2,
         ValidationError = 3,
-        Exception = 4,
+        Forbidden = 4,
         DataBaseError = 5,
         OtherClientApiError = 6
     }

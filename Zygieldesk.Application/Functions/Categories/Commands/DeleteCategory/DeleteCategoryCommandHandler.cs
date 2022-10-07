@@ -1,12 +1,16 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Zygieldesk.Application.Authorization;
 using Zygieldesk.Application.Contracts.Persistance;
+using Zygieldesk.Application.Functions.Categories.Commands.UpdateCategory;
 using Zygieldesk.Application.Functions.Responses;
+using Zygieldesk.Application.Services;
 
 namespace Zygieldesk.Application.Functions.Categories.Commands.DeleteCategory
 {
@@ -14,11 +18,16 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.DeleteCategory
     {
         private readonly IMapper _mapper;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IAuthorizationService _authorizationService;
+        private readonly IUserContextService _userContextService;
 
-        public DeleteCategoryCommandHandler(IMapper mapper,ICategoryRepository categoryRepository)
+        public DeleteCategoryCommandHandler(IMapper mapper, ICategoryRepository categoryRepository,
+            IAuthorizationService authorizationService, IUserContextService userContextService)
         {
             _mapper = mapper;
             _categoryRepository = categoryRepository;
+            _authorizationService = authorizationService;
+            _userContextService = userContextService;
         }
         public async Task<DeleteCategoryCommandResponse> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
         {
@@ -26,7 +35,13 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.DeleteCategory
 
             if (categoryToDelete == null)
             {
-                return new DeleteCategoryCommandResponse($"Category with {request.CategoryId} id, do not exist", false);
+                return new DeleteCategoryCommandResponse(ResponseStatus.NotFound ,$"Category with {request.CategoryId} id, do not exist");
+            }
+            var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, categoryToDelete,
+                new ResourceOperationRequirement(ResourceOperation.Delete)).Result;
+            if (!authorizationResult.Succeeded)
+            {
+                return new DeleteCategoryCommandResponse(ResponseStatus.Forbidden, "Forbidden");
             }
 
             await _categoryRepository.DeleteAsync(categoryToDelete);

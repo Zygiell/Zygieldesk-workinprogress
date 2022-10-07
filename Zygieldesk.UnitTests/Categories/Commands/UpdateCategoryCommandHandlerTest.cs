@@ -39,7 +39,8 @@ namespace Zygieldesk.UnitTests.Categories.Commands
         [Fact]
         public async Task UpdateCategoryTest()
         {
-            var handler = new UpdateCategoryCommandHandler(_mapper, _mockCategoryRepository.Object, _mockAuthorizationService.Object, _mockUserContextService.Object);
+            var handler = new UpdateCategoryCommandHandler(_mapper, _mockCategoryRepository.Object,
+                _mockAuthorizationService.Object, _mockUserContextService.Object);
             var result = await handler.Handle(new UpdateCategoryCommand { Name = "New name", Id = 1 }, CancellationToken.None);
             var categoryToUpdate = await _mockCategoryRepository.Object.GetByIdAsync(1);
 

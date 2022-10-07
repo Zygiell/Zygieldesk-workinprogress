@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Moq;
 using Shouldly;
 using System;
@@ -12,6 +13,7 @@ using Zygieldesk.Application.Functions.Categories.Commands.CreateCategory;
 using Zygieldesk.Application.Functions.Categories.Commands.DeleteCategory;
 using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryList;
 using Zygieldesk.Application.Mapper;
+using Zygieldesk.Application.Services;
 using Zygieldesk.Domain.Entities;
 using Zygieldesk.UnitTests.Mocks;
 
@@ -21,10 +23,14 @@ namespace Zygieldesk.UnitTests.Categories.Commands
     {
         private readonly IMapper _mapper;
         private readonly Mock<ICategoryRepository> _mockCategoryRepository;
+        private readonly Mock<IAuthorizationService> _mockAuthorizationService;
+        private readonly Mock<IUserContextService> _mockUserContextService;
 
         public DeleteCategoryCommandHandlerTest()
         {
             _mockCategoryRepository = RepositoryMocks.GetCategoryRepository();
+            _mockAuthorizationService = ServiceMocks.GetAuthorizationService();
+            _mockUserContextService = ServiceMocks.GetUserContextService();
             var configurationProvider = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<MappingProfile>();
@@ -38,7 +44,8 @@ namespace Zygieldesk.UnitTests.Categories.Commands
         {
             var allCategories = await _mockCategoryRepository.Object.GetAllAsync();
 
-            var handler = new DeleteCategoryCommandHandler(_mapper, _mockCategoryRepository.Object);
+            var handler = new DeleteCategoryCommandHandler(_mapper, _mockCategoryRepository.Object,
+                _mockAuthorizationService.Object, _mockUserContextService.Object);
             var result = await handler.Handle(new DeleteCategoryCommand { CategoryId = 1 }, CancellationToken.None);
 
             result.ShouldBeOfType<DeleteCategoryCommandResponse>();

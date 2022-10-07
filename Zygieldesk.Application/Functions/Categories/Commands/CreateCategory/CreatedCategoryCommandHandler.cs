@@ -1,11 +1,16 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Zygieldesk.Application.Authorization;
 using Zygieldesk.Application.Contracts.Persistance;
+using Zygieldesk.Application.Functions.Categories.Commands.UpdateCategory;
+using Zygieldesk.Application.Functions.Responses;
+using Zygieldesk.Application.Services;
 using Zygieldesk.Domain.Entities;
 
 namespace Zygieldesk.Application.Functions.Categories.Commands.CreateCategory
@@ -14,11 +19,16 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.CreateCategory
     {
         private readonly IMapper _mapper;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IAuthorizationService _authorizationService;
+        private readonly IUserContextService _userContextService;
 
-        public CreatedCategoryCommandHandler(IMapper mapper, ICategoryRepository categoryRepository)
+        public CreatedCategoryCommandHandler(IMapper mapper, ICategoryRepository categoryRepository,
+            IAuthorizationService authorizationService, IUserContextService userContextService)
         {
             _mapper = mapper;
             _categoryRepository = categoryRepository;
+            _authorizationService = authorizationService;
+            _userContextService = userContextService;
         }
         public async Task<CreatedCategoryCommandResponse> Handle(CreatedCategoryCommand request, CancellationToken cancellationToken)
         {
@@ -31,6 +41,13 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.CreateCategory
             }
 
             var category = _mapper.Map<Category>(request);
+            var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, category,
+                new ResourceOperationRequirement(ResourceOperation.Create)).Result;
+
+            if (!authorizationResult.Succeeded)
+            {
+                return new CreatedCategoryCommandResponse(ResponseStatus.Forbidden, "Forbidden",validatorResult);
+            }
 
             category = await _categoryRepository.AddAsync(category);
 
