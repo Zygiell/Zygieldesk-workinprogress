@@ -21,14 +21,6 @@ namespace Zygieldesk.Application.Functions.Account.Commands.AddUser
 
         public async Task<CreateUserCommandResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            var validator = new CreateUserCommandValidator();
-            var validatorResult = await validator.ValidateAsync(request);
-
-            if (!validatorResult.IsValid)
-            {
-                return new CreateUserCommandResponse(validatorResult);
-            }
-
             var isEmailFree = await _accountRepository.IsEmailAddressFree(request.Email);
             if (!isEmailFree)
             {

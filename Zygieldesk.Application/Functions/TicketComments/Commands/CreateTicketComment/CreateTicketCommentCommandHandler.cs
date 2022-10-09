@@ -29,19 +29,12 @@ namespace Zygieldesk.Application.Functions.TicketComments.Commands.CreateTicketC
 
         public async Task<CreateTicketCommentCommandResponse> Handle(CreateTicketCommentCommand request, CancellationToken cancellationToken)
         {
-            var validator = new CreateTicketCommentCommandValidator();
-            var validationResult = await validator.ValidateAsync(request);
 
-            if (!validationResult.IsValid)
-            {
-                return new CreateTicketCommentCommandResponse(validationResult);
-            }
 
             var ticket = await _ticketRepository.GetByIdAsync(request.TicketId);
             if (ticket == null)
             {
-                return new CreateTicketCommentCommandResponse(ResponseStatus.NotFound, $"Ticket id {request.TicketId} you are trying to comment does not exist",
-                    validationResult);
+                return new CreateTicketCommentCommandResponse(ResponseStatus.NotFound, $"Ticket id {request.TicketId} you are trying to comment does not exist");
             }
 
             var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, ticket,
@@ -49,7 +42,7 @@ namespace Zygieldesk.Application.Functions.TicketComments.Commands.CreateTicketC
 
             if (!authorizationResult.Succeeded)
             {
-                return new CreateTicketCommentCommandResponse(ResponseStatus.Forbidden, "Forbidden", validationResult);
+                return new CreateTicketCommentCommandResponse(ResponseStatus.Forbidden, "Forbidden");
             }
 
             var ticketComment = _mapper.Map<TicketComment>(request);

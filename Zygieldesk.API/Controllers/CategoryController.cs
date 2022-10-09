@@ -60,10 +60,6 @@ namespace Zygieldesk.API.Controllers
         {
             var response = await _mediator.Send(dto);
 
-            if (response.ValidationErrors.Any())
-            {
-                return BadRequest(response.ValidationErrors);
-            }
             if (response.Status == ResponseStatus.Forbidden)
             {
                 return StatusCode(403, response.Message);
@@ -85,10 +81,6 @@ namespace Zygieldesk.API.Controllers
             if (categoryWasFound.Status == ResponseStatus.NotFound)
             {
                 return NotFound(categoryWasFound.Message);
-            }
-            if (categoryWasFound.ValidationErrors.Any())
-            {
-                return BadRequest(categoryWasFound.ValidationErrors);
             }
 
             if (categoryWasFound.Status == ResponseStatus.Forbidden)

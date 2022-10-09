@@ -1,5 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
+using System.Text.Json;
 using Zygieldesk.Application.Exceptions;
+using ValidationException = FluentValidation.ValidationException;
 
 namespace Zygieldesk.Application.Middlewares
 {
@@ -20,6 +25,16 @@ namespace Zygieldesk.Application.Middlewares
             {
                 context.Response.StatusCode = 404;
                 await context.Response.WriteAsync(notFoundException.Message);
+            }
+            catch(ValidationException validationException)
+            {
+                var errorTextList = new List<string>();
+                foreach (var error in validationException.Errors)
+                {
+                    errorTextList.Add(error.ErrorMessage);
+                }                
+                context.Response.StatusCode = 400;
+                await context.Response.WriteAsync(string.Join("\n", errorTextList));
             }
             catch (Exception e)
             {

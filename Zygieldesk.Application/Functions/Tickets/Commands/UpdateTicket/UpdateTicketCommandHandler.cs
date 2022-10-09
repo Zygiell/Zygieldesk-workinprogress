@@ -26,25 +26,17 @@ namespace Zygieldesk.Application.Functions.Tickets.Commands.UpdateTicket
 
         public async Task<UpdateTicketCommandResponse> Handle(UpdateTicketCommand request, CancellationToken cancellationToken)
         {
-            var validator = new UpdateTicketCommandValidator();
-            var validatorResult = await validator.ValidateAsync(request);
-
-            if (!validatorResult.IsValid)
-            {
-                return new UpdateTicketCommandResponse(validatorResult);
-            }
-
             var ticketToUpdate = await _ticketRepository.GetByIdAsync(request.TicketId);
             if (ticketToUpdate == null)
             {
-                return new UpdateTicketCommandResponse(ResponseStatus.NotFound, $"Ticket with {request.TicketId} id, does not exist", validatorResult);
+                return new UpdateTicketCommandResponse(ResponseStatus.NotFound, $"Ticket with {request.TicketId} id, does not exist");
             }
             var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, ticketToUpdate,
                 new ResourceOperationRequirement(ResourceOperation.Update)).Result;
 
             if (!authorizationResult.Succeeded)
             {
-                return new UpdateTicketCommandResponse(ResponseStatus.Forbidden, "Forbidden", validatorResult);
+                return new UpdateTicketCommandResponse(ResponseStatus.Forbidden, "Forbidden");
             }
             ticketToUpdate.TicketTitle = request.TicketTitle;
             ticketToUpdate.TicketBody = request.TicketBody;

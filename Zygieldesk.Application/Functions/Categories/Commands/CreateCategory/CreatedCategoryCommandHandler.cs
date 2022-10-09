@@ -27,21 +27,13 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.CreateCategory
 
         public async Task<CreatedCategoryCommandResponse> Handle(CreatedCategoryCommand request, CancellationToken cancellationToken)
         {
-            var validator = new CreatedCategoryCommandValidator();
-            var validatorResult = await validator.ValidateAsync(request);
-
-            if (!validatorResult.IsValid)
-            {
-                return new CreatedCategoryCommandResponse(validatorResult);
-            }
-
             var category = _mapper.Map<Category>(request);
             var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, category,
                 new ResourceOperationRequirement(ResourceOperation.Create)).Result;
 
             if (!authorizationResult.Succeeded)
             {
-                return new CreatedCategoryCommandResponse(ResponseStatus.Forbidden, "Forbidden", validatorResult);
+                return new CreatedCategoryCommandResponse(ResponseStatus.Forbidden, "Forbidden");
             }
 
             category = await _categoryRepository.AddAsync(category);

@@ -29,10 +29,7 @@ namespace Zygieldesk.API.Controllers
         public async Task<ActionResult> UpdateTicketComment([FromBody] UpdateTicketCommentCommand updateTicketCommentCommand)
         {
             var ticketCommentWasFound = await _mediator.Send(updateTicketCommentCommand);
-            if (ticketCommentWasFound.ValidationErrors.Any())
-            {
-                return BadRequest(ticketCommentWasFound);
-            }
+
             if (ticketCommentWasFound.Status == ResponseStatus.NotFound)
             {
                 return NotFound(ticketCommentWasFound.Message);
@@ -67,10 +64,7 @@ namespace Zygieldesk.API.Controllers
         public async Task<ActionResult<CreateTicketCommentCommandResponse>> CreateTicketComment([FromBody] CreateTicketCommentCommand dto)
         {
             var response = await _mediator.Send(dto);
-            if (response.ValidationErrors.Any())
-            {
-                return BadRequest(response.ValidationErrors);
-            }
+
             if (response.Status == ResponseStatus.NotFound)
             {
                 return NotFound(response.Message);
