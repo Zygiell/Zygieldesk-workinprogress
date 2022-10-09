@@ -3,8 +3,7 @@
 namespace Zygieldesk.Application.Functions.Responses
 {
     public class BaseResponse
-    {
-        public ResponseStatus Status { get; set; }
+    { 
         public bool Success { get; set; }
         public string Message { get; set; }
         public List<string> ValidationErrors { get; set; }
@@ -31,24 +30,6 @@ namespace Zygieldesk.Application.Functions.Responses
 
         public BaseResponse(ValidationResult validationResult)
         {
-            ValidationErrors = new List<string>();
-            Success = validationResult.Errors.Count < 0;
-            foreach (var item in validationResult.Errors)
-            {
-                ValidationErrors.Add(item.ErrorMessage);
-            }
-        }
-
-        public BaseResponse(ResponseStatus status, string message)
-        {
-            Status = status;
-            Message = message;
-        }
-
-        public BaseResponse(ResponseStatus status, string message, ValidationResult validationResult)
-        {
-            Status = status;
-            Message = message;
             ValidationErrors = new List<string>();
             Success = validationResult.Errors.Count < 0;
             foreach (var item in validationResult.Errors)

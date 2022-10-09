@@ -28,12 +28,5 @@ namespace Zygieldesk.Application.Functions.Tickets.Commands.UpdateTicket
             TicketId = ticketId;
         }
 
-        public UpdateTicketCommandResponse(ResponseStatus status, string message) : base(status, message)
-        {
-        }
-
-        public UpdateTicketCommandResponse(ResponseStatus status, string message, ValidationResult validationResult) : base(status, message, validationResult)
-        {
-        }
     }
 }

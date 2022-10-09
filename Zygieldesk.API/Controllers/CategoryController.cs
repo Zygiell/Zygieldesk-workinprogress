@@ -32,6 +32,7 @@ namespace Zygieldesk.API.Controllers
         public async Task<ActionResult<List<CategoryListViewModel>>> GetAllCategories()
         {
             var categoryListViewModel = await _mediator.Send(new GetCategoryListQuery());
+
             return Ok(categoryListViewModel);
         }
 
@@ -60,33 +61,19 @@ namespace Zygieldesk.API.Controllers
         {
             var response = await _mediator.Send(dto);
 
-            if (response.Status == ResponseStatus.Forbidden)
-            {
-                return StatusCode(403, response.Message);
-            }
-
             return Ok(response.CategoryId);
         }
 
         /// <summary>
         /// Updates existing category, valid category id provided from body is required.
         /// </summary>
-        /// <param name="updateCategoryCommand"></param>
+        /// <param name="dto"></param>
         /// <returns></returns>
         [HttpPut]
         [SwaggerOperation(Summary = "Updates existing category")]
-        public async Task<ActionResult> UpdateCategory([FromBody] UpdateCategoryCommand updateCategoryCommand)
+        public async Task<ActionResult> UpdateCategory([FromBody] UpdateCategoryCommand dto)
         {
-            var categoryWasFound = await _mediator.Send(updateCategoryCommand);
-            if (categoryWasFound.Status == ResponseStatus.NotFound)
-            {
-                return NotFound(categoryWasFound.Message);
-            }
-
-            if (categoryWasFound.Status == ResponseStatus.Forbidden)
-            {
-                return StatusCode(403, categoryWasFound.Message);
-            }
+            var response = await _mediator.Send(dto);
 
             return NoContent();
         }
@@ -99,17 +86,8 @@ namespace Zygieldesk.API.Controllers
         [HttpDelete("{id}")]
         [SwaggerOperation(Summary = "Deletes existing category")]
         public async Task<ActionResult> DeleteCategory(int id)
-        {
-            var deleteCategoryCommand = new DeleteCategoryCommand() { CategoryId = id };
-            var categoryWasFound = await _mediator.Send(deleteCategoryCommand);
-            if (categoryWasFound.Status == ResponseStatus.NotFound)
-            {
-                return NotFound(categoryWasFound.Message);
-            }
-            if (categoryWasFound.Status == ResponseStatus.Forbidden)
-            {
-                return StatusCode(403, categoryWasFound.Message);
-            }
+        {            
+            var response = await _mediator.Send(new DeleteCategoryCommand() { CategoryId=id});
 
             return NoContent();
         }

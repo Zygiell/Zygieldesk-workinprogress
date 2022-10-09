@@ -16,6 +16,21 @@ namespace Zygieldesk.Application.Middlewares
             {
                 await next.Invoke(context);
             }
+            catch (BadRequestException badRequestException)
+            {
+                context.Response.StatusCode = 400;
+                await context.Response.WriteAsync(badRequestException.Message);
+            }
+            catch (ValidationException validationException)
+            {
+                var errorTextList = new List<string>();
+                foreach (var error in validationException.Errors)
+                {
+                    errorTextList.Add(error.ErrorMessage);
+                }
+                context.Response.StatusCode = 400;
+                await context.Response.WriteAsync(string.Join("\n", errorTextList));
+            }
             catch (ForbiddenException forbiddenException)
             {
                 context.Response.StatusCode = 403;
@@ -26,16 +41,7 @@ namespace Zygieldesk.Application.Middlewares
                 context.Response.StatusCode = 404;
                 await context.Response.WriteAsync(notFoundException.Message);
             }
-            catch(ValidationException validationException)
-            {
-                var errorTextList = new List<string>();
-                foreach (var error in validationException.Errors)
-                {
-                    errorTextList.Add(error.ErrorMessage);
-                }                
-                context.Response.StatusCode = 400;
-                await context.Response.WriteAsync(string.Join("\n", errorTextList));
-            }
+
             catch (Exception e)
             {
                 context.Response.StatusCode = 500;

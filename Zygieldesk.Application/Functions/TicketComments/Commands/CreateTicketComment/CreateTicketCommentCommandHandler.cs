@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Zygieldesk.Application.Authorization;
 using Zygieldesk.Application.Contracts.Persistance;
+using Zygieldesk.Application.Exceptions;
 using Zygieldesk.Application.Functions.Responses;
 using Zygieldesk.Application.Services;
 using Zygieldesk.Domain.Entities;
@@ -34,7 +35,7 @@ namespace Zygieldesk.Application.Functions.TicketComments.Commands.CreateTicketC
             var ticket = await _ticketRepository.GetByIdAsync(request.TicketId);
             if (ticket == null)
             {
-                return new CreateTicketCommentCommandResponse(ResponseStatus.NotFound, $"Ticket id {request.TicketId} you are trying to comment does not exist");
+                throw new NotFoundException($"Ticket id {request.TicketId} you are trying to comment does not exist");
             }
 
             var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, ticket,
@@ -42,7 +43,7 @@ namespace Zygieldesk.Application.Functions.TicketComments.Commands.CreateTicketC
 
             if (!authorizationResult.Succeeded)
             {
-                return new CreateTicketCommentCommandResponse(ResponseStatus.Forbidden, "Forbidden");
+                throw new ForbiddenException("Forbidden");
             }
 
             var ticketComment = _mapper.Map<TicketComment>(request);

@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Zygieldesk.Application.Authorization;
 using Zygieldesk.Application.Contracts.Persistance;
+using Zygieldesk.Application.Exceptions;
 using Zygieldesk.Application.Functions.Responses;
 using Zygieldesk.Application.Services;
 
@@ -30,14 +31,14 @@ namespace Zygieldesk.Application.Functions.TicketComments.Commands.UpdateTicketC
             var ticketCommentToUpdate = await _ticketCommentRepository.GetByIdAsync(request.TicketCommentId);
             if (ticketCommentToUpdate == null)
             {
-                return new UpdateTicketCommentCommandResponse(ResponseStatus.NotFound, $"Ticket comment with {request.TicketCommentId} id, does not exist");
+                throw new NotFoundException($"Ticket comment with {request.TicketCommentId} id, does not exist");
             }
             var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, ticketCommentToUpdate,
                 new ResourceOperationRequirement(ResourceOperation.Update)).Result;
 
             if (!authorizationResult.Succeeded)
             {
-                return new UpdateTicketCommentCommandResponse(ResponseStatus.Forbidden, "Forbidden");
+                throw new ForbiddenException("Forbidden");
             }
 
             ticketCommentToUpdate.CommentBody = request.CommentBody;

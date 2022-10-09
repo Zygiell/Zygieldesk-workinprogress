@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using Zygieldesk.Application.Authentication;
 using Zygieldesk.Application.Contracts.Persistance;
+using Zygieldesk.Application.Exceptions;
 using Zygieldesk.Domain.Entities;
 
 namespace Zygieldesk.Application.Functions.Account.Commands.LoginUser
@@ -28,13 +29,13 @@ namespace Zygieldesk.Application.Functions.Account.Commands.LoginUser
             var user = await _accountRepository.GetUserByEmail(request.Email);
             if (user == null)
             {
-                return new LoginUserCommandResponse("Invalid username or password", false);
+                throw new BadRequestException("Invalid username or password");
             }
 
             var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, request.Password);
             if (result == PasswordVerificationResult.Failed)
             {
-                return new LoginUserCommandResponse("Invalid username or password", false);
+                throw new BadRequestException("Invalid username or password");
             }
             var claims = new List<Claim>()
             {
