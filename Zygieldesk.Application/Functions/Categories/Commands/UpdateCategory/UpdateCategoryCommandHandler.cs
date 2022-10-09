@@ -26,13 +26,6 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.UpdateCategory
 
         public async Task<UpdateCategoryCommandResponse> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
         {
-            var validator = new UpdateCategoryCommandValidator();
-            var validatorResult = await validator.ValidateAsync(request);
-
-            if (!validatorResult.IsValid)
-            {
-                return new UpdateCategoryCommandResponse(validatorResult);
-            }
 
             var categoryToUpdate = await _categoryRepository.GetByIdAsync(request.Id);
 
@@ -45,7 +38,7 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.UpdateCategory
 
             if (!authorizationResult.Succeeded)
             {
-                return new UpdateCategoryCommandResponse(ResponseStatus.Forbidden, "Forbidden", validatorResult);
+                return new UpdateCategoryCommandResponse(ResponseStatus.Forbidden, "Forbidden");
             }
 
             categoryToUpdate.Name = request.Name;

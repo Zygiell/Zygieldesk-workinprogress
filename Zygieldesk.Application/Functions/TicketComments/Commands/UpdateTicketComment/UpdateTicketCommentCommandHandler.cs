@@ -26,26 +26,18 @@ namespace Zygieldesk.Application.Functions.TicketComments.Commands.UpdateTicketC
 
         public async Task<UpdateTicketCommentCommandResponse> Handle(UpdateTicketCommentCommand request, CancellationToken cancellationToken)
         {
-            var validator = new UpdateTicketCommentCommandValidator();
-            var validatorResult = await validator.ValidateAsync(request);
-
-            if (!validatorResult.IsValid)
-            {
-                return new UpdateTicketCommentCommandResponse(validatorResult);
-            }
 
             var ticketCommentToUpdate = await _ticketCommentRepository.GetByIdAsync(request.TicketCommentId);
             if (ticketCommentToUpdate == null)
             {
-                return new UpdateTicketCommentCommandResponse(ResponseStatus.NotFound, $"Ticket comment with {request.TicketCommentId} id, does not exist",
-                    validatorResult);
+                return new UpdateTicketCommentCommandResponse(ResponseStatus.NotFound, $"Ticket comment with {request.TicketCommentId} id, does not exist");
             }
             var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, ticketCommentToUpdate,
                 new ResourceOperationRequirement(ResourceOperation.Update)).Result;
 
             if (!authorizationResult.Succeeded)
             {
-                return new UpdateTicketCommentCommandResponse(ResponseStatus.Forbidden, "Forbidden", validatorResult);
+                return new UpdateTicketCommentCommandResponse(ResponseStatus.Forbidden, "Forbidden");
             }
 
             ticketCommentToUpdate.CommentBody = request.CommentBody;

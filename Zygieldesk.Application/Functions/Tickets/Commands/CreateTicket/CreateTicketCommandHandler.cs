@@ -20,14 +20,6 @@ namespace Zygieldesk.Application.Functions.Tickets.Commands.CreateTicket
 
         public async Task<CreateTicketCommandResponse> Handle(CreateTicketCommand request, CancellationToken cancellationToken)
         {
-            var validator = new CreateTicketCommandValidator();
-            var validationResult = await validator.ValidateAsync(request);
-
-            if (!validationResult.IsValid)
-            {
-                return new CreateTicketCommandResponse(validationResult);
-            }
-
             var category = await _categoryRepository.GetByIdAsync(request.CategoryId);
 
             if (category == null)

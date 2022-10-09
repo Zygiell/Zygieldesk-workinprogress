@@ -25,13 +25,6 @@ namespace Zygieldesk.Application.Functions.Account.Commands.LoginUser
 
         public async Task<LoginUserCommandResponse> Handle(LoginUserCommand request, CancellationToken cancellationToken)
         {
-            var validator = new LoginUserCommandValidator();
-            var validatorResult = await validator.ValidateAsync(request);
-            if (!validatorResult.IsValid)
-            {
-                return new LoginUserCommandResponse(validatorResult);
-            }
-
             var user = await _accountRepository.GetUserByEmail(request.Email);
             if (user == null)
             {

@@ -36,11 +36,6 @@ namespace Zygieldesk.API.Controllers
         {
             var ticketWasFound = await _mediator.Send(updateTicketCommand);
 
-            if (ticketWasFound.ValidationErrors.Any())
-            {
-                return BadRequest(ticketWasFound.ValidationErrors);
-            }
-
             if (ticketWasFound.Status == ResponseStatus.NotFound)
             {
                 return NotFound(ticketWasFound.Message);
@@ -85,11 +80,6 @@ namespace Zygieldesk.API.Controllers
         public async Task<ActionResult<CreateTicketCommandResponse>> CreateTicket([FromBody] CreateTicketCommand dto)
         {
             var response = await _mediator.Send(dto);
-
-            if (response.ValidationErrors.Any())
-            {
-                return BadRequest(response.ValidationErrors);
-            }
 
             if (!response.Success)
             {
