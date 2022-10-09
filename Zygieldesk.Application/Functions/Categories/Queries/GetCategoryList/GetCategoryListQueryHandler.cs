@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Zygieldesk.Application.Contracts.Persistance;
+using Zygieldesk.Application.Exceptions;
 
 namespace Zygieldesk.Application.Functions.Categories.Queries.GetCategoryList
 {

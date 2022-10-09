@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Zygieldesk.Application.Authorization;
 using Zygieldesk.Application.Contracts.Persistance;
+using Zygieldesk.Application.Exceptions;
 using Zygieldesk.Application.Functions.Responses;
 using Zygieldesk.Application.Services;
 
@@ -31,14 +32,14 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.UpdateCategory
 
             if (categoryToUpdate == null)
             {
-                return new UpdateCategoryCommandResponse(ResponseStatus.NotFound, $"Category with {request.Id} id does not exist");
+                throw new NotFoundException($"Category with {request.Id} id does not exist");
             }
             var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, categoryToUpdate,
                 new ResourceOperationRequirement(ResourceOperation.Update)).Result;
 
             if (!authorizationResult.Succeeded)
             {
-                return new UpdateCategoryCommandResponse(ResponseStatus.Forbidden, "Forbidden");
+                throw new ForbiddenException("Forbidden");
             }
 
             categoryToUpdate.Name = request.Name;
@@ -46,7 +47,7 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.UpdateCategory
 
             await _categoryRepository.UpdateAsync(categoryToUpdate);
 
-            return new UpdateCategoryCommandResponse("Category successfully updated", true);
+            return new UpdateCategoryCommandResponse();
         }
     }
 }

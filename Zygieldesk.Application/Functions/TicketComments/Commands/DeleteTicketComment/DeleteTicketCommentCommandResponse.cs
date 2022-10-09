@@ -28,12 +28,5 @@ namespace Zygieldesk.Application.Functions.TicketComments.Commands.DeleteTicketC
             TicketCommentId = ticketCommentId;
         }
 
-        public DeleteTicketCommentCommandResponse(ResponseStatus status, string message) : base(status, message)
-        {
-        }
-
-        public DeleteTicketCommentCommandResponse(ResponseStatus status, string message, ValidationResult validationResult) : base(status, message, validationResult)
-        {
-        }
     }
 }

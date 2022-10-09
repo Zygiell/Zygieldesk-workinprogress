@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Zygieldesk.Application.Authorization;
 using Zygieldesk.Application.Contracts.Persistance;
+using Zygieldesk.Application.Exceptions;
 using Zygieldesk.Application.Functions.Responses;
 using Zygieldesk.Application.Services;
 using Zygieldesk.Domain.Entities;
@@ -28,12 +29,13 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.CreateCategory
         public async Task<CreatedCategoryCommandResponse> Handle(CreatedCategoryCommand request, CancellationToken cancellationToken)
         {
             var category = _mapper.Map<Category>(request);
+
             var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, category,
                 new ResourceOperationRequirement(ResourceOperation.Create)).Result;
 
             if (!authorizationResult.Succeeded)
             {
-                return new CreatedCategoryCommandResponse(ResponseStatus.Forbidden, "Forbidden");
+                throw new ForbiddenException("Forbidden");
             }
 
             category = await _categoryRepository.AddAsync(category);

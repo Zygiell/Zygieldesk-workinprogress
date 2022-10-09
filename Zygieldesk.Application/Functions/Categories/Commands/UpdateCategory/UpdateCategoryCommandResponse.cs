@@ -28,12 +28,5 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.UpdateCategory
             CategoryId = categoryId;
         }
 
-        public UpdateCategoryCommandResponse(ResponseStatus status, string message, ValidationResult validationResult) : base(status, message, validationResult)
-        {
-        }
-
-        public UpdateCategoryCommandResponse(ResponseStatus status, string message) : base(status, message)
-        {
-        }
     }
 }

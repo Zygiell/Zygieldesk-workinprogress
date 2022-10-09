@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Zygieldesk.Application.Authorization;
 using Zygieldesk.Application.Contracts.Persistance;
+using Zygieldesk.Application.Exceptions;
 using Zygieldesk.Application.Functions.Responses;
 using Zygieldesk.Application.Services;
 
@@ -30,13 +31,13 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.DeleteCategory
 
             if (categoryToDelete == null)
             {
-                return new DeleteCategoryCommandResponse(ResponseStatus.NotFound, $"Category with {request.CategoryId} id, do not exist");
+                throw new NotFoundException($"Category with {request.CategoryId} id, do not exist");
             }
             var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, categoryToDelete,
                 new ResourceOperationRequirement(ResourceOperation.Delete)).Result;
             if (!authorizationResult.Succeeded)
             {
-                return new DeleteCategoryCommandResponse(ResponseStatus.Forbidden, "Forbidden");
+                throw new ForbiddenException("Forbidden");
             }
 
             await _categoryRepository.DeleteAsync(categoryToDelete);

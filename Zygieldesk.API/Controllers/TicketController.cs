@@ -28,22 +28,13 @@ namespace Zygieldesk.API.Controllers
         /// <summary>
         /// Update ticket
         /// </summary>
-        /// <param name="updateTicketCommand"></param>
+        /// <param name="dto"></param>
         /// <returns></returns>
         [HttpPut]
         [SwaggerOperation(Summary = "Updates existing ticket.")]
-        public async Task<ActionResult> UpdateTicket([FromBody] UpdateTicketCommand updateTicketCommand)
+        public async Task<ActionResult> UpdateTicket([FromBody] UpdateTicketCommand dto)
         {
-            var ticketWasFound = await _mediator.Send(updateTicketCommand);
-
-            if (ticketWasFound.Status == ResponseStatus.NotFound)
-            {
-                return NotFound(ticketWasFound.Message);
-            }
-            if (ticketWasFound.Status == ResponseStatus.Forbidden)
-            {
-                return StatusCode(403, ticketWasFound.Message);
-            }
+            var response = await _mediator.Send(dto);
 
             return NoContent();
         }
@@ -57,16 +48,8 @@ namespace Zygieldesk.API.Controllers
         [SwaggerOperation(Summary = "Deletes existing ticket.")]
         public async Task<ActionResult> DeleteTicket(int id)
         {
-            var ticketWasFound = await _mediator.Send(new DeleteTicketCommand() { TicketId = id });
+            var response = await _mediator.Send(new DeleteTicketCommand() { TicketId = id });
 
-            if (ticketWasFound.Status == ResponseStatus.NotFound)
-            {
-                return NotFound(ticketWasFound.Message);
-            }
-            if (ticketWasFound.Status == ResponseStatus.Forbidden)
-            {
-                return StatusCode(403, ticketWasFound.Message);
-            }
             return NoContent();
         }
 
@@ -81,11 +64,6 @@ namespace Zygieldesk.API.Controllers
         {
             var response = await _mediator.Send(dto);
 
-            if (!response.Success)
-            {
-                return NotFound(response.Message);
-            }
-
             return Ok(response.TicketId);
         }
 
@@ -98,9 +76,9 @@ namespace Zygieldesk.API.Controllers
         [SwaggerOperation(Summary = "Returns all tickets associated with category id {categoryId}")]
         public async Task<ActionResult<List<CategoryListViewModel>>> GetAllTicketsFromCategory(int categoryId)
         {
-            var ticketsListViewModel = await _mediator.Send(new GetTicketListFromCategoryQuery() { CategoryId = categoryId });
+            var response = await _mediator.Send(new GetTicketListFromCategoryQuery() { CategoryId = categoryId });
 
-            return Ok(ticketsListViewModel);
+            return Ok(response);
         }
 
         /// <summary>
@@ -112,9 +90,9 @@ namespace Zygieldesk.API.Controllers
         [SwaggerOperation(Summary = "Returns ticket from database with {id}")]
         public async Task<ActionResult<TicketViewModel>> GetTicketById(int id)
         {
-            var ticket = await _mediator.Send(new GetTicketByIdQuery() { TicketId = id });
+            var response = await _mediator.Send(new GetTicketByIdQuery() { TicketId = id });
 
-            return Ok(ticket);
+            return Ok(response);
         }
 
         /// <summary>
@@ -125,13 +103,9 @@ namespace Zygieldesk.API.Controllers
         [SwaggerOperation(Summary = "Returns all tickets from database")]
         public async Task<ActionResult<List<TicketViewModel>>> GetAllTickets()
         {
-            var ticketsList = await _mediator.Send(new GetAllTicketsQuery());
-            if (ticketsList == null)
-            {
-                return NotFound("There are not any tickets in database");
-            }
+            var response = await _mediator.Send(new GetAllTicketsQuery());
 
-            return Ok(ticketsList);
+            return Ok(response);
         }
     }
 }

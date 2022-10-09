@@ -26,18 +26,10 @@ namespace Zygieldesk.API.Controllers
 
         [HttpPut]
         [SwaggerOperation(Summary = "Updates existing ticket comment")]
-        public async Task<ActionResult> UpdateTicketComment([FromBody] UpdateTicketCommentCommand updateTicketCommentCommand)
+        public async Task<ActionResult> UpdateTicketComment([FromBody] UpdateTicketCommentCommand dto)
         {
-            var ticketCommentWasFound = await _mediator.Send(updateTicketCommentCommand);
+            var response = await _mediator.Send(dto);
 
-            if (ticketCommentWasFound.Status == ResponseStatus.NotFound)
-            {
-                return NotFound(ticketCommentWasFound.Message);
-            }
-            if (ticketCommentWasFound.Status == ResponseStatus.Forbidden)
-            {
-                return StatusCode(403, ticketCommentWasFound.Message);
-            }
             return NoContent();
         }
 
@@ -45,16 +37,7 @@ namespace Zygieldesk.API.Controllers
         [SwaggerOperation(Summary = "Delete existing ticket.")]
         public async Task<ActionResult<DeleteTicketCommentCommandResponse>> DeleteTicketComment(int id)
         {
-            var ticketCommentWasFound = await _mediator.Send(new DeleteTicketCommentCommand() { TicketCommentId = id });
-
-            if (ticketCommentWasFound.Status == ResponseStatus.NotFound)
-            {
-                return NotFound(ticketCommentWasFound.Message);
-            }
-            if (ticketCommentWasFound.Status == ResponseStatus.Forbidden)
-            {
-                return StatusCode(403, ticketCommentWasFound.Message);
-            }
+            var response = await _mediator.Send(new DeleteTicketCommentCommand() { TicketCommentId = id });
 
             return NoContent();
         }
@@ -65,15 +48,6 @@ namespace Zygieldesk.API.Controllers
         {
             var response = await _mediator.Send(dto);
 
-            if (response.Status == ResponseStatus.NotFound)
-            {
-                return NotFound(response.Message);
-            }
-            if (response.Status == ResponseStatus.Forbidden)
-            {
-                return StatusCode(403, response.Message);
-            }
-
             return Ok(response.TicketCommentId);
         }
 
@@ -81,27 +55,27 @@ namespace Zygieldesk.API.Controllers
         [SwaggerOperation(Summary = "Returns all ticket comments from database.")]
         public async Task<ActionResult<List<TicketCommentViewModel>>> GetAllTicketComments()
         {
-            var ticketCommentsList = await _mediator.Send(new GetAllTicketsCommentsQuery());
+            var response = await _mediator.Send(new GetAllTicketsCommentsQuery());
 
-            return Ok(ticketCommentsList);
+            return Ok(response);
         }
 
         [HttpGet("ticket/{ticketId}")]
         [SwaggerOperation(Summary = "Returns all ticket comments associated with {ticketId}.")]
         public async Task<ActionResult<List<TicketCommentListViewModel>>> GetTicketCommentsFromTicket(int ticketId)
         {
-            var ticketCommentsListViewModel = await _mediator.Send(new GetTicketCommentListFromTicketQuery() { TicketId = ticketId });
+            var response = await _mediator.Send(new GetTicketCommentListFromTicketQuery() { TicketId = ticketId });
 
-            return Ok(ticketCommentsListViewModel);
+            return Ok(response);
         }
 
         [HttpGet("{id}")]
         [SwaggerOperation(Summary = "Returns ticket comment found by {id}.")]
         public async Task<ActionResult<TicketCommentViewModel>> GetTicketCommentById(int id)
         {
-            var ticketComment = await _mediator.Send(new GetTicketCommentByIdQuery() { TicketCommentId = id });
+            var response = await _mediator.Send(new GetTicketCommentByIdQuery() { TicketCommentId = id });
 
-            return Ok(ticketComment);
+            return Ok(response);
         }
     }
 }

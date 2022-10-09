@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Zygieldesk.Application.Contracts.Persistance;
+using Zygieldesk.Application.Exceptions;
 using Zygieldesk.Domain.Entities;
 
 namespace Zygieldesk.Application.Functions.Tickets.Commands.CreateTicket
@@ -24,7 +25,7 @@ namespace Zygieldesk.Application.Functions.Tickets.Commands.CreateTicket
 
             if (category == null)
             {
-                return new CreateTicketCommandResponse($"Category you are trying to add ticket to (Category id: {request.CategoryId}) does not exist.", false);
+                throw new NotFoundException($"Category you are trying to add ticket to (Category id: {request.CategoryId}) does not exist.");
             }
 
             var ticket = _mapper.Map<Ticket>(request);

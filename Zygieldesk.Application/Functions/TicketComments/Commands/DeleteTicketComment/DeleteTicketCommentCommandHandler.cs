@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Zygieldesk.Application.Authorization;
 using Zygieldesk.Application.Contracts.Persistance;
+using Zygieldesk.Application.Exceptions;
 using Zygieldesk.Application.Functions.Responses;
 using Zygieldesk.Application.Services;
 
@@ -30,14 +31,14 @@ namespace Zygieldesk.Application.Functions.TicketComments.Commands.DeleteTicketC
 
             if (ticketCommentToDelete == null)
             {
-                return new DeleteTicketCommentCommandResponse($"Ticket with {request.TicketCommentId} id, does not exist", false);
+                throw new NotFoundException($"Ticket with {request.TicketCommentId} id, does not exist");
             }
             var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, ticketCommentToDelete,
                 new ResourceOperationRequirement(ResourceOperation.Delete)).Result;
 
             if (!authorizationResult.Succeeded)
             {
-                return new DeleteTicketCommentCommandResponse(ResponseStatus.Forbidden, "Forbidden");
+                throw new ForbiddenException("Forbidden");
             }
 
             await _ticketCommentRepository.DeleteAsync(ticketCommentToDelete);

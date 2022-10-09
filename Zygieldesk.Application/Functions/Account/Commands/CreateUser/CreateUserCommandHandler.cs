@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Zygieldesk.Application.Contracts.Persistance;
+using Zygieldesk.Application.Exceptions;
 using Zygieldesk.Domain.Entities;
 
 namespace Zygieldesk.Application.Functions.Account.Commands.AddUser
@@ -24,7 +25,7 @@ namespace Zygieldesk.Application.Functions.Account.Commands.AddUser
             var isEmailFree = await _accountRepository.IsEmailAddressFree(request.Email);
             if (!isEmailFree)
             {
-                return new CreateUserCommandResponse($"Email address is already taken", false);
+                throw new BadRequestException($"Email address is already taken");
             }
 
             var userRole = await _accountRepository.GetUserRoleId();
@@ -37,8 +38,9 @@ namespace Zygieldesk.Application.Functions.Account.Commands.AddUser
             };
             var hashedPassword = _passwordHasher.HashPassword(newUser, request.Password);
             newUser.PasswordHash = hashedPassword;
-            newUser = await _accountRepository.AddAsync(newUser);
-            return new CreateUserCommandResponse($"Account successfully registered");
+            await _accountRepository.AddAsync(newUser);
+
+            return new CreateUserCommandResponse($"Account successfully registered", true);
         }
     }
 }
