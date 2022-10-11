@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using Zygieldesk.Application.Functions.Account.Commands.AddUser;
 using Zygieldesk.Application.Functions.Account.Commands.LoginUser;
+using Zygieldesk.Application.Functions.Account.Commands.UpdateUser;
 
 namespace Zygieldesk.API.Controllers
 {
@@ -37,6 +38,15 @@ namespace Zygieldesk.API.Controllers
             var response = await _mediator.Send(dto);
 
             return Ok(response.Message);
+        }
+
+        [HttpPut("update")]
+        [SwaggerOperation(Summary = "Update existing user account.")]        
+        public async Task<ActionResult> UpdateUserAccount([FromBody] UpdateUserCommand dto)
+        {
+            var response = await _mediator.Send(dto);
+
+            return NoContent();
         }
     }
 }
