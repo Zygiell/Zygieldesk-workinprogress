@@ -17,13 +17,15 @@ namespace Zygieldesk.Application.Authorization
             var userRole = context.User.FindFirst(c => c.Type == ClaimTypes.Role).Value;
             var userEmail = context.User.FindFirst(c => c.Type == ClaimTypes.Email).Value;
 
-            if(requirement.ResourceOperation == ResourceOperation.Update)
+            if(requirement.ResourceOperation == ResourceOperation.Update||
+                requirement.ResourceOperation == ResourceOperation.Delete)
             {
-                if (userEmail == resource.Email)
+                if (userEmail == resource.Email || userRole == "Admin")
                 {
                     context.Succeed(requirement);
                 }
             }
+
 
             return Task.CompletedTask;
 
