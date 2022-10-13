@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using Zygieldesk.Application.Functions.Account.Commands.AddUser;
+using Zygieldesk.Application.Functions.Account.Commands.DeleteUser;
 using Zygieldesk.Application.Functions.Account.Commands.LoginUser;
 using Zygieldesk.Application.Functions.Account.Commands.UpdateUser;
 
@@ -40,9 +41,18 @@ namespace Zygieldesk.API.Controllers
             return Ok(response.Message);
         }
 
-        [HttpPut("update")]
+        [HttpPut]
         [SwaggerOperation(Summary = "Update existing user account.")]        
         public async Task<ActionResult> UpdateUserAccount([FromBody] UpdateUserCommand dto)
+        {
+            var response = await _mediator.Send(dto);
+
+            return NoContent();
+        }
+
+        [HttpDelete]
+        [SwaggerOperation(Summary = "Update existing user account.")]
+        public async Task<ActionResult> DeleteUserAccount([FromBody] DeleteUserCommand dto)
         {
             var response = await _mediator.Send(dto);
 
