@@ -10,6 +10,24 @@ namespace Zygieldesk.Persistance.Repositories
         {
         }
 
+        public async Task<IReadOnlyList<Role>> GetAllRoles()
+        {
+            var rolesList = await _dbContext.Roles.ToListAsync();
+
+            return rolesList;
+        }
+        public async Task<Role> GetRoleById(int id)
+        {
+            var role = await _dbContext.Roles.FirstOrDefaultAsync(r => r.Id == id);
+            return role;
+        }
+
+        public async Task<IReadOnlyList<User>> GetAllUsersWithRoles()
+        {
+            var userList = await _dbContext.Users.Include(u => u.Role).ToListAsync();
+            return userList;
+        }
+
         public async Task<User> GetUserByEmail(string email)
         {
             var user = await _dbContext.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Email == email);
