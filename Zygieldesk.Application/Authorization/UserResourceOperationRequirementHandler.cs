@@ -25,6 +25,15 @@ namespace Zygieldesk.Application.Authorization
                     context.Succeed(requirement);
                 }
             }
+            if(requirement.ResourceOperation == ResourceOperation.Read)
+            {
+                if (userEmail == resource.Email || 
+                    userRole == "Admin"||
+                    userRole == "Support")
+                {
+                    context.Succeed(requirement);
+                }
+            }
 
 
             return Task.CompletedTask;
