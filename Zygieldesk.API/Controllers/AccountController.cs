@@ -6,6 +6,8 @@ using Zygieldesk.Application.Functions.Account.Commands.AddUser;
 using Zygieldesk.Application.Functions.Account.Commands.DeleteUser;
 using Zygieldesk.Application.Functions.Account.Commands.LoginUser;
 using Zygieldesk.Application.Functions.Account.Commands.UpdateUser;
+using Zygieldesk.Application.Functions.Account.Queries.GetUserByEmail;
+using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryWithTickets;
 
 namespace Zygieldesk.API.Controllers
 {
@@ -19,6 +21,15 @@ namespace Zygieldesk.API.Controllers
         public AccountController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [HttpGet()]
+        [SwaggerOperation(Summary = "Returns account detail associated with email.")]
+        public async Task<ActionResult<UserViewModel>> GetCategoryWithTickets([FromBody]GetUserByEmailQuery dto)
+        {
+            var user = await _mediator.Send(dto);
+
+            return Ok(user);
         }
 
         [HttpPost("login")]
@@ -51,7 +62,7 @@ namespace Zygieldesk.API.Controllers
         }
 
         [HttpDelete]
-        [SwaggerOperation(Summary = "Update existing user account.")]
+        [SwaggerOperation(Summary = "Delete existing user account.")]
         public async Task<ActionResult> DeleteUserAccount([FromBody] DeleteUserCommand dto)
         {
             var response = await _mediator.Send(dto);
