@@ -1,10 +1,5 @@
 ﻿using FluentValidation;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Zygieldesk.Application.PipelineBehaviors
 {
@@ -21,9 +16,9 @@ namespace Zygieldesk.Application.PipelineBehaviors
         {
             var context = new ValidationContext<TRequest>(request);
             var failures = _validators
-                .Select(x=>x.Validate(context))
-                .SelectMany(x=>x.Errors)
-                .Where(x=>x != null)
+                .Select(x => x.Validate(context))
+                .SelectMany(x => x.Errors)
+                .Where(x => x != null)
                 .ToList();
 
             if (failures.Any())

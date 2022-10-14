@@ -2,11 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Functions.Account.Queries.GetUserByEmail;
 using Zygieldesk.Application.Functions.AdminPanel.Commands.ChangeUserRole;
 using Zygieldesk.Application.Functions.AdminPanel.Commands.UpdateUserDetails;
@@ -24,16 +19,6 @@ namespace Zygieldesk.API.Controllers
         public AdminPanelController(IMediator mediator)
         {
             _mediator = mediator;
-        }
-
-
-        [HttpGet("users")]
-        [SwaggerOperation(Summary = "Returns all users from database")]
-        public async Task<ActionResult<List<UserViewModel>>> GetAllUsers()
-        {
-            var users = await _mediator.Send(new GetAllUsersQuery());
-
-            return Ok(users);
         }
 
         [HttpPut]
@@ -54,5 +39,13 @@ namespace Zygieldesk.API.Controllers
             return NoContent();
         }
 
+        [HttpGet("users")]
+        [SwaggerOperation(Summary = "Returns all users from database")]
+        public async Task<ActionResult<List<UserViewModel>>> GetAllUsers()
+        {
+            var users = await _mediator.Send(new GetAllUsersQuery());
+
+            return Ok(users);
+        }
     }
 }

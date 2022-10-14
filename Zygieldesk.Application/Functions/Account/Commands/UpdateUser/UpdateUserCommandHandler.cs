@@ -2,11 +2,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Authorization;
 using Zygieldesk.Application.Contracts.Persistance;
 using Zygieldesk.Application.Exceptions;
@@ -32,9 +27,10 @@ namespace Zygieldesk.Application.Functions.Account.Commands.UpdateUser
             _userContextService = userContextService;
             _passwordHasher = passwordHasher;
         }
+
         public async Task<UpdateUserCommandResponse> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            var userToEdit = await _accountRepository.GetUserByEmail(request.Email);            
+            var userToEdit = await _accountRepository.GetUserByEmail(request.Email);
             if (userToEdit == null)
             {
                 throw new NotFoundException("Wrong user email");
@@ -65,7 +61,6 @@ namespace Zygieldesk.Application.Functions.Account.Commands.UpdateUser
             await _accountRepository.UpdateAsync(userToEdit);
 
             return new UpdateUserCommandResponse();
-
         }
     }
 }

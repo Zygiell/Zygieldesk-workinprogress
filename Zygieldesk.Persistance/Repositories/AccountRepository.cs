@@ -16,6 +16,7 @@ namespace Zygieldesk.Persistance.Repositories
 
             return rolesList;
         }
+
         public async Task<Role> GetRoleById(int id)
         {
             var role = await _dbContext.Roles.FirstOrDefaultAsync(r => r.Id == id);

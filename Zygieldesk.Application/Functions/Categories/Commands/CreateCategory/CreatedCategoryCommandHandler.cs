@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Zygieldesk.Application.Authorization;
 using Zygieldesk.Application.Contracts.Persistance;
 using Zygieldesk.Application.Exceptions;
-using Zygieldesk.Application.Functions.Responses;
 using Zygieldesk.Application.Services;
 using Zygieldesk.Domain.Entities;
 

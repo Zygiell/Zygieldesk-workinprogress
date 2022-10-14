@@ -5,7 +5,6 @@ using System.Text;
 using Zygieldesk.Application;
 using Zygieldesk.Application.Authentication;
 using Zygieldesk.Application.Middlewares;
-using Zygieldesk.Application.PipelineBehaviors;
 using Zygieldesk.Persistance;
 using Zygieldesk.Persistance.Seeder;
 

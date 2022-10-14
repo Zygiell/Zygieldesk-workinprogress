@@ -27,6 +27,5 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.DeleteCategory
         {
             CategoryId = categoryId;
         }
-
     }
 }

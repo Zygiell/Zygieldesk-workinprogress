@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Zygieldesk.Application.Authorization;
 using Zygieldesk.Application.Contracts.Persistance;
 using Zygieldesk.Application.Exceptions;
-using Zygieldesk.Application.Functions.Responses;
 using Zygieldesk.Application.Services;
 
 namespace Zygieldesk.Application.Functions.Categories.Commands.UpdateCategory
@@ -27,7 +26,6 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.UpdateCategory
 
         public async Task<UpdateCategoryCommandResponse> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
         {
-
             var categoryToUpdate = await _categoryRepository.GetByIdAsync(request.Id);
 
             if (categoryToUpdate == null)

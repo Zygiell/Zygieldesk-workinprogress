@@ -7,7 +7,6 @@ using Zygieldesk.Application.Functions.Categories.Commands.DeleteCategory;
 using Zygieldesk.Application.Functions.Categories.Commands.UpdateCategory;
 using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryList;
 using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryWithTickets;
-using Zygieldesk.Application.Functions.Responses;
 
 namespace Zygieldesk.API.Controllers
 {
@@ -23,38 +22,6 @@ namespace Zygieldesk.API.Controllers
             _mediator = mediator;
         }
 
-        /// <summary>
-        /// Get all the categories from database.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [SwaggerOperation(Summary = "Returns all categories from database")]
-        public async Task<ActionResult<List<CategoryListViewModel>>> GetAllCategories()
-        {
-            var categoryListViewModel = await _mediator.Send(new GetCategoryListQuery());
-
-            return Ok(categoryListViewModel);
-        }
-
-        /// <summary>
-        /// Get category by id with tickets list.
-        /// </summary>
-        /// <param name="id">Id of the category</param>
-        /// <returns></returns>
-        [HttpGet("{id}")]
-        [SwaggerOperation(Summary = "Returns category found by {id} with tickets associated with category.")]
-        public async Task<ActionResult<CategoryWithTitcketsViewModel>> GetCategoryWithTickets(int id)
-        {
-            var dto = await _mediator.Send(new GetCategoryWithTicketsQuery { CategoryId = id });
-
-            return Ok(dto);
-        }
-
-        /// <summary>
-        /// Create new category.
-        /// </summary>
-        /// <param name="dto">Model received from body</param>
-        /// <returns></returns>
         [HttpPost]
         [SwaggerOperation(Summary = "Creates new category.")]
         public async Task<ActionResult<CreatedCategoryCommandResponse>> CreateCategory([FromBody] CreatedCategoryCommand dto)
@@ -64,11 +31,6 @@ namespace Zygieldesk.API.Controllers
             return Ok(response.CategoryId);
         }
 
-        /// <summary>
-        /// Updates existing category, valid category id provided from body is required.
-        /// </summary>
-        /// <param name="dto"></param>
-        /// <returns></returns>
         [HttpPut]
         [SwaggerOperation(Summary = "Updates existing category")]
         public async Task<ActionResult> UpdateCategory([FromBody] UpdateCategoryCommand dto)
@@ -78,18 +40,31 @@ namespace Zygieldesk.API.Controllers
             return NoContent();
         }
 
-        /// <summary>
-        /// Delete category by id.
-        /// </summary>
-        /// <param name="id">Id of category to delete</param>
-        /// <returns></returns>
         [HttpDelete("{id}")]
         [SwaggerOperation(Summary = "Deletes existing category")]
         public async Task<ActionResult> DeleteCategory(int id)
-        {            
-            var response = await _mediator.Send(new DeleteCategoryCommand() { CategoryId=id});
+        {
+            var response = await _mediator.Send(new DeleteCategoryCommand() { CategoryId = id });
 
             return NoContent();
+        }
+
+        [HttpGet]
+        [SwaggerOperation(Summary = "Returns all categories from database")]
+        public async Task<ActionResult<List<CategoryListViewModel>>> GetAllCategories()
+        {
+            var categoryListViewModel = await _mediator.Send(new GetCategoryListQuery());
+
+            return Ok(categoryListViewModel);
+        }
+
+        [HttpGet("{id}")]
+        [SwaggerOperation(Summary = "Returns category found by {id} with tickets associated with category.")]
+        public async Task<ActionResult<CategoryWithTitcketsViewModel>> GetCategoryWithTickets(int id)
+        {
+            var dto = await _mediator.Send(new GetCategoryWithTicketsQuery { CategoryId = id });
+
+            return Ok(dto);
         }
     }
 }

@@ -1,10 +1,5 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Contracts.Persistance;
 using Zygieldesk.Application.Exceptions;
 using Zygieldesk.Domain.Entities;
@@ -21,6 +16,7 @@ namespace Zygieldesk.Application.Functions.AdminPanel.Commands.UpdateUserDetails
             _accountRepository = accountRepository;
             _passwordHasher = passwordHasher;
         }
+
         public async Task<UpdateUserDetailsCommandResponse> Handle(UpdateUserDetailsCommand request, CancellationToken cancellationToken)
         {
             var userToUpdate = await _accountRepository.GetByIdAsync(request.UserId);

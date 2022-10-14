@@ -27,6 +27,5 @@ namespace Zygieldesk.Application.Functions.Tickets.Commands.UpdateTicket
         {
             TicketId = ticketId;
         }
-
     }
 }
