@@ -27,6 +27,5 @@ namespace Zygieldesk.Application.Functions.TicketComments.Commands.DeleteTicketC
         {
             TicketCommentId = ticketCommentId;
         }
-
     }
 }

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using Zygieldesk.Application.Functions.Responses;
 using Zygieldesk.Application.Functions.TicketComments.Commands.CreateTicketComment;
 using Zygieldesk.Application.Functions.TicketComments.Commands.DeleteTicketComment;
 using Zygieldesk.Application.Functions.TicketComments.Commands.UpdateTicketComment;
@@ -24,6 +23,15 @@ namespace Zygieldesk.API.Controllers
             _mediator = mediator;
         }
 
+        [HttpPost]
+        [SwaggerOperation(Summary = "Creates new ticket comment.")]
+        public async Task<ActionResult<CreateTicketCommentCommandResponse>> CreateTicketComment([FromBody] CreateTicketCommentCommand dto)
+        {
+            var response = await _mediator.Send(dto);
+
+            return Ok(response.TicketCommentId);
+        }
+
         [HttpPut]
         [SwaggerOperation(Summary = "Updates existing ticket comment")]
         public async Task<ActionResult> UpdateTicketComment([FromBody] UpdateTicketCommentCommand dto)
@@ -40,15 +48,6 @@ namespace Zygieldesk.API.Controllers
             var response = await _mediator.Send(new DeleteTicketCommentCommand() { TicketCommentId = id });
 
             return NoContent();
-        }
-
-        [HttpPost]
-        [SwaggerOperation(Summary = "Creates new ticket comment.")]
-        public async Task<ActionResult<CreateTicketCommentCommandResponse>> CreateTicketComment([FromBody] CreateTicketCommentCommand dto)
-        {
-            var response = await _mediator.Send(dto);
-
-            return Ok(response.TicketCommentId);
         }
 
         [HttpGet]

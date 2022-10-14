@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-namespace Zygieldesk.Application.Functions.Account.Commands.UpdateUser
+namespace Zygieldesk.Application.Functions.AdminPanel.Commands.UpdateUserDetails
 {
-    public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
+    public class UpdateUserDetailsCommandValidator : AbstractValidator<UpdateUserDetailsCommand>
     {
-        public UpdateUserCommandValidator()
+        public UpdateUserDetailsCommandValidator()
         {
             RuleFor(x => x.Password)
                 .MinimumLength(8)

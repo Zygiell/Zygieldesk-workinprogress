@@ -1,10 +1,10 @@
 ﻿using MediatR;
 
-namespace Zygieldesk.Application.Functions.Account.Commands.UpdateUser
+namespace Zygieldesk.Application.Functions.AdminPanel.Commands.UpdateUserDetails
 {
-    public class UpdateUserCommand : IRequest<UpdateUserCommandResponse>
+    public class UpdateUserDetailsCommand : IRequest<UpdateUserDetailsCommandResponse>
     {
-        public string Email { get; set; }
+        public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Password { get; set; }

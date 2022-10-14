@@ -1,14 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Zygieldesk.Application.Authorization;
 using Zygieldesk.Application.Contracts.Persistance;
-using Zygieldesk.Application.Exceptions;
 using Zygieldesk.Application.Functions.Account.Queries.GetUserByEmail;
 using Zygieldesk.Application.Services;
 
@@ -29,6 +22,7 @@ namespace Zygieldesk.Application.Functions.AdminPanel.Queries.GetAllUseres
             _authorizationService = authorizationService;
             _userContextService = userContextService;
         }
+
         public async Task<List<UserViewModel>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
         {
             var userList = await _accountRepository.GetAllUsersWithRoles();

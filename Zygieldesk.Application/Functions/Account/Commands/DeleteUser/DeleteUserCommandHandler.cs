@@ -1,15 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Application.Authorization;
 using Zygieldesk.Application.Contracts.Persistance;
 using Zygieldesk.Application.Exceptions;
 using Zygieldesk.Application.Services;
-using Zygieldesk.Domain.Entities;
 
 namespace Zygieldesk.Application.Functions.Account.Commands.DeleteUser
 {
@@ -25,10 +19,11 @@ namespace Zygieldesk.Application.Functions.Account.Commands.DeleteUser
             _authorizationService = authorizationService;
             _userContextService = userContextService;
         }
+
         public async Task<DeleteUserCommandResponse> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
             var userToDelete = await _accountRepository.GetUserByEmail(request.Email);
-            if(userToDelete == null)
+            if (userToDelete == null)
             {
                 throw new NotFoundException("Invalid user email");
             }

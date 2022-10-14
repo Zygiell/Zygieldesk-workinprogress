@@ -25,8 +25,7 @@ namespace Zygieldesk.Application.Functions.Categories.Commands.CreateCategory
 
         public CreatedCategoryCommandResponse(int categoryId)
         {
-            CategoryId = categoryId;            
+            CategoryId = categoryId;
         }
-
     }
 }

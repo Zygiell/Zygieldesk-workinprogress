@@ -9,8 +9,11 @@ namespace Zygieldesk.Application.Contracts.Persistance
         Task<int> GetUserRoleId();
 
         Task<User> GetUserByEmail(string email);
+
         Task<IReadOnlyList<User>> GetAllUsersWithRoles();
+
         Task<Role> GetRoleById(int id);
+
         Task<IReadOnlyList<Role>> GetAllRoles();
     }
 }

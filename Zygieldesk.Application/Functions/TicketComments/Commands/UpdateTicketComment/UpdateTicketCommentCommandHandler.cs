@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Zygieldesk.Application.Authorization;
 using Zygieldesk.Application.Contracts.Persistance;
 using Zygieldesk.Application.Exceptions;
-using Zygieldesk.Application.Functions.Responses;
 using Zygieldesk.Application.Services;
 
 namespace Zygieldesk.Application.Functions.TicketComments.Commands.UpdateTicketComment
@@ -27,7 +26,6 @@ namespace Zygieldesk.Application.Functions.TicketComments.Commands.UpdateTicketC
 
         public async Task<UpdateTicketCommentCommandResponse> Handle(UpdateTicketCommentCommand request, CancellationToken cancellationToken)
         {
-
             var ticketCommentToUpdate = await _ticketCommentRepository.GetByIdAsync(request.TicketCommentId);
             if (ticketCommentToUpdate == null)
             {

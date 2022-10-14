@@ -1,8 +1,4 @@
-﻿using FluentValidation;
-using Microsoft.AspNetCore.Http;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using System.Text.Json;
+﻿using Microsoft.AspNetCore.Http;
 using Zygieldesk.Application.Exceptions;
 using ValidationException = FluentValidation.ValidationException;
 
@@ -41,7 +37,6 @@ namespace Zygieldesk.Application.Middlewares
                 context.Response.StatusCode = 404;
                 await context.Response.WriteAsync(notFoundException.Message);
             }
-
             catch (Exception e)
             {
                 context.Response.StatusCode = 500;

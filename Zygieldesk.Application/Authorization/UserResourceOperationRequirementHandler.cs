@@ -1,10 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 using Zygieldesk.Domain.Entities;
 
 namespace Zygieldesk.Application.Authorization
@@ -17,7 +12,7 @@ namespace Zygieldesk.Application.Authorization
             var userRole = context.User.FindFirst(c => c.Type == ClaimTypes.Role).Value;
             var userEmail = context.User.FindFirst(c => c.Type == ClaimTypes.Email).Value;
 
-            if(requirement.ResourceOperation == ResourceOperation.Update||
+            if (requirement.ResourceOperation == ResourceOperation.Update ||
                 requirement.ResourceOperation == ResourceOperation.Delete)
             {
                 if (userEmail == resource.Email || userRole == "Admin")
@@ -25,19 +20,17 @@ namespace Zygieldesk.Application.Authorization
                     context.Succeed(requirement);
                 }
             }
-            if(requirement.ResourceOperation == ResourceOperation.Read)
+            if (requirement.ResourceOperation == ResourceOperation.Read)
             {
-                if (userEmail == resource.Email || 
-                    userRole == "Admin"||
+                if (userEmail == resource.Email ||
+                    userRole == "Admin" ||
                     userRole == "Support")
                 {
                     context.Succeed(requirement);
                 }
             }
 
-
             return Task.CompletedTask;
-
         }
     }
 }
