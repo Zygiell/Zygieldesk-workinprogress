@@ -12,12 +12,10 @@ namespace Zygieldesk.Persistance.Repositories
 
         public async Task<Category> GetCategoryWithTickets(int categoryId)
         {
-            var categoryWithTickets = await _dbContext
+            return (await _dbContext
                 .Categories
                 .Include(t => t.Tickets)
-                .FirstOrDefaultAsync(c => c.Id == categoryId);
-
-            return categoryWithTickets;
+                .FirstOrDefaultAsync(c => c.Id == categoryId));
         }
     }
 }
