@@ -26,11 +26,9 @@ namespace Zygieldesk.Persistance.Repositories
 
         public async Task<Ticket> GetTicketByIdWithTicketComments(int ticketId)
         {
-            var ticket = await _dbContext.Tickets
+            return (await _dbContext.Tickets
                 .Include(t => t.TicketComments)
-                .FirstOrDefaultAsync(ti => ti.Id == ticketId);
-
-            return ticket;
+                .FirstOrDefaultAsync(ti => ti.Id == ticketId));
         }
     }
 }
