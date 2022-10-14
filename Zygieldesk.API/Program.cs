@@ -1,12 +1,16 @@
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using System.Text;
+using System.Xml;
 using Zygieldesk.Application;
 using Zygieldesk.Application.Authentication;
 using Zygieldesk.Application.Middlewares;
 using Zygieldesk.Persistance;
 using Zygieldesk.Persistance.Seeder;
+using Formatting = Newtonsoft.Json.Formatting;
 
 var builder = WebApplication.CreateBuilder(args);
 
