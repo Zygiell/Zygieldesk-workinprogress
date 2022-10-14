@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Zygieldesk.Application.Functions.Account.Queries.GetUserByEmail;
 using Zygieldesk.Application.Functions.AdminPanel.Commands.ChangeUserRole;
+using Zygieldesk.Application.Functions.AdminPanel.Commands.UpdateUserDetails;
 using Zygieldesk.Application.Functions.AdminPanel.Queries.GetAllUseres;
 
 namespace Zygieldesk.API.Controllers
@@ -34,6 +35,7 @@ namespace Zygieldesk.API.Controllers
 
             return Ok(users);
         }
+
         [HttpPut]
         [SwaggerOperation(Summary = "Change user role")]
         public async Task<ActionResult> ChangeUserRole([FromBody] ChangeUserRoleCommand dto)
@@ -41,6 +43,15 @@ namespace Zygieldesk.API.Controllers
             var response = await _mediator.Send(dto);
 
             return Ok(response);
+        }
+
+        [HttpPut("edituser")]
+        [SwaggerOperation(Summary = "Update user details.")]
+        public async Task<ActionResult> UpdateUserDetails([FromBody] UpdateUserDetailsCommand dto)
+        {
+            var response = await _mediator.Send(dto);
+
+            return NoContent();
         }
 
     }
