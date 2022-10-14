@@ -30,7 +30,7 @@ namespace Zygieldesk.Application.Middlewares
                 }
                 context.Response.StatusCode = 400;
                 context.Response.ContentType = "application/json";
-                await context.Response.WriteAsync(JsonConvert.SerializeObject(string.Join("\n", errorTextList)));
+                await context.Response.WriteAsync(JsonConvert.SerializeObject(errorTextList));
             }
             catch (ForbiddenException forbiddenException)
             {
