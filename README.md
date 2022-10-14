@@ -3,14 +3,15 @@
  Zygieldesk - zendesk like customer service app. Clean architecture + CQRS + MediatR
 
  # Demo:
- SwaggerUI Demo avaiable: http://zygieldeskapi.tk
+ SwaggerUI Demo available: http://zygieldeskapi.tk
+
  Admin account:
 
  ``login: admin@admin.com``
 
  ``password : admin``
 
- demo last update: 14.10.2022
+ demo last updated: 14.10.2022
 
  # How to launch on local machine:
  PRE REQUISITES : .NET 6 FRAMEWORK + IDE (tested on Visual Studio)
