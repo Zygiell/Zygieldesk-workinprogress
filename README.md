@@ -3,7 +3,7 @@
  Zygieldesk - zendesk like customer service app. Clean architecture + CQRS + MediatR
 
  # Demo:
- SwaggerUI Demo available: http://zygieldeskapi.tk
+ SwaggerUI Demo available: http://51.38.128.57:5400/swagger/index.html
 
  Admin account:
 
