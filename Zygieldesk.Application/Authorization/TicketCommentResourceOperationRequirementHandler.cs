@@ -20,15 +20,9 @@ namespace Zygieldesk.Application.Authorization
                 }
             }
 
-            if (requirement.ResourceOperation == ResourceOperation.Create ||
-                requirement.ResourceOperation == ResourceOperation.Read ||
-                requirement.ResourceOperation == ResourceOperation.Update ||
-                requirement.ResourceOperation == ResourceOperation.Delete)
+            if (userRole == "Admin")
             {
-                if (userRole == "Admin")
-                {
-                    context.Succeed(requirement);
-                }
+                context.Succeed(requirement);
             }
 
             return Task.CompletedTask;
