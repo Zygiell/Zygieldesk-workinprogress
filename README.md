@@ -27,7 +27,7 @@
  - Shouldly
  - Swashbuckle(Swagger UI)
 
- #Functions
+ # Functions
  There are 3 roles: User, Support, Admin:
  - Anonymous users can register/login account.
  - Logged in users with User role, can open new ticket, add replies to their tickets, view their tickets, replies and replies made by Support in their tickets.
