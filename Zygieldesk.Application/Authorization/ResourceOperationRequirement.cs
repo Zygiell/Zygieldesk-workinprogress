@@ -8,7 +8,8 @@ namespace Zygieldesk.Application.Authorization
         Read,
         Update,
         Delete,
-        Reply
+        Reply,
+        SetPriority
     }
 
     public class ResourceOperationRequirement : IAuthorizationRequirement
