@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Zygieldesk.Persistance;
 
@@ -11,9 +12,10 @@ using Zygieldesk.Persistance;
 namespace Zygieldesk.Persistance.Migrations
 {
     [DbContext(typeof(ZygieldeskDbContext))]
-    partial class ZygieldeskDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221101142335_AddTicketPriority")]
+    partial class AddTicketPriority
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

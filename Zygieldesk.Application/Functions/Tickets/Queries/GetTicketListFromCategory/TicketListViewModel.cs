@@ -9,6 +9,7 @@ namespace Zygieldesk.Application.Functions.Tickets.Queries.GetTicketList
         public string TicketBody { get; set; }
         public int CategoryId { get; set; }
         public TicketStatus Status { get; set; }
+        public TicketPriority Priority { get; set; }
         public int? CreatedByUserId { get; set; }
         public DateTime CreatedDate { get; set; }
         public int? LastModifiedByUserId { get; set; }

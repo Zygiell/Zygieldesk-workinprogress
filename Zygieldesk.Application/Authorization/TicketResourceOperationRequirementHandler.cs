@@ -36,6 +36,13 @@ namespace Zygieldesk.Application.Authorization
                     context.Succeed(requirement);
                 }
             }
+            if(requirement.ResourceOperation == ResourceOperation.SetPriority)
+            {
+                if(userRole == "Support")
+                {
+                    context.Succeed(requirement);
+                }
+            }
 
             if (userRole == "Admin")
             {

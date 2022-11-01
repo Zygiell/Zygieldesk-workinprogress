@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using Zygieldesk.Application.Functions.Categories.Queries.GetCategoryList;
+using Zygieldesk.Application.Functions.Tickets.Commands.ChangeTicketPriority;
 using Zygieldesk.Application.Functions.Tickets.Commands.CreateTicket;
 using Zygieldesk.Application.Functions.Tickets.Commands.DeleteTicket;
 using Zygieldesk.Application.Functions.Tickets.Commands.UpdateTicket;
@@ -36,6 +37,15 @@ namespace Zygieldesk.API.Controllers
         [HttpPut]
         [SwaggerOperation(Summary = "Updates existing ticket.")]
         public async Task<ActionResult> UpdateTicket([FromBody] UpdateTicketCommand dto)
+        {
+            var response = await _mediator.Send(dto);
+
+            return NoContent();
+        }
+
+        [HttpPut("setpriority")]
+        [SwaggerOperation(Summary = "Changes ticket priority.")]
+        public async Task<ActionResult> SetTicketPriority([FromBody] ChangeTicketPriorityCommand dto)
         {
             var response = await _mediator.Send(dto);
 

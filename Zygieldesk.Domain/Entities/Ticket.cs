@@ -10,5 +10,6 @@ namespace Zygieldesk.Domain.Entities
         public int CategoryId { get; set; }
         public ICollection<TicketComment> TicketComments { get; set; }
         public TicketStatus Status { get; set; } = TicketStatus.Open;
+        public TicketPriority TicketPriority { get; set; } = TicketPriority.Normal;
     }
 }
